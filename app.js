@@ -6,6 +6,7 @@ const STATUS = {new:'Эхлээгүй',trying:'Оролдож байгаа',solv
 let data, selectedPack='', selectedProblem, state={}, dirty={}, user=null, client=null, loading=false, syncing=false, syncAgain=false, epoch=0;
 let username=null, profileLoading=false, profileSaving=false, solverRequest=0, solverNames=[], solverTotal=0;
 let detailTagsShown=false;
+const hiddenHints=new Set();
 const cfg=window.THINK_CP_CONFIG || {};
 const configured=Boolean(cfg.supabaseUrl && cfg.supabaseKey);
 const key=()=> 'think-cp:v1:'+(user?.id || 'guest');
@@ -54,6 +55,11 @@ function openProblem(p) {selectedProblem=p;detailTagsShown=false;$('detail-title
 function renderDetail() {
   if(!selectedProblem)return;const p=selectedProblem,e=entry(p.id);$('problem-status').value=e.status;$('hint-list').replaceChildren();
   p.hints.slice(0,e.hints).forEach((hint,i)=>{const h=el('div','hint');h.append(el('b','','HINT '+(i+1)),el('span','',hint));$('hint-list').append(h);});
+  const hintsVisible=!hiddenHints.has(p.id);
+  $('hint-list').hidden=!hintsVisible;
+  $('toggle-hints').hidden=e.hints===0;
+  $('toggle-hints').textContent=hintsVisible?'Hint-үүдийг нуух':'Нээсэн hint-үүдийг харуулах';
+  $('toggle-hints').setAttribute('aria-expanded',String(hintsVisible&&e.hints>0));
   $('next-hint').hidden=e.hints===3;$('next-hint').textContent='Hint '+(e.hints+1)+' нээх';$('reflection').hidden=e.status!=='solved';$('tags').textContent='Сэдэв: '+p.tags.join(' · ');$('lesson').textContent=p.lesson;
   const tagsVisible=$('show-tags').checked||detailTagsShown||e.status==='solved';$('detail-tags').hidden=!tagsVisible;$('detail-tags').replaceChildren();for(const tag of p.tags)$('detail-tags').append(el('span','tag-chip',tag));
   $('reveal-detail-tags').hidden=$('show-tags').checked||e.status==='solved';$('reveal-detail-tags').textContent=detailTagsShown?'Tags нуух':'Tags харуулах';
@@ -148,7 +154,8 @@ async function init() {
   $('refresh-solvers').onclick=()=>void loadSolvers();$('more-solvers').onclick=()=>void loadSolvers(true);
   $('detail').addEventListener('close',()=>{solverRequest++;selectedProblem=null;});
   $('problem-status').onchange=()=>{setEntry(selectedProblem.id,{status:$('problem-status').value});renderDetail();};
-  $('next-hint').onclick=()=>{const e=entry(selectedProblem.id);setEntry(selectedProblem.id,{hints:Math.min(e.hints+1,3),status:e.status==='new'?'trying':e.status});renderDetail();};
+  $('toggle-hints').onclick=()=>{const id=selectedProblem.id;if(hiddenHints.has(id))hiddenHints.delete(id);else hiddenHints.add(id);renderDetail();};
+  $('next-hint').onclick=()=>{hiddenHints.delete(selectedProblem.id);const e=entry(selectedProblem.id);setEntry(selectedProblem.id,{hints:Math.min(e.hints+1,3),status:e.status==='new'?'trying':e.status});renderDetail();};
   $('save-note').onclick=()=>{setEntry(selectedProblem.id,{notes:$('notes').value});$('detail-feedback').textContent='Тэмдэглэлийг progress-д нэмлээ. Хадгалалтын төлөвийг үндсэн хуудаснаас харна уу.';};
   $('export').onclick=()=>{const blob=new Blob([JSON.stringify({version:1,progress:state},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=el('a');a.href=url;a.download='think-cp-progress.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
   $('import').onchange=async event=>{
