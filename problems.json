@@ -1,357 +1,2656 @@
 {
-  "version": 1,
+  "version": 2,
+  "updatedAt": "2026-10-05",
+  "ratingNote": "Codeforces: official API snapshot. CSES/EGOI: approximate CF difficulty estimates; EGOI full task only.",
   "packs": [
     {
-      "id": "warmup",
-      "title": "01 · Халаалт",
-      "description": "Зарим нь 1300-аас хялбар. Хурд биш, ажиглалтаа тайлбарлаж батлахыг зорь."
+      "id": "foundation",
+      "title": "01 · 900–1100",
+      "description": "Халаалт. Богино кодтой байсан ч observation-оо өөрийн үгээр батал."
     },
     {
-      "id": "discover",
-      "title": "02 · Өөр өнцөг",
-      "description": "1300–1400 сурагчдад үндсэн дасгал. Санаа олохоос өмнө сэдвийг нь бүү хай."
+      "id": "core",
+      "title": "02 · 1200–1500",
+      "description": "Үндсэн дасгал. 1300–1500 сурагчдад ★ бодлогуудаас эхлэхийг зөвлөе."
+    },
+    {
+      "id": "challenge",
+      "title": "03 · 1600–1800",
+      "description": "Next step: нэг санаанаас хэд хэдэн observation холбоход суралц."
     },
     {
       "id": "stretch",
-      "title": "03 · Сорилт",
-      "description": "Дараагийн алхам. Гацвал жижиг жишээ, эсрэг жишээ, шаталсан hint ашигла."
+      "title": "04 · 1900–2100",
+      "description": "Илүү гүн reasoning. Hint бүрийн дараа шинэ hypothesis-оо турш."
+    },
+    {
+      "id": "advanced",
+      "title": "05 · 2200+",
+      "description": "Advanced construction болон invariant. Rating-ийг хүчээр дагахгүй, бэлэн үедээ оролд."
     },
     {
       "id": "cses",
-      "title": "04 · CSES remix",
-      "description": "Танил өгүүлбэрийг шинэ өнцгөөс хар. Бүх CSES бодлогыг оруулаагүй."
+      "title": "06 · CSES remix",
+      "description": "CSES-ийн rating нь ≈ CF баримжаа, албан rating биш. Санааг нь нэрлэхээс өмнө өөрөө ажигла."
     },
     {
       "id": "egoi",
-      "title": "05 · Олимпиадын алхам",
-      "description": "EGOI-г CF rating-тай дүйцүүлээгүй. Эхлээд subtask, дараа нь бүтэн бодлого."
+      "title": "07 · EGOI",
+      "description": "Subtask → full task. ≈ CF rating нь багшийн баримжаа; olympiad points-той дүйцүүлээгүй."
     }
   ],
   "problems": [
     {
-      "id": "cf-1691B",
-      "pack": "warmup",
-      "title": "Shoe Shuffling",
-      "source": "Codeforces",
-      "ref": "1691/B",
-      "level": "Эхний ажиглалт",
-      "url": "https://codeforces.com/problemset/problem/1691/B",
-      "hints": [
-        "Хамгийн жижиг боломжгүй жишээг ол. Нэг хэмжээ ганцхан удаа байвал яах вэ?",
-        "Хамгийн жижиг хэмжээтэй хүмүүсийг бод. Тэд өөрөөсөө том гутал авч болох уу?",
-        "Ижил хэмжээтэй бүлэг бүрийг нэг байрлалаар тойруул. Ганц гишүүнтэй бүлэг байвал боломжгүй."
-      ],
-      "tags": [
-        "бүлэглэх",
-        "constructive"
-      ],
-      "lesson": "Хамгийн жижиг бүлгээс эхэлж нөхцөл бусад бүлэгт яагаад давтагдахыг батал."
-    },
-    {
-      "id": "cf-1831B",
-      "pack": "warmup",
-      "title": "Array merging",
-      "source": "Codeforces",
-      "ref": "1831/B",
-      "level": "Хоёр дарааллыг ажигла",
-      "url": "https://codeforces.com/problemset/problem/1831/B",
-      "hints": [
-        "Нэг утга сонгоод хоёр array дахь хамгийн урт үргэлжилсэн хэсгүүдийг ол.",
-        "Merge нь array тус бүрийн дотоод дарааллыг өөрчлөхгүй. Энэ нь ямар дээд хязгаар өгөх вэ?",
-        "Утга бүрийн хувьд хоёр array дахь хамгийн урт run-ийн уртуудыг нэм. Тэр хоёр run-ийг зэрэгцүүлж чадна."
-      ],
-      "tags": [
-        "run length",
-        "дээд хязгаар"
-      ],
-      "lesson": "Дээд хязгаараа олсны дараа түүнд хүрэх merge байгуул."
-    },
-    {
       "id": "cf-1665B",
-      "pack": "warmup",
+      "pack": "foundation",
       "title": "Array Cloning Technique",
       "source": "Codeforces",
       "ref": "1665/B",
-      "level": "Үйлдлээ төлөвлө",
+      "level": "Practice",
       "url": "https://codeforces.com/problemset/problem/1665/B",
-      "hints": [
-        "Эцсийн утгаа сонгохдоо анх хэдэн ширхэг байгааг нь тооц.",
-        "Clone хийсний дараа хамгийн ихдээ хэдэн шинэ байрлалыг хүссэн утгаар сольж болох вэ?",
-        "Хамгийн их давтамж f-ийг сонго. Clone бүрийн дараа min(f,n-f) swap хийж f-ээ өсгө. Clone ба swap-ийг тусад нь тоол."
+      "rating": 900,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "greedy",
+        "sortings"
       ],
       "tags": [
-        "давтамж",
-        "өсөлт"
+        "array",
+        "frequency",
+        "greedy"
       ],
-      "lesson": "Нэг clone-оор зөв байрлалын тоо хамгийн ихдээ хоёр дахин өсөхийг тайлбарла."
+      "hints": [
+        "Эцсийн array нэг value-тай болно. Анх хамгийн их frequency-тай value-г сонговол ямар давуу талтай вэ?",
+        "Одоогоор зөв value-тай f байрлал байна. Array-ийг clone хийсний дараа хамгийн ихдээ хэдийг нэмж зөв болгож болох вэ?",
+        "Хамгийн их frequency f-ээс эхэл. Нэг clone-ийн дараа min(f,n-f) swap хийгээд f-ийг тэр хэмжээгээр өсгө. Clone-ийн тоо болон нийт n-f_initial swap-ийг тусад нь тоол."
+      ],
+      "lesson": "Clone бүрд зөв байрлалын тоо хамгийн ихдээ хоёр дахин өсөхийг тайлбарла.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/101663",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     },
     {
-      "id": "cf-1741C",
-      "pack": "warmup",
-      "title": "Minimize the Thickness",
+      "id": "cf-1440B",
+      "pack": "foundation",
+      "title": "Sum of Medians",
       "source": "Codeforces",
-      "ref": "1741/C",
-      "level": "Хуваалтын боломжууд",
-      "url": "https://codeforces.com/problemset/problem/1741/C",
-      "hints": [
-        "Эцсийн segment-үүдийн нийлбэр ижил. Эхний segment хаана төгсөх вэ?",
-        "Эхний segment-ийн төгсгөлийг сонговол нийтлэг нийлбэр тодорхой болно.",
-        "Prefix sum бүрийг зорилтот нийлбэр болгон турш. Эерэг тоонуудыг хуримтлуулж тэр нийлбэрт хүрэх бүрд тасал; хамгийн урт segment-ийг хэмж."
+      "ref": "1440/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1440/B",
+      "rating": 900,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "greedy",
+        "math"
       ],
       "tags": [
-        "enumeration",
-        "эерэг нийлбэр"
+        "sorting",
+        "greedy",
+        "median"
       ],
-      "lesson": "Яагаад эхний segment-ийг сонгоход үлдсэн таслах цэгүүд тодорхой болдог вэ?"
+      "hints": [
+        "Median-ийн баруун талд group бүр хэдэн element шаардахыг тоол.",
+        "Нийт sorted list-ийн хамгийн том талаас group бүрийн right half-ийг reserved гэж үз.",
+        "Төгсгөлөөс floor(n/2) element алгасаад дараагийн median-ийг ав. Дараагийн median руу floor(n/2)+1 алхам ухарсаар k median-ийн sum-ийг ол. Үлдсэн жижиг values left halves-д хүрэлцэнэ."
+      ],
+      "lesson": "Group-уудыг шууд байгуулахгүйгээр median positions-ийг ол.",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/84731"
     },
     {
-      "id": "cf-1526B",
-      "pack": "warmup",
-      "title": "I Hate 1111",
+      "id": "cf-1831B",
+      "pack": "foundation",
+      "title": "Array merging",
       "source": "Codeforces",
-      "ref": "1526/B",
-      "level": "Тооны бүтэц",
-      "url": "https://codeforces.com/problemset/problem/1526/B",
-      "hints": [
-        "11, 111, 1111, ... дотроос урт тоонуудыг богино хоёр тоогоор илэрхийлж үз.",
-        "11 ба 111 хангалттай. 111-ийг 11 ширхэг нэмэх нь 11-ийн үржвэртэй тэнцэнэ.",
-        "111-ийн тоог 0..10 дотор туршаад үлдэгдэл нь сөрөг биш, 11-д хуваагдах эсэхийг шалга."
+      "ref": "1831/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1831/B",
+      "rating": 1000,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "greedy"
       ],
       "tags": [
-        "үлдэгдэл",
-        "тоон бүтэц"
+        "observation",
+        "array",
+        "greedy"
       ],
-      "lesson": "Хязгааргүй олон боломжийг яагаад 11 шалгалтад багтааж болохыг батал."
+      "hints": [
+        "Нэг value сонгоод array тус бүрд дараалсан ижил value-тай хамгийн урт run-ийг ол.",
+        "Merge хийхэд array бүрийн дотоод order өөрчлөгдөхгүй. Нэг run-д хоёр өөр run-ийг нэг array-аас нийлүүлж болох уу?",
+        "Value бүрд хоёр array-ийн longest run length-үүдийг нэмээд maximum-ийг ав. Сонгосон хоёр run-ийг зэрэгцүүлж merge хийж чадна; нэг array дахь завсрын өөр value-уудыг алгасаж болохгүй."
+      ],
+      "lesson": "Upper bound-аа олсны дараа тэр bound-д хүрэх merge байгуул.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/116527",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     },
     {
-      "id": "cf-1618C",
-      "pack": "warmup",
-      "title": "Paint the Array",
+      "id": "cf-1691B",
+      "pack": "foundation",
+      "title": "Shoe Shuffling",
       "source": "Codeforces",
-      "ref": "1618/C",
-      "level": "Нөхцөлийг буулга",
-      "url": "https://codeforces.com/problemset/problem/1618/C",
-      "hints": [
-        "Зөв будалттай бол байрлалуудын өнгө яаж ээлжлэх вэ?",
-        "Нэг parity-ийн бүх тоо d-д хуваагдаж, нөгөө parity-ийн аль нь ч хуваагдах ёсгүй.",
-        "Parity тус бүрийн gcd-ийг кандидат болго. Нөгөө талд нэг ч тоо түүнд хуваагдахгүй байгааг шалга."
+      "ref": "1691/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1691/B",
+      "rating": 1000,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "greedy",
+        "implementation",
+        "two pointers"
       ],
       "tags": [
-        "gcd",
-        "parity"
+        "observation",
+        "constructive algorithms",
+        "array"
       ],
-      "lesson": "Боломжит d байгаа бол тухайн талын gcd мөн зөв кандидат болохыг тайлбарла."
-    },
-    {
-      "id": "cf-1497B",
-      "pack": "discover",
-      "title": "M-arrays",
-      "source": "Codeforces",
-      "ref": "1497/B",
-      "level": "Хослох боломж",
-      "url": "https://codeforces.com/problemset/problem/1497/B",
       "hints": [
-        "Тоо өөрөө биш, m-д хуваахад гарах үлдэгдлийг нь хар.",
-        "r үлдэгдэлтэй тооны хажууд зөвхөн m-r үлдэгдэл байж болно. Хоёр бүлгийн хэмжээг харьцуул.",
-        "r ба m-r бүлгийг ээлжлүүлж нэг array байгуул. Хэмжээнүүдийн ялгаа 1-ээс их бол илүүдсэн тоо бүр нэмэлт array шаардана. 0 болон m/2-ыг тусад нь бод."
+        "Нэг size ганцхан удаа байвал тэр сурагч хэний shoes-ийг авах вэ?",
+        "Хамгийн жижиг size-тай group өөрөөсөө том shoes авах боломжгүй. Тэгвэл group дотор permutation хийх шаардлагатай юу?",
+        "Ижил size-тай group бүрийн index-үүдийг нэгээр cyclic shift хий. Size ганцхан удаа орсон бол -1. Өсөхөөр өгөгдсөн array дээр groups нь contiguous байна."
       ],
-      "tags": [
-        "үлдэгдэл",
-        "хослол"
-      ],
-      "lesson": "Хоёр бүлгийн тэнцвэр хариуг тодорхойлж байгааг дүрсэл."
+      "lesson": "Хамгийн жижиг group-ээс эхэлж бүх group дотроо солилцох шаардлагыг батал.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/103212",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     },
     {
       "id": "cf-1624C",
-      "pack": "discover",
+      "pack": "foundation",
       "title": "Division by Two and Permutation",
       "source": "Codeforces",
       "ref": "1624/C",
-      "level": "Сонголтын дараалал",
+      "level": "Practice",
       "url": "https://codeforces.com/problemset/problem/1624/C",
-      "hints": [
-        "Тоо бүрийг давтан хоёрт хуваагаад хүрч болох утгуудыг жагсаа.",
-        "Жижиг тоо хязгаарлагдмал сонголттой. Том тоонуудыг түрүүлж байрлуулах хувилбарыг турш.",
-        "Тоонуудыг буурахаар эрэмбэл. Тоо бүрийг n-ээс их эсвэл эзлэгдсэн байхад хоёрт хуваа; 0 хүрвэл боломжгүй."
-      ],
-      "tags": [
+      "rating": 1100,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "flows",
+        "graph matchings",
         "greedy",
-        "exchange argument"
-      ],
-      "lesson": "Илүү том чөлөөтэй утгыг сонгох нь жижиг боломжуудыг хадгалдгийг батал."
-    },
-    {
-      "id": "cf-1368B",
-      "pack": "discover",
-      "title": "Codeforces Subsequences",
-      "source": "Codeforces",
-      "ref": "1368/B",
-      "level": "Тоолох өөр арга",
-      "url": "https://codeforces.com/problemset/problem/1368/B",
-      "hints": [
-        "codeforces-ийн үсэг бүрийг дараалан давтсан string байгуулбал subsequence хэд болох вэ?",
-        "Давталтын тоонуудын үржвэрийг өсгөх хэрэгтэй. Нийт уртыг тогтоовол тэнцвэртэй байвал яах вэ?",
-        "Давталт бүрийг 1-ээс эхлүүлж, хамгийн бага давталтыг нэгээр өсгө. Үржвэр k-д хүрэхэд зогс; тоонууд хамгийн ихдээ 1 зөрнө."
+        "math"
       ],
       "tags": [
-        "үржвэр",
-        "тэнцвэржүүлэх"
-      ],
-      "lesson": "Хэт ялгаатай хоёр давталтыг ойртуулахад үржвэр буурахгүйг батал."
-    },
-    {
-      "id": "cf-1515C",
-      "pack": "discover",
-      "title": "Phoenix and Towers",
-      "source": "Codeforces",
-      "ref": "1515/C",
-      "level": "Барих дараалал",
-      "url": "https://codeforces.com/problemset/problem/1515/C",
-      "hints": [
-        "Бүх tower-ийн өндрийг ойр байлгахын тулд дараагийн блокийг хаана тавих вэ?",
-        "Одоогийн хамгийн нам tower-ийг сонго. Эцсийн хамгийн өндөр tower дээрх сүүлийн блокийг хар.",
-        "Min-heap-аар хамгийн нам tower дээр дараагийн блокийг тавь. Сүүлийн блокийн өмнөх өндөр нь бусад tower-аас их байгаагүй; блокийн өндөр x-ээс ихгүй."
-      ],
-      "tags": [
+        "array",
         "greedy",
-        "min-heap"
+        "sorting"
       ],
-      "lesson": "Бүх агшныг биш, эцсийн хамгийн өндөр tower-ийн сүүлийн үйлдлийг ашиглаж батал."
+      "hints": [
+        "Value бүрийг давтан 2-т divide хийгээд хүрч болох candidate-уудыг зур.",
+        "Хамгийн том value-уудыг эхэлж байрлуулж, чөлөөтэй байгаа хамгийн том reachable value-г авбал ямар жижиг боломжууд үлдэх вэ?",
+        "Array-ийг decreasing order-оор sort хий. Value нь n-ээс их эсвэл used байвал 2-т divide хий. 1..n дотор free value хүрвэл mark; 0 хүрвэл NO."
+      ],
+      "lesson": "Илүү том free value сонгох greedy-г exchange argument-аар тайлбарла.",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/98942"
     },
     {
-      "id": "cf-1506D",
-      "pack": "discover",
-      "title": "Epic Transformation",
+      "id": "cf-1304B",
+      "pack": "foundation",
+      "title": "Longest Palindrome",
       "source": "Codeforces",
-      "ref": "1506/D",
-      "level": "Хамгийн том бүлэг",
-      "url": "https://codeforces.com/problemset/problem/1506/D",
-      "hints": [
-        "Үлдэж чадах тоонд n-ийн parity ямар хязгаар тавих вэ?",
-        "Хамгийн олон давтагдсан утгын тоог f гэе. Бусад бүх тоо түүнийг арилгахад хүрэлцэх үү?",
-        "Хариу max(n%2, 2*f-n). Нэг утга давамгайлсан ба давамгайлаагүй тохиолдлыг тусад нь батал."
+      "ref": "1304/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1304/B",
+      "rating": 1100,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "constructive algorithms",
+        "greedy",
+        "implementation",
+        "strings"
       ],
       "tags": [
-        "давтамж",
-        "доод хязгаар"
+        "strings",
+        "constructive algorithms",
+        "frequency"
       ],
-      "lesson": "Хязгаарт хүрэх арилгалтын дараалал яагаад байдаг вэ?"
+      "hints": [
+        "Нэг string-ийн mirror талд ямар string байх ёстой вэ?",
+        "String x-ийг reverse(x)-тэй pair болго. Өөрөө palindrome string-үүдийн odd leftover-оос хэдийг center-д тавьж болох вэ?",
+        "Unused strings-ийг reverse partner-тай нь pair болгож left half үүсгэ. Өөрөө palindrome unused string байвал нэгийг center-д ав. Answer=left+center+reverse(left); нэг input string-ийг хоёр удаа ашиглахгүй."
+      ],
+      "lesson": "Pair бүр дээд bound-д хүрдэг, center-д хамгийн ихдээ нэг string ордгийг батал.",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/73934"
+    },
+    {
+      "id": "cf-1741C",
+      "pack": "foundation",
+      "title": "Minimize the Thickness",
+      "source": "Codeforces",
+      "ref": "1741/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1741/C",
+      "rating": 1100,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "greedy",
+        "math",
+        "two pointers"
+      ],
+      "tags": [
+        "array",
+        "prefix sums",
+        "brute force"
+      ],
+      "hints": [
+        "Бүх segment ижил sum-тай. Эхний segment-ийн төгсгөлийг сонговол юу тодорхой болох вэ?",
+        "Эхний segment-ийн бүх боломжит prefix sum-ийг target sum болгон турш. Array-ийн values бүгд positive гэдгийг ашигла.",
+        "Target бүрд зүүнээс sum цуглуулаад target хүрмэгц тасал. Target-аас хэтэрвэл эсвэл төгсгөлд үлдэгдэлтэй бол боломжгүй. Зөв partition бүрийн хамгийн урт segment length-ийг авч minimum-ийг ол."
+      ],
+      "lesson": "Positive values нь cutting point-уудыг яагаад нэг утгатай тодорхойлдог вэ?",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/107908",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     },
     {
       "id": "cf-1616B",
-      "pack": "discover",
+      "pack": "foundation",
       "title": "Mirror in the String",
       "source": "Codeforces",
       "ref": "1616/B",
-      "level": "Лексикограф сонголт",
+      "level": "Practice",
       "url": "https://codeforces.com/problemset/problem/1616/B",
-      "hints": [
-        "Prefix-ийн уртыг нэгээр нэмэхэд үүсэх palindrome-уудын анхны ялгааг ол.",
-        "Эхний хоёр үсэг тэнцүү үед урт 1 ба 2-ыг харьцуул. Бусад тэнцүү хөршид мөн адил уу?",
-        "Эхний хоёр үсэг тэнцүү бол зөвхөн эхний үсгийг ав. Үгүй бол эхний non-increasing prefix-ийг аваад урвууг нь залга."
+      "rating": 1100,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "greedy",
+        "strings"
       ],
       "tags": [
-        "lexicographic",
-        "prefix"
+        "strings",
+        "greedy",
+        "lexicographic"
       ],
-      "lesson": "Эхний тэнцүү үсгийн онцгой тохиолдолд эсрэг жишээ бич."
+      "hints": [
+        "Prefix length-ийг нэгээр нэмэхэд үүсэх хоёр palindrome-ийн анхны өөр position-ийг харьцуул.",
+        "Эхний хоёр character equal байх үед length 1 болон 2-ыг заавал харьцуул. Дараагийн equal character-уудтай ижил дүрэм үйлчлэх үү?",
+        "Эхний хоёр character equal бол эхний character-ийг хоёр давт. Үгүй бол хамгийн урт non-increasing prefix-ийг аваад reverse-ийг нь залга. n=1-ийг мөн зөв handle хий."
+      ],
+      "lesson": "First equal pair-ийн special case-д counterexample бич.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/98501",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     },
     {
-      "id": "cf-1370C",
-      "pack": "stretch",
-      "title": "Number Game",
+      "id": "cf-1618C",
+      "pack": "foundation",
+      "title": "Paint the Array",
       "source": "Codeforces",
-      "ref": "1370/C",
-      "level": "Тоглоомын төлөв",
-      "url": "https://codeforces.com/problemset/problem/1370/C",
-      "hints": [
-        "n=1, n=2, сондгой n, хоёрын зэрэг гэсэн ангиллуудыг эхлээд турш.",
-        "Тэгш n-д сондгой хуваагч хэрэгтэй. n=2*p, p нь сондгой анхны тоо бол яах вэ?",
-        "Ялагдах төлөвүүд: 1; 2-оос их хоёрын зэрэг; 2*p хэлбэрийн сондгой анхны p. Үлдсэн тохиолдолд өрсөлдөгчөө ялагдах төлөвт оруул."
+      "ref": "1618/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1618/C",
+      "rating": 1100,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "math"
       ],
       "tags": [
-        "games",
-        "анхны тоо"
-      ],
-      "lesson": "Ялагдах төлөвөөс ялалт руу, ялалтын төлөвөөс ялагдал руу шилжихийг шалга."
-    },
-    {
-      "id": "cf-1537D",
-      "pack": "stretch",
-      "title": "Deleting Divisors",
-      "source": "Codeforces",
-      "ref": "1537/D",
-      "level": "Туршилтаас баталгаа",
-      "url": "https://codeforces.com/problemset/problem/1537/D",
-      "hints": [
-        "Эхний хэдэн n-ийн win/lose хүснэгтийг гараар байгуул. Сондгой тоонуудыг хар.",
-        "Хоёрын зэрэг биш тэгш тооноос сондгой proper divisor хасвал ямар төлөвт очих вэ?",
-        "Сондгой n ялагдана. Хоёрын зэрэг биш тэгш n ялна. n=2^k үед k тэгш бол ялна, сондгой бол ялагдана; n=1 тусдаа ялагдана."
-      ],
-      "tags": [
-        "games",
+        "gcd",
+        "array",
         "parity"
       ],
-      "lesson": "Өмнөх Number Game-тай дүрэм нь өөр. Ангиллыг сохроор давтаж болохгүй."
+      "hints": [
+        "Adjacent байрлалууд өөр color-тай байх ёстой. Colors нь index-ийн parity-тай ямар холбоотой вэ?",
+        "Нэг parity-ийн бүх value d-д хуваагдаж, нөгөө parity-ийн аль нь ч хуваагдахгүй байх хэрэгтэй.",
+        "Parity тус бүрийн gcd-ийг candidate болго. Нөгөө parity-д тэр gcd-д хуваагдах нэг ч value байхгүй бол зөв d. Хоёр candidate хоёулаа бүтэхгүй бол 0."
+      ],
+      "lesson": "Зөв d байгаа үед тухайн parity-ийн gcd мөн зөв болохыг батал.",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/97927"
     },
     {
-      "id": "cf-1389B",
-      "pack": "stretch",
-      "title": "Array Walk",
+      "id": "cf-1382B",
+      "pack": "foundation",
+      "title": "Sequential Nim",
       "source": "Codeforces",
-      "ref": "1389/B",
-      "level": "Алхалтын бүтэц",
-      "url": "https://codeforces.com/problemset/problem/1389/B",
-      "hints": [
-        "Зүүн алхам бүр баруун алхмаар нөхөгдөхөд хөрш хоёр утга хэдэн удаа нэмэгдэнэ вэ?",
-        "Зүүн алхмын тоог l гэвэл хамгийн баруун очих цэг k-2*l. Ашиглаж болох хамгийн сайн хөрш хосыг ол.",
-        "l=0..z ба 2*l<=k-ийг турш. Prefix[0..k-2*l] дээр, i<=k-2*l ба i+1<n гэсэн хөршүүдийн хамгийн их нийлбэрийг l удаа нэм."
+      "ref": "1382/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1382/B",
+      "rating": 1100,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "dp",
+        "games"
       ],
       "tags": [
-        "enumeration",
-        "алхалтыг хувиргах"
+        "games",
+        "observation",
+        "parity"
       ],
-      "lesson": "Олон өөр алхалтын дарааллыг нэг prefix, нэг хос болгон хувиргаж тайлбарла."
+      "hints": [
+        "Эхний pile 1 бол move нь forced. Эхний pile >1 болоход ямар сонголт шинээр гардаг вэ?",
+        "Leading piles of size 1-ийн тоог тоол. >1 pile байгаа эсэхээр case-аа салга.",
+        "Бүгд 1 бол n odd үед First, even үед Second. Үгүй бол leading ones-ийн тоо even үед First, odd үед Second. Эхний >1 pile-ийн turn дээр тоглогч remaining pile-ийг 1 эсвэл 0 болгон дараагийн turn-ийг удирдана."
+      ],
+      "lesson": "Forced prefix-ийг салгаад game-ийн үлдсэн сонголтыг хар.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/80427",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1343C",
+      "pack": "core",
+      "title": "Alternating Subsequence",
+      "source": "Codeforces",
+      "ref": "1343/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1343/C",
+      "rating": 1200,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "dp",
+        "greedy",
+        "two pointers"
+      ],
+      "tags": [
+        "array",
+        "greedy",
+        "dp"
+      ],
+      "hints": [
+        "Subsequence length хамгийн их байхын тулд ижил sign-тай consecutive run-ээс хэдийг авах вэ?",
+        "Run бүрээс яг нэг element сонгоно. Max sum байлгахын тулд тухайн run-ээс алийг сонгох вэ?",
+        "Ижил sign-тай maximal run бүрийн maximum value-г авч sum хий. Negative run-д мөн numerical maximum буюу 0-д хамгийн ойр negative value-г ав."
+      ],
+      "lesson": "Эхлээд maximum length, дараа нь maximum sum гэсэн objective-ийн дарааллыг ялга.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/76352",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1497B",
+      "pack": "core",
+      "title": "M-arrays",
+      "source": "Codeforces",
+      "ref": "1497/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1497/B",
+      "rating": 1200,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "greedy",
+        "math"
+      ],
+      "tags": [
+        "modulo",
+        "frequency",
+        "greedy"
+      ],
+      "hints": [
+        "Value-ийн оронд m-д хуваасан remainder-ийг нь хар. Remainder r-ийн хажууд ямар remainder байж болох вэ?",
+        "r ба m-r гэсэн хоёр group-ийг alternating order-оор байрлуул. Frequency-ууд нь их зөрвөл юу үлдэх вэ?",
+        "0 remainder-ууд байвал нэг array хангалттай; m even үед m/2 мөн адил. Бусад complementary pair-д нийт frequency positive бол 1+max(0,abs(f[r]-f[m-r])-1) array хэрэгтэй. Pair бүрийг нэг удаа тоол."
+      ],
+      "lesson": "Complementary group-уудын imbalance хариуг яагаад тодорхойлдог вэ?",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/88677"
+    },
+    {
+      "id": "cf-1354B",
+      "pack": "core",
+      "title": "Ternary String",
+      "source": "Codeforces",
+      "ref": "1354/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1354/B",
+      "rating": 1200,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "dp",
+        "implementation",
+        "two pointers"
+      ],
+      "tags": [
+        "strings",
+        "sliding window",
+        "two pointers"
+      ],
+      "hints": [
+        "Valid substring дотор input-ийн 1,2,3 гэсэн character тус бүр орсон байх ёстой. Хамгийн богино ийм window-г хай.",
+        "Right pointer урагшлахад counts нэмэгдэнэ. Бүгд present болсон үед left pointer-ийг хэд хүртэл урагшлуулж болох вэ?",
+        "Гурван count-тай sliding window хэрэглэ. Window valid үед length-ээ update хийгээд left character-ийг хассаар invalid болтол shrink хий. Valid window олдоогүй бол 0."
+      ],
+      "lesson": "Window validity monotone болохыг хар.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/77593",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1364A",
+      "pack": "core",
+      "title": "XXXXX",
+      "source": "Codeforces",
+      "ref": "1364/A",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1364/A",
+      "rating": 1200,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "data structures",
+        "number theory",
+        "two pointers"
+      ],
+      "tags": [
+        "array",
+        "modulo",
+        "observation"
+      ],
+      "hints": [
+        "Total sum нь x-д хуваагдахгүй бол answer шууд хэд вэ? Хуваагддаг бол нэг талын хэсгийг хас.",
+        "Total divisible үед prefix эсвэл suffix-ээс хамгийн богино non-divisible sum-тай хэсэг хасах хэрэгтэй.",
+        "Бүх a[i] x-д divisible бол -1. Үгүй бол first болон last non-divisible element-ийн index-ийг ол; тэднийг багтаасан хамгийн богино prefix/suffix-ийг хасах хоёр candidate-аас уртыг maximum болго."
+      ],
+      "lesson": "Full array-ийн remainder-ээс зөвхөн boundary choices үлддэгийг батал.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/78781",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     },
     {
       "id": "cf-1601A",
-      "pack": "stretch",
+      "pack": "core",
       "title": "Array Elimination",
       "source": "Codeforces",
       "ref": "1601/A",
-      "level": "Бит тус бүрээр",
+      "level": "Practice",
       "url": "https://codeforces.com/problemset/problem/1601/A",
-      "hints": [
-        "Бит бүр хэдэн тоон дээр асаалттай байгааг тоол. Нэг үйлдэл энэ тоог яаж өөрчлөх вэ?",
-        "Асаалттай битийн тоо k-ийн үржвэр байх нь шаардлагатай. Хангалттай юу?",
-        "Битүүдийн давтамжуудын gcd-ийн хуваагч k-уудыг гарга. Бүгд 0 бол 1..n бүгд боломжтой. Хамгийн их үлдсэн утгатай k тоог сонгох байдлаар хангалттайг батал."
+      "rating": 1300,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "bitmasks",
+        "greedy",
+        "math",
+        "number theory"
       ],
       "tags": [
-        "bitwise",
+        "bitmasks",
         "gcd",
         "invariant"
       ],
-      "lesson": "Шаардлагатай нөхцөл ба хангалттай нөхцөлийг тусад нь батал."
+      "hints": [
+        "Bit position бүрд хэдэн element дээр 1 байгааг тоол. Нэг operation энэ count-ийг яаж өөрчлөх вэ?",
+        "AND-ийн тухайн bit нь 1 байвал яг k element-ээс тэр bit арилна. Бүх bit count k-д хуваагдах шаардлагатай.",
+        "Bit counts-ийн gcd-ийн divisors k-уудыг хэвлэ. Бүх count 0 бол 1..n бүгд боломжтой. Хангалттайг батлахдаа хамгийн их үлдсэн k values нийтлэг highest bit-тэй байгааг ашигла."
+      ],
+      "lesson": "Necessary condition хангалттай болох construction-ийг тайлбарла.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/95865",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1661B",
+      "pack": "core",
+      "title": "Getting Zero",
+      "source": "Codeforces",
+      "ref": "1661/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1661/B",
+      "rating": 1300,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "bitmasks",
+        "brute force",
+        "dfs and similar",
+        "dp",
+        "graphs",
+        "greedy",
+        "shortest paths"
+      ],
+      "tags": [
+        "modulo",
+        "bitmasks",
+        "brute force"
+      ],
+      "hints": [
+        "Ямар ч value-г 15 doubling-оор modulo 32768 дээр 0 болгож чадна. Better answer-ийн additions хэдээс их байж болох вэ?",
+        "Эхэнд add=0..15 increments хийж үз. Дараа нь value-ийн trailing zero bits хэд байгаагаар remaining doubling count-ийг ол.",
+        "x=(a+add)%32768. x=0 бол doubling 0; бусад үед 15-v2(x) doubling хэрэгтэй. add+doubling-ийн minimum-ийг ав. Эсвэл reverse BFS-аар бүх 32768 states-ийн exact distance-ийг олж болно."
+      ],
+      "lesson": "Huge operation sequences-ийн оронд жижиг candidate family эсвэл reverse states ашигла.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/101790",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1534C",
+      "pack": "core",
+      "title": "Little Alawn's Puzzle",
+      "source": "Codeforces",
+      "ref": "1534/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1534/C",
+      "rating": 1300,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "combinatorics",
+        "dp",
+        "dsu",
+        "graphs",
+        "math"
+      ],
+      "tags": [
+        "permutation",
+        "cycles",
+        "dsu"
+      ],
+      "hints": [
+        "Column swap хийснээр нэг value-ийн row солигдоход тэр value-ийн нөгөө occurrence-д юу шаардагдах вэ?",
+        "a[i]-ээс b[i] рүү mapping хий. Хоёр row permutation тул энэ mapping cycles-оос бүрдэнэ.",
+        "Cycle бүрийн columns бүгд swap хийнэ эсвэл бүгд хэвээр үлдэнэ. Cycles-ийн тоог c гэвэл answer=2^c modulo 1e9+7. Initial grid solved тул column-д equal values байхгүй."
+      ],
+      "lesson": "Local row uniqueness нь бүтэн cycle-ийн сонголтыг forced болгодгийг батал.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/91760",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1401C",
+      "pack": "core",
+      "title": "Mere Array",
+      "source": "Codeforces",
+      "ref": "1401/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1401/C",
+      "rating": 1300,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "math",
+        "number theory",
+        "sortings"
+      ],
+      "tags": [
+        "gcd",
+        "sorting",
+        "invariant"
+      ],
+      "hints": [
+        "Array-ийн minimum value m-тэй ямар values swap хийж болох вэ?",
+        "m-д divisible value бүрийг minimum element-ээр дамжуулж дурын order-д оруулж болно. Divisible биш value хөдөлж чадах уу?",
+        "Sorted target-ийг гарга. a[i]!=sorted[i] гэсэн position бүрд a[i]%m==0 байх ёстой; тэгвэл YES. m-д divisible биш elements original position-дээ үлдэнэ."
+      ],
+      "lesson": "Allowed swaps-ийн connected component-ийг тань.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/81700",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1654C",
+      "pack": "core",
+      "title": "Alice and the Cake",
+      "source": "Codeforces",
+      "ref": "1654/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1654/C",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "data structures",
+        "greedy",
+        "implementation",
+        "sortings"
+      ],
+      "tags": [
+        "heap",
+        "greedy",
+        "multiset"
+      ],
+      "hints": [
+        "Бүх target pieces-ийн sum S нь original cake. Largest current piece-ийг largest target-тай харьцуул.",
+        "Current piece target-оос том бол split хийхээс өөр аргагүй; жижиг бол яагаад боломжгүй вэ?",
+        "Хоёр max-heap хэрэглэ. Largest x==target бол consume, x>target бол floor(x/2),ceil(x/2) болгон split, x<target бол NO. Pending pieces remaining targets-оос олон бол мөн NO; ингэснээр exponential splitting-ээс сэргийлнэ."
+      ],
+      "lesson": "Largest-first strategy дээр forced action-уудыг ол.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/100127",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1520E",
+      "pack": "core",
+      "title": "Arranging The Sheep",
+      "source": "Codeforces",
+      "ref": "1520/E",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1520/E",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "greedy",
+        "math"
+      ],
+      "tags": [
+        "array",
+        "median",
+        "greedy"
+      ],
+      "hints": [
+        "Sheep-ийн positions p[0],p[1],...-ийг order-оор хадгал. Consecutive target positions x,x+1,... гэж ав.",
+        "Movement sum=sum abs(p[i]-(x+i)). q[i]=p[i]-i гэж хувиргавал ямар стандарт objective болох вэ?",
+        "q[i]=p[i]-i values-ийн median m-г аваад sum abs(q[i]-m) ол. Sheep crossing хийх шаардлагагүй; sheep байхгүй бол answer 0."
+      ],
+      "lesson": "Consecutive placement-ийг median minimization болгон хувирга.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/90342",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1332B",
+      "pack": "core",
+      "title": "Composite Coloring",
+      "source": "Codeforces",
+      "ref": "1332/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1332/B",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "constructive algorithms",
+        "greedy",
+        "math",
+        "number theory"
+      ],
+      "tags": [
+        "number theory",
+        "gcd",
+        "constructive algorithms"
+      ],
+      "hints": [
+        "Нэг color-д орсон бүх number нэг prime divisor хуваалцвал pairwise gcd нөхцөл биелэх үү?",
+        "Input numbers нь composite, <=1000. Smallest prime divisor нь хамгийн ихдээ хэд байж болох вэ?",
+        "Prime 2,3,5,7,11,13,17,19,23,29,31-ээс хамгийн эхний divisor-аар group хий. Used prime groups-ийг 1..m color болгон compress хий; m<=11."
+      ],
+      "lesson": "Input-ийн composite болон upper limit нөхцөл color bound-ийг яаж өгдөг вэ?",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/75432"
+    },
+    {
+      "id": "cf-1380C",
+      "pack": "core",
+      "title": "Create The Teams",
+      "source": "Codeforces",
+      "ref": "1380/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1380/C",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "dp",
+        "greedy",
+        "implementation",
+        "sortings"
+      ],
+      "tags": [
+        "array",
+        "sorting",
+        "greedy"
+      ],
+      "hints": [
+        "Strong team-ийн skill нь team size * minimum skill. Highest skills-ээс эхэлж үз.",
+        "Descending order дээр current skill нь одоо байгуулж байгаа team-ийн minimum болно.",
+        "Descending sort хийгээд current group size-ийг өсгө. size*a[i]>=x болмогц нэг team болгож reset хий. Эцэст incomplete group-ийг ашиглахгүй."
+      ],
+      "lesson": "Team-ийг аль болох эрт дуусгах нь дараагийн team-д яагаад муу биш вэ?",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/80054",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1605C",
+      "pack": "core",
+      "title": "Dominant Character",
+      "source": "Codeforces",
+      "ref": "1605/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1605/C",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "greedy",
+        "implementation",
+        "strings"
+      ],
+      "tags": [
+        "strings",
+        "observation",
+        "brute force"
+      ],
+      "hints": [
+        "Хамгийн богино valid substring дотор irrelevant prefix/suffix байхгүй. a-уудын хоорондох gaps-ийг зур.",
+        "Length 2,3,4 дотор valid pattern-ууд олдохгүй бол a-уудын хооронд b/c хэр байрлах ёстой вэ?",
+        "Зөв minimum pattern нь aa, aba, aca, abca, acba, abbacca, accabba-ийн аль нэг. Эдгээрийг эсвэл бүх length 2..7 windows-ийг count-аар шалга. Long valid substring байвал эдгээр богино valid patterns-ийн нэг агуулагдана."
+      ],
+      "lesson": "Small counterexamples-оос finite set of patterns гаргаад completeness-ийг батал.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/96866",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1506D",
+      "pack": "core",
+      "title": "Epic Transformation",
+      "source": "Codeforces",
+      "ref": "1506/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1506/D",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "data structures",
+        "greedy"
+      ],
+      "tags": [
+        "frequency",
+        "greedy",
+        "array"
+      ],
+      "hints": [
+        "Хоёр element арилгах бүрд remaining length-ийн parity өөрчлөгдөх үү?",
+        "Хамгийн их frequency-г f гэе. Бусад n-f element бүгд тэр value-тай pair болбол хэд үлдэх вэ?",
+        "Answer=max(n%2,2*f-n). Нэг value давамгайлсан бол илүүдэл нь зайлшгүй үлдэнэ. Давамгайлаагүй бол өөр value-тай pairs-аар parity-ийн bound хүртэл багасгаж чадна."
+      ],
+      "lesson": "Lower bound болон тэр bound-д хүрэх боломжийг тусад нь батал.",
+      "priority": true,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1526B",
+      "pack": "core",
+      "title": "I Hate 1111",
+      "source": "Codeforces",
+      "ref": "1526/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1526/B",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "dp",
+        "math",
+        "number theory"
+      ],
+      "tags": [
+        "observation",
+        "number theory",
+        "modulo"
+      ],
+      "hints": [
+        "11, 111, 1111, ... дотроос урт тоонуудыг 11 ба 111-ийн non-negative нийлбэрээр илэрхийлж үз.",
+        "111-ийг 11 ширхэг авсан нийлбэр нь 11-д хуваагдана. Тэгвэл 111-ийн тоог хэр бага хүрээнд туршиж болох вэ?",
+        "b=0..10-ыг туршаад x-111*b нь non-negative бөгөөд 11-д хуваагдах эсэхийг шалга. Энэ нь x=11*a+111*b гэсэн боломжийг бүгдийг хамарна."
+      ],
+      "lesson": "Infinite search-ийг modulo ашиглан яагаад 11 candidate-д багтааж болохыг батал.",
+      "priority": true,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/91195"
     },
     {
       "id": "cf-1627C",
-      "pack": "stretch",
+      "pack": "core",
       "title": "Not Assigning",
       "source": "Codeforces",
       "ref": "1627/C",
-      "level": "Бүтцийг тань",
+      "level": "Practice",
       "url": "https://codeforces.com/problemset/problem/1627/C",
-      "hints": [
-        "3 болон түүнээс олон ирмэгтэй оройд нөхцөлүүдийг зэрэг хангаж болох уу?",
-        "Гурван анхны жинд дор хаяж хоёр нь сондгой. Тэдний нийлбэр 2-оос их тэгш тоо болно.",
-        "Degree 3 ба түүнээс их бол -1. Үлдсэн tree нь зам; төгсгөлөөс нь явж ирмэгүүдэд 2,3-ыг ээлжлүүл."
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "dfs and similar",
+        "number theory",
+        "trees"
       ],
       "tags": [
-        "tree",
+        "trees",
         "parity",
-        "constructive"
+        "constructive algorithms"
       ],
-      "lesson": "Tree нөхцөл яагаад degree<=2 бүтцийг заавал зам болгодог вэ?"
+      "hints": [
+        "Degree>=3 vertex дээр гурван prime edge weight байвал pair sums нь бүгд prime байж чадах уу?",
+        "Гурван prime-ийн дор хаяж хоёр нь odd байна, эсвэл хоёр нь 2 байна. Тэр хоёрын sum prime болохгүй.",
+        "Degree>=3 байвал -1. Үгүй бол tree нь path; endpoint-оос явж edge weights-ийг 2,3 гэж alternate хий. Output-ийг original edge order-оор хэвлэ."
+      ],
+      "lesson": "Tree болон degree<=2 нөхцөл нийлээд яагаад path болгодог вэ?",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/99067",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1370C",
+      "pack": "core",
+      "title": "Number Game",
+      "source": "Codeforces",
+      "ref": "1370/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1370/C",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "games",
+        "math",
+        "number theory"
+      ],
+      "tags": [
+        "games",
+        "number theory",
+        "observation"
+      ],
+      "hints": [
+        "n=1, n=2, odd n, power of two гэсэн classes-ийг тусад нь турш.",
+        "Even n=2*p, p нь odd prime байх үед allowed moves хаашаа хүргэх вэ? n нь 4-т хуваагддаг бол юу өөр вэ?",
+        "Losing states: 1; 2-оос их powers of two; 2*p хэлбэрийн odd prime p. Бусад state winning. n=2-ыг losing гэж андуурч болохгүй."
+      ],
+      "lesson": "Losing state-ийн бүх move winning рүү, winning state-ийн нэг move losing рүү хүрдгийг батал.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/79107",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1324D",
+      "pack": "core",
+      "title": "Pair of Topics",
+      "source": "Codeforces",
+      "ref": "1324/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1324/D",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "data structures",
+        "sortings",
+        "two pointers"
+      ],
+      "tags": [
+        "array",
+        "two pointers",
+        "binary search"
+      ],
+      "hints": [
+        "a[i]+a[j]>b[i]+b[j] нөхцөлийг нэг array дээрх нөхцөл болгож хувирга.",
+        "c[i]=a[i]-b[i] гэж авбал c[i]+c[j]>0. Sorted array дээр threshold яаж хайх вэ?",
+        "c-ийг sort хий. Index i бүрд j>i бөгөөд c[j]>-c[i] гэсэн эхний j-г upper_bound-аар олж remaining count-ийг нэм; эсвэл two pointers хэрэглэ. Equality-г тоолохгүй, answer-д 64-bit хэрэглэ."
+      ],
+      "lesson": "Хоёр array-ийн хамаарлыг нэг difference array болгон бууруул.",
+      "priority": true,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/74714"
+    },
+    {
+      "id": "cf-1515C",
+      "pack": "core",
+      "title": "Phoenix and Towers",
+      "source": "Codeforces",
+      "ref": "1515/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1515/C",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "data structures",
+        "greedy"
+      ],
+      "tags": [
+        "greedy",
+        "heap",
+        "constructive algorithms"
+      ],
+      "hints": [
+        "Дараагийн block-ийг хамгийн нам tower дээр тавих хувилбарыг турш.",
+        "Эцэст хамгийн өндөр болсон tower-ийн хамгийн сүүлд нэмсэн block-ийг хар. Тэр block-оос өмнө tower ямар өндөртэй байсан бэ?",
+        "Min-heap-аар хамгийн нам tower дээр block бүрийг тавь. Хамгийн өндөр tower-ийн сүүлийн block нэмэгдэхийн өмнөх height бусад tower-уудаас их байгаагүй. Block height<=x тул эцсийн difference<=x."
+      ],
+      "lesson": "Бүх үйлдлийг бус, эцсийн хамгийн өндөр tower-ийн сүүлийн үйлдлийг ашиглан батал.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/90236",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1451C",
+      "pack": "core",
+      "title": "String Equality",
+      "source": "Codeforces",
+      "ref": "1451/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1451/C",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "dp",
+        "greedy",
+        "hashing",
+        "implementation",
+        "strings"
+      ],
+      "tags": [
+        "strings",
+        "frequency",
+        "greedy"
+      ],
+      "hints": [
+        "Swaps нь order-ийг өөрчилж чадна. Тэгвэл зөвхөн character frequencies дээр ажиллаж болох уу?",
+        "Smallest character-оос эхэл. Target frequency-д хүрэхгүй бол дараагийн character-оос буцааж авч болох уу?",
+        "a..z дарааллаар source count<target count бол NO. Surplus нь k-д divisible байх ёстой; surplus-ийг дараагийн character-д шилжүүл. z дээр бүх count яг таарах ёстой."
+      ],
+      "lesson": "One-way operation үед smallest unmet requirement-ийг эхэлж шийд.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/84885",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1363B",
+      "pack": "core",
+      "title": "Subsequence Hate",
+      "source": "Codeforces",
+      "ref": "1363/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1363/B",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "implementation",
+        "strings"
+      ],
+      "tags": [
+        "strings",
+        "prefix sums",
+        "observation"
+      ],
+      "hints": [
+        "010 болон 101 subsequence байхгүй binary string хэдэн удаа character-аа сольж болох вэ?",
+        "Зөв string нь 0*1* эсвэл 1*0* байна. Split position бүрийн flip cost-ийг тооц.",
+        "Split i бүрд prefix-ийн 1 + suffix-ийн 0 гэсэн cost, мөн prefix-ийн 0 + suffix-ийн 1 гэсэн cost-ийг minimum болго. Энэ бодлогод delete биш, character flip хийдэг."
+      ],
+      "lesson": "Forbidden subsequence-ийг final string-ийн structure болгон хувирга.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/78202",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1374D",
+      "pack": "core",
+      "title": "Zero Remainder Array",
+      "source": "Codeforces",
+      "ref": "1374/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1374/D",
+      "rating": 1400,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "math",
+        "sortings",
+        "two pointers"
+      ],
+      "tags": [
+        "modulo",
+        "frequency",
+        "math"
+      ],
+      "hints": [
+        "Divisible биш value бүрд шаардлагатай increment d=(k-a[i]%k)%k. Ижил d-тай values хоорондоо яагаад conflict хийх вэ?",
+        "Current x нэг бүрээр өсдөг тул ижил remainder d-тай values d,d+k,d+2*k,... мөчүүдэд л засагдана.",
+        "d>0 бүрийн frequency f-ийг тоол. Last required x нь d+(f-1)*k; answer нь эдгээр maximum дээр 1 нэмсэн утга. Бүгд divisible бол 0."
+      ],
+      "lesson": "Frequency collision-ийг waiting time болгон хувирга.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/79517",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1466D",
+      "pack": "core",
+      "title": "13th Labour of Heracles",
+      "source": "Codeforces",
+      "ref": "1466/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1466/D",
+      "rating": 1500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "data structures",
+        "greedy",
+        "sortings",
+        "trees"
+      ],
+      "tags": [
+        "trees",
+        "degree",
+        "greedy"
+      ],
+      "hints": [
+        "Нэг vertex-ийн weight partition-уудын нийт weight-д хамгийн ихдээ хэдэн удаа тоологдож болох вэ?",
+        "Vertex-ийн degree d бол initial нэг occurrence-оос гадна d-1 нэмэлт occurrence байна.",
+        "Initial sum бүх vertex weights-ийн sum. Vertex weight бүрийг degree-1 удаа extra list-д нэм; extras descending sort хийгээд sum-д нэг нэгээр нь нэмэн n-1 answers хэвлэ."
+      ],
+      "lesson": "Tree partition-ийн objective-ийг vertex multiplicity болгон хувирга.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/86126",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1547E",
+      "pack": "core",
+      "title": "Air Conditioners",
+      "source": "Codeforces",
+      "ref": "1547/E",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1547/E",
+      "rating": 1500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "data structures",
+        "dp",
+        "implementation",
+        "shortest paths",
+        "sortings",
+        "two pointers"
+      ],
+      "tags": [
+        "array",
+        "dp",
+        "two passes"
+      ],
+      "hints": [
+        "Position x-ийн temperature=min(t[i]+abs(x-a[i])). Sources-ийг left болон right гэж салга.",
+        "Left sources-ийн influence нэг position шилжих бүрд 1 нэмэгдэнэ. Right sources мөн адил.",
+        "Source positions-д initial temperature, бусдад INF тавь. Left-to-right arr[i]=min(arr[i],arr[i-1]+1), дараа нь right-to-left ижил relaxation хий."
+      ],
+      "lesson": "Distance objective-ийг хоёр directional scan-аар шийд.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/92715",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1368B",
+      "pack": "core",
+      "title": "Codeforces Subsequences",
+      "source": "Codeforces",
+      "ref": "1368/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1368/B",
+      "rating": 1500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "constructive algorithms",
+        "greedy",
+        "math",
+        "strings"
+      ],
+      "tags": [
+        "constructive algorithms",
+        "combinatorics",
+        "strings"
+      ],
+      "hints": [
+        "codeforces-ийн character position бүрийг тодорхой тоогоор давтвал хүссэн subsequence хэд болох вэ?",
+        "Давталтын тоонуудын product k-д хүрэх ёстой. Нийт length тогтмол байхад counts хэт ялгаатай байвал product ямар байх вэ?",
+        "Арван count-ийг 1-ээс эхлүүл. Хамгийн бага count-ийг нэгээр өсгөсөөр product>=k болго; counts хамгийн ихдээ 1 зөрнө. Character бүрийг count-ийнх нь дагуу дараалан хэвлэ. 64-bit product хэрэглэ."
+      ],
+      "lesson": "Хоёр их зөрүүтэй count-ийг ойртуулахад product буурахгүйг батал.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/79027",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1444A",
+      "pack": "core",
+      "title": "Division",
+      "source": "Codeforces",
+      "ref": "1444/A",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1444/A",
+      "rating": 1500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "math",
+        "number theory"
+      ],
+      "tags": [
+        "number theory",
+        "prime factors",
+        "math"
+      ],
+      "hints": [
+        "p нь q-д divisible биш бол answer шууд p. Divisible бол q-ийн аль нэг prime exponent-ийг дутагдуулах хэрэгтэй.",
+        "q-ийн prime factor r бүрд p-ээс хэдэн r хасахад q-д хуваагдахгүй болох вэ?",
+        "q-ийн distinct prime factors бүрд candidate=p-ээс r-ийг divide хийсээр candidate%q!=0 болго. Candidate-уудын maximum-ийг ав. q>=2 тул factorization дуусна."
+      ],
+      "lesson": "Divisibility-г prime exponents-ийн шаардлага болгон салга.",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/84248"
+    },
+    {
+      "id": "cf-1325C",
+      "pack": "core",
+      "title": "Ehab and Path-etic MEXs",
+      "source": "Codeforces",
+      "ref": "1325/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1325/C",
+      "rating": 1500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "dfs and similar",
+        "greedy",
+        "trees"
+      ],
+      "tags": [
+        "trees",
+        "mex",
+        "constructive algorithms"
+      ],
+      "hints": [
+        "Tree нь path бол бүх edge нэг path дээр багтана. Branching vertex байвал нэг path хэдэн incident edge ашиглаж чадах вэ?",
+        "Degree>=3 vertex-ийн гурван edge-д 0,1,2 өгвөл ямар ч simple path тэднийг гурвууланг нь агуулж чадах уу?",
+        "Branching vertex-ийн гурван edge-д 0,1,2 тавьж бусдад remaining labels өг. Tree нь path бол ямар ч labeling хангалттай. n<4 үед branching байхгүй байж болно."
+      ],
+      "lesson": "Нэг local branching нь бүх path-ийн mex-д global bound өгдгийг батал.",
+      "priority": true,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/74235"
+    },
+    {
+      "id": "cf-1490F",
+      "pack": "core",
+      "title": "Equalize the Array",
+      "source": "Codeforces",
+      "ref": "1490/F",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1490/F",
+      "rating": 1500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "data structures",
+        "greedy",
+        "math",
+        "sortings"
+      ],
+      "tags": [
+        "frequency",
+        "sorting",
+        "greedy"
+      ],
+      "hints": [
+        "Эцсийн common frequency f-г тогтоовол original frequency f-ээс бага болон их values-д ямар deletion хийх вэ?",
+        "f-ээс бага frequency-тай value-ийг бүхэлд нь устгана; бусдыг f хүртэл багасгана.",
+        "Frequency list-ийг sort хий. Existing frequency f бүрд keep=f*number_of_frequencies_at_least_f; deletion=n-keep. Minimum deletion-ийг ав; optimum existing frequency дээр байна."
+      ],
+      "lesson": "Value биш, frequencies дээр дахин frequency reasoning хий.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/87874",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1492C",
+      "pack": "core",
+      "title": "Maximum width",
+      "source": "Codeforces",
+      "ref": "1492/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1492/C",
+      "rating": 1500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "data structures",
+        "dp",
+        "greedy",
+        "two pointers"
+      ],
+      "tags": [
+        "strings",
+        "subsequence",
+        "two pointers"
+      ],
+      "hints": [
+        "t-ийн adjacent хоёр character-ийг s дотор аль болох хол байрлуулах хэрэгтэй.",
+        "t-ийн prefix бүрийг earliest positions-д, suffix бүрийг latest positions-д match хий.",
+        "Left[i]=t[i]-ийн earliest greedy match, Right[i]=latest backward match. Answer=max(Right[i+1]-Left[i]). t нь s-ийн subsequence тул энэ хоёр partial matching compatible байна."
+      ],
+      "lesson": "Earliest prefix ба latest suffix-ийг хослуулах аргументыг батал.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/87792",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1426D",
+      "pack": "core",
+      "title": "Non-zero Segments",
+      "source": "Codeforces",
+      "ref": "1426/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1426/D",
+      "rating": 1500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "data structures",
+        "greedy",
+        "sortings"
+      ],
+      "tags": [
+        "prefix sums",
+        "hash set",
+        "greedy"
+      ],
+      "hints": [
+        "Zero-sum subarray байна гэдэг нь нэг segment дотор prefix sum давтагдана гэсэн үг.",
+        "Current segment-ийн prefix sums-ийг set-д хадгал. Давталт гарахад current element-ийн өмнө boundary тавих хувилбарыг үз.",
+        "Set={0}, sum=0-оос scan хий. sum+a[i] set-д байвал insert count-оо өсгөөд segment-ийг current a[i]-ээс шинээр эхэл; үгүй бол үргэлжлүүл. Boundary бүрд sufficiently large positive number оруулбал cross-boundary sum 0 болохгүй."
+      ],
+      "lesson": "Earliest conflict бүрд нэг insertion зайлшгүй хэрэгтэйг батал.",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/83120"
+    },
+    {
+      "id": "cf-1515D",
+      "pack": "core",
+      "title": "Phoenix and Socks",
+      "source": "Codeforces",
+      "ref": "1515/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1515/D",
+      "rating": 1500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "greedy",
+        "sortings",
+        "two pointers"
+      ],
+      "tags": [
+        "frequency",
+        "greedy",
+        "matching"
+      ],
+      "hints": [
+        "Already matching left/right same-color socks-ийг эхлээд арилга.",
+        "Remaining талуудын size L>=R бол (L-R)/2 socks side солих шаардлагатай. Large side дахь same-color pair-ууд ямар extra ашигтай вэ?",
+        "Moves=(L-R)/2. Large side дахь pair count=sum floor(freq/2); used=min(moves,pair count). Cost=moves+(L+R)/2-used. Pair ашигласан side switch нь нэг repaint-ийг мөн хэмнэдэг."
+      ],
+      "lesson": "Заавал төлөх imbalance cost дээр duplicate color-ийн savings нэм.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/90236",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1385D",
+      "pack": "core",
+      "title": "a-Good String",
+      "source": "Codeforces",
+      "ref": "1385/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1385/D",
+      "rating": 1500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "bitmasks",
+        "brute force",
+        "divide and conquer",
+        "dp",
+        "implementation"
+      ],
+      "tags": [
+        "divide and conquer",
+        "dp",
+        "strings"
+      ],
+      "hints": [
+        "c-good string-ийн нэг half бүгд c болж, нөгөө half нь (c+1)-good байх ёстой.",
+        "Left-ийг c болгох cost + solve(right,c+1), эсвэл right-ийг c болгох cost + solve(left,c+1) гэсэн хоёр option байна.",
+        "Recursion-аар хоёр option-ийн minimum-ийг ав. Length 1 үед character нь c-ээс өөр бол cost 1. Half дотор c-ийн count-оор mismatch cost-ийг ол; n нь power of two."
+      ],
+      "lesson": "Definition өөрөө recursion-ийн states ба transitions-ийг өгч байгааг анзаарал.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/80257",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1416A",
+      "pack": "core",
+      "title": "k-Amazing Numbers",
+      "source": "Codeforces",
+      "ref": "1416/A",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1416/A",
+      "rating": 1500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "data structures",
+        "implementation",
+        "two pointers"
+      ],
+      "tags": [
+        "array",
+        "maximum gap",
+        "prefix minimum"
+      ],
+      "hints": [
+        "Value x бүх length-k window-д орно гэдгийг occurrences-ийн хоорондох gaps-аар илэрхийл.",
+        "Occurrences-ийн өмнө 0, дараа нь n+1 sentinel нэм. Largest gap g бол x ямар k-үүдэд valid вэ?",
+        "Value бүрд max consecutive occurrence gap g-г олж best[g]-г x-ээр minimum update хий. Prefix minimum авбал k бүрийн smallest valid value гарна; байхгүй бол -1."
+      ],
+      "lesson": "Every-window нөхцөлийг нэг maximum gap болгон шах.",
+      "priority": true,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "editorialUrl": "https://codeforces.com/blog/entry/83036"
+    },
+    {
+      "id": "cf-1513C",
+      "pack": "challenge",
+      "title": "Add One",
+      "source": "Codeforces",
+      "ref": "1513/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1513/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "dp",
+        "matrices"
+      ],
+      "tags": [
+        "dp",
+        "digits",
+        "counting"
+      ],
+      "hints": [
+        "Actual number exponentially томорч болно. Digit бүрээс хэдэн digit үүсэхийг л тооцож болох уу?",
+        "Digit 9 нь нэг increment-ийн дараа 1 ба 0 гэсэн хоёр digit болно. Бусад digit ганц successor-той.",
+        "f[0][d]=1. f[m][d]=f[m-1][d+1] if d<9; f[m][9]=f[m-1][1]+f[m-1][0]. Precompute maximum m хүртэл, original digits-ийн f[m][d]-г modulo 1e9+7-аар нэм."
+      ],
+      "lesson": "Simulation-ийн утгуудын оронд independent descendants-ийн count-ийг dp-д хадгал.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/89550",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1389B",
+      "pack": "challenge",
+      "title": "Array Walk",
+      "source": "Codeforces",
+      "ref": "1389/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1389/B",
+      "rating": 1600,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "dp",
+        "greedy"
+      ],
+      "tags": [
+        "array",
+        "prefix sums",
+        "brute force"
+      ],
+      "hints": [
+        "Left move-ийг right move-оор нөхөхөд adjacent pair-ийн sum дахин нэмэгдэнэ. Left moves-ийн тоог тогтоож үз.",
+        "l left move ашиглавал хамгийн баруун очих index r=k-2*l болно. Index r-ээс нэг алхам баруун тийш давтаж болохыг бүү март.",
+        "0<=l<=z, 2*l<=k бүрд prefix sum a[0..r] дээр l*max(a[i]+a[i+1]) нэм. Maximum-д 0<=i<=r, i+1<n гэсэн pairs орно. r=0 үед pair (0,1) ашиглаж болно."
+      ],
+      "lesson": "Олон walk-ийг нэг prefix ба нэг adjacent pair болгон хувиргаж батал.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/80809",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1407C",
+      "pack": "challenge",
+      "title": "Chocolate Bunny",
+      "source": "Codeforces",
+      "ref": "1407/C",
+      "level": "Interactive",
+      "url": "https://codeforces.com/problemset/problem/1407/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "interactive",
+        "math",
+        "two pointers"
+      ],
+      "tags": [
+        "interactive",
+        "modulo",
+        "tournament"
+      ],
+      "hints": [
+        "a,b гэсэн distinct values-д a%b ба b%a-ийн maximum нь ямар value вэ?",
+        "Хоёр remainder-ийг харьцуулбал smaller value-тай index-ийг яг тогтоож, larger value-тай index-ийг үлдээж болно.",
+        "Current candidate болон дараагийн index-д хоёр query хий. a%b>b%a бол a smaller, эсрэг бол b smaller; larger remainder нь smaller value. 2*(n-1) queries-ээр бүгдийг олж remaining maximum-д n өг. Interactive output-оо flush хий."
+      ],
+      "lesson": "Comparison биш modulo oracle-аас exact value авах арга. Эхлээд local interactor-аар дасгал хий.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/82417",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1353D",
+      "pack": "challenge",
+      "title": "Constructing the Array",
+      "source": "Codeforces",
+      "ref": "1353/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1353/D",
+      "rating": 1600,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "data structures",
+        "sortings"
+      ],
+      "tags": [
+        "constructive algorithms",
+        "heap",
+        "intervals"
+      ],
+      "hints": [
+        "Operation бүрийн selected interval-ийг юу тодорхойлдог вэ? Already filled positions-ийг нэг нэгээр scan хийх хэрэгтэй юу?",
+        "Unfilled maximal intervals-ийг length descending, equal үед left endpoint ascending order-оор хадгал.",
+        "Priority queue-д [l,r] ав. Mid=(l+r)/2 буюу even length үед left middle-д дараагийн value тавиад хоёр non-empty interval-ийг queue-д нэм. Comparator-ийн tie-break-ийг зөв хий."
+      ],
+      "lesson": "Array simulation-ийг interval state болгон хялбарчил.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/77373",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1481C",
+      "pack": "challenge",
+      "title": "Fence Painting",
+      "source": "Codeforces",
+      "ref": "1481/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1481/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "constructive algorithms",
+        "greedy"
+      ],
+      "tags": [
+        "constructive algorithms",
+        "reverse processing",
+        "greedy"
+      ],
+      "hints": [
+        "Сүүлд paint хийх хүний color нь final array-ийн хаана ашиглагдаж болох вэ?",
+        "Painters-ийг reverse order-оор assign хийвэл unwanted earlier paint-ийг later paint-аар дарж болно.",
+        "Target color бүрийн mismatched positions-ийг list-д хадгал. Reverse scan-д painter color шаардлагатай position байвал оноож anchor update хий; байхгүй бол known later-painted anchor ашигла. Last painter-д target color-той position байх ёстой; бүх mismatches дууссан эсэхийг шалга."
+      ],
+      "lesson": "Last operation-оос эхлэх нь temporary wrong states-ийг зөвшөөрөх боломж өгдөг.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/87523",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1398C",
+      "pack": "challenge",
+      "title": "Good Subarrays",
+      "source": "Codeforces",
+      "ref": "1398/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1398/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "data structures",
+        "dp",
+        "math"
+      ],
+      "tags": [
+        "prefix sums",
+        "frequency",
+        "math"
+      ],
+      "hints": [
+        "Subarray sum = length нөхцөлийг хоёр prefix-ийн equality болгож бич.",
+        "Prefix digit sum S[i]-ээс index i-г хассан value-уудыг хар.",
+        "P[i]=S[i]-i, P[0]=0. Equal P value-тай index pairs-ийг count хий: frequency map-д initial 0-ийг 1 гэж нэмээд scan бүрд өмнөх frequency-г answer-д нэм."
+      ],
+      "lesson": "Sum болон length-ийг нэг transformed prefix болгон нийлүүл.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/81506",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1622C",
+      "pack": "challenge",
+      "title": "Set or Decrease",
+      "source": "Codeforces",
+      "ref": "1622/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1622/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "brute force",
+        "greedy",
+        "sortings"
+      ],
+      "tags": [
+        "array",
+        "sorting",
+        "greedy"
+      ],
+      "hints": [
+        "Minimum element-ийг decrease хийх, largest elements-ийг minimum-тэй equal болгох plan ав.",
+        "Largest k values-ийг equal болгохоор сонговол minimum-ийг d-ээр decrease хийх нь total sum-ийг хэдээр бууруулах вэ?",
+        "Sorted array дээр largest k values-ийн sum T гэе. Base=S-T+k*a[0]. d=max(0,ceil((Base-K)/(k+1))); cost=k+d. k=0..n-1 бүрийг турш. Base>K үед positive ceiling division хэрэглэ."
+      ],
+      "lesson": "Operation types-ийг reorder хийж optimal solution-ийг нэг minimum ба suffix болго.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/98453",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1748C",
+      "pack": "challenge",
+      "title": "Zero-Sum Prefixes",
+      "source": "Codeforces",
+      "ref": "1748/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1748/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "data structures",
+        "dp",
+        "greedy",
+        "implementation"
+      ],
+      "tags": [
+        "prefix sums",
+        "frequency",
+        "greedy"
+      ],
+      "hints": [
+        "0 element-ийн value-г өөрчлөхөд тэр position-оос хойших prefix sums бүгд ижил offset-оор шилжинэ.",
+        "First 0-оос өмнө prefix sum-ийг өөрчилж болохгүй. Zero-оос next zero хүртэлх block-д хамгийн олон equal prefix value-г 0 болго.",
+        "Original prefix sums-ийг block бүрд frequency map-аар тоол. First zero-оос өмнө actual zero prefix-үүдийг нэм; zero-start blocks бүрд maximum frequency-г нэм. Next zero эхлэхэд map reset хий."
+      ],
+      "lesson": "Independent offsets нь block бүрд mode frequency сонгох боломж өгдөг.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/108319",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1368D",
+      "pack": "challenge",
+      "title": "AND, OR and square sum",
+      "source": "Codeforces",
+      "ref": "1368/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1368/D",
+      "rating": 1700,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "bitmasks",
+        "greedy",
+        "math"
+      ],
+      "tags": [
+        "bitmasks",
+        "invariant",
+        "greedy"
+      ],
+      "hints": [
+        "AND/OR operation bit бүрийн нийт 1-ийн count-ийг өөрчилдөг үү?",
+        "Sum тогтмол үед values-ийг илүү unequal болгоход squares-ийн sum хэр өөрчлөгдөх вэ?",
+        "Bit counts-ийг хадгал. Нэг шинэ value-д count positive бүх bit-ийг тавьж count бүрийг нэгээр бууруул; n value үүсгээд squares-ийг нэм. Bit-үүдийг нэг дор concentrate хийх нь optimal."
+      ],
+      "lesson": "Bit count invariant болон convex objective-ийг холбож батал.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/79027",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1538D",
+      "pack": "challenge",
+      "title": "Another Problem About Dividing Numbers",
+      "source": "Codeforces",
+      "ref": "1538/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1538/D",
+      "rating": 1700,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "math",
+        "number theory"
+      ],
+      "tags": [
+        "number theory",
+        "prime factors",
+        "case analysis"
+      ],
+      "hints": [
+        "Нэг operation-оор arbitrary divisor хүртэл divide хийж болно. Exactly k гэдгийг анхаар.",
+        "Maximum operations нь a,b-ийн prime factors-ийн total multiplicity. Харин k=1 боломжийг тусад нь шалга.",
+        "k=1 бол a!=b бөгөөд нэг нь нөгөөгөө divide хийдэг үед YES. k>=2 бол k<=Omega(a)+Omega(b) үед YES. Factor count-д repeated prime factors-ийг бүгдийг тоол."
+      ],
+      "lesson": "Minimum feasibility ба maximum operation count-ийг ялга.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/91637",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1343D",
+      "pack": "challenge",
+      "title": "Constant Palindrome Sum",
+      "source": "Codeforces",
+      "ref": "1343/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1343/D",
+      "rating": 1700,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "brute force",
+        "data structures",
+        "greedy",
+        "two pointers"
+      ],
+      "tags": [
+        "array",
+        "difference array",
+        "prefix sums"
+      ],
+      "hints": [
+        "Mirror pair (a,b)-ийн sum target s болгоход 0,1,2 change шаардах ranges-ийг ол.",
+        "Нэг change хангалттай sums нь [1+min(a,b), k+max(a,b)]. Zero change зөвхөн s=a+b үед.",
+        "Target sums 2..2*k бүрд base cost 2*(n/2) ав. Pair бүрийн one-change interval дээр cost-ийг 1, яг a+b дээр нэмж 1 багасга. Difference array болон prefix sum-аар бүх costs-ийг O(n+k)-д ол."
+      ],
+      "lesson": "Candidate бүрийг pair бүртэй шалгахын оронд contribution-уудыг range хэлбэрээр нэм.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/76352",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1644D",
+      "pack": "challenge",
+      "title": "Cross Coloring",
+      "source": "Codeforces",
+      "ref": "1644/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1644/D",
+      "rating": 1700,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "data structures",
+        "implementation",
+        "math"
+      ],
+      "tags": [
+        "grid",
+        "reverse processing",
+        "counting"
+      ],
+      "hints": [
+        "Later operation нь earlier row/column paint-ийг дардаг. Queries-ийг reverse order-оор хар.",
+        "Өмнө нь reverse scan-д хараагүй row эсвэл column орсон query л шинэ visible cell үлдээж чадна.",
+        "Reverse scan-д seen rows/columns хадгал. Бүх row эсвэл бүх column covered бол stop. Үгүй үед шинэ row эсвэл шинэ column нэмсэн query бүрд answer-ийг k-ээр modulo 998244353 үржүүлээд row,column-ийг mark хий."
+      ],
+      "lesson": "Operation visibility-г grid cells биш covered rows/columns-оор тогтоо.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/100227",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1537D",
+      "pack": "challenge",
+      "title": "Deleting Divisors",
+      "source": "Codeforces",
+      "ref": "1537/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1537/D",
+      "rating": 1700,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "games",
+        "math",
+        "number theory"
+      ],
+      "tags": [
+        "games",
+        "number theory",
+        "parity"
+      ],
+      "hints": [
+        "Энэ тоглоомд 1 болон n-ийг divisor болгон хасаж болохгүй. Odd n-ээс ямар parity-тай state рүү шилжих вэ?",
+        "Power of two биш even n-д odd proper divisor байдаг. Харин n=2^k үед allowed divisors нь ямар байх вэ?",
+        "Odd n losing. Power of two биш even n winning. n=2^k, k>=1 үед k even бол winning, k odd бол losing. n=1 мөн losing."
+      ],
+      "lesson": "Number Game-тай rules нь өөр тул өмнөх ангиллыг шууд давтаж болохгүй.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/91381",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1392D",
+      "pack": "challenge",
+      "title": "Omkar and Bed Wars",
+      "source": "Codeforces",
+      "ref": "1392/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1392/D",
+      "rating": 1700,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "dp",
+        "greedy"
+      ],
+      "tags": [
+        "strings",
+        "circular array",
+        "greedy"
+      ],
+      "hints": [
+        "Logical бус player-ийг гурван consecutive L/R character-тай холбож үз.",
+        "LLL эсвэл RRR гэсэн triple-уудыг арилгах хэрэгтэй. Circle-ийн эхлэл ба төгсгөл нэг run байж болохыг анхаар.",
+        "Бүгд ижил бол ceil(n/3). Үгүй бол өөр character-тай boundary дээр circle-ийг тасалж linear runs болго; run length L бүрд floor(L/3)-ыг нэм."
+      ],
+      "lesson": "Circular special case яагаад ceil, бусад run яагаад floor хэрэглэдгийг тайлбарла.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/81565",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1336B",
+      "pack": "challenge",
+      "title": "Xenia and Colorful Gems",
+      "source": "Codeforces",
+      "ref": "1336/B",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1336/B",
+      "rating": 1700,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "greedy",
+        "math",
+        "sortings",
+        "two pointers"
+      ],
+      "tags": [
+        "sorting",
+        "binary search",
+        "math"
+      ],
+      "hints": [
+        "Гурван сонгосон value-г x<=y<=z гэж эрэмбэл. Middle value y-г тогтоовол x,z-ийг хаанаас авах вэ?",
+        "Middle color-ийн y бүрд өөр color-оос хамгийн том x<=y, гурав дахь color-оос хамгийн жижиг z>=y сонгох нь ашигтай.",
+        "Гурван color-ийн order-ийн 6 permutation-ийг турш. Middle array-ийн y бүрд lower/upper_bound-аар x,z олж squared differences-ийн sum-ийг багасга. Candidate байхгүй бол skip; 64-bit arithmetic хэрэглэ."
+      ],
+      "lesson": "Fixed middle value-ийн хувьд хоёр endpoint-ийг ойртуулах нь objective-ийг бууруулдгийг батал.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/76099",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1525D",
+      "pack": "challenge",
+      "title": "Armchairs",
+      "source": "Codeforces",
+      "ref": "1525/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1525/D",
+      "rating": 1800,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "dp",
+        "flows",
+        "graph matchings",
+        "greedy"
+      ],
+      "tags": [
+        "dp",
+        "matching",
+        "array"
+      ],
+      "hints": [
+        "Initially occupied positions болон empty positions-ийг хоёр sorted list болго.",
+        "Crossing matching-ийг uncross хийхэд total distance өсөхгүй. Тэгвэл order-preserving assignment хангалттай.",
+        "dp[i][j]=first i people-ийг first j empty seats-д суулгах minimum cost. j-г skip хийх, эсвэл i-th person-ийг j-th seat-д assign хийх хоёр transition ав. dp[0][j]=0, impossible states=INF."
+      ],
+      "lesson": "Order-preserving matching нь general assignment-ийг dp болгон бууруул.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/90793",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1552D",
+      "pack": "challenge",
+      "title": "Array Differentiation",
+      "source": "Codeforces",
+      "ref": "1552/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1552/D",
+      "rating": 1800,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "bitmasks",
+        "brute force",
+        "constructive algorithms",
+        "dfs and similar",
+        "dp",
+        "graphs",
+        "math"
+      ],
+      "tags": [
+        "brute force",
+        "graphs",
+        "subset sums"
+      ],
+      "hints": [
+        "a[i]=b[j]-b[k]-г b-values vertices, a-values weighted edges гэж зур. n edges ба n vertices ямар cycle өгөх вэ?",
+        "Cycle-ийн signed edge sum 0 болно. Тэгвэл non-empty signed subset sum 0 байх нь ямар холбоотой вэ?",
+        "Coefficient бүрийг -1,0,1 гэж сонгон 3^n possibilities дундаас non-empty zero-sum combination хай. Олдвол cycle байгуулж, remaining a-values-ийг chain-ээр залгаж n b-values гаргаж чадна."
+      ],
+      "lesson": "Necessary cycle relation-оос sufficient construction гарга.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/93199",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1572A",
+      "pack": "challenge",
+      "title": "Book",
+      "source": "Codeforces",
+      "ref": "1572/A",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1572/A",
+      "rating": 1800,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "brute force",
+        "data structures",
+        "dp",
+        "graphs",
+        "implementation",
+        "sortings"
+      ],
+      "tags": [
+        "graphs",
+        "topological sort",
+        "dp"
+      ],
+      "hints": [
+        "Prerequisite u-ээс chapter v рүү edge зур. Cycle байвал book-ийг ойлгож дуусах уу?",
+        "u<v бол u-г ойлгосон read-through дотор v-г ойлгож болно. u>v бол next read-through хэрэгтэй.",
+        "Topological order дээр day[v]=max(day[v],day[u]+(u>v)) update хий; prerequisitesгүй chapters day=1. Cycle байвал -1, үгүй бол max day answer."
+      ],
+      "lesson": "Topological dependency дээр index ordering-ийн extra cost нэм.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/95086",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1398D",
+      "pack": "challenge",
+      "title": "Colored Rectangles",
+      "source": "Codeforces",
+      "ref": "1398/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1398/D",
+      "rating": 1800,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "dp",
+        "greedy",
+        "sortings"
+      ],
+      "tags": [
+        "dp",
+        "sorting",
+        "greedy"
+      ],
+      "hints": [
+        "Ижил color-ийн rectangles дотроос жижиг value-г түрүүлж ашиглах нь ашигтай юу?",
+        "Гурван list-ийг decreasing order-оор sort хий. Used counts i,j,k гэсэн dp state авч үз.",
+        "dp[i][j][k]-ээс R-G, R-B, G-B гэсэн available хоёр color-ийн next values-ийг pair болгож product нэм. Өөр color pair үлдээгүй үед зогсоно; unused нэг color үлдэхийг зөвшөөр."
+      ],
+      "lesson": "Sorted order-оор matching хийх exchange argument-ийг dp state reduction-тай холбо.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/81506",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1560E",
+      "pack": "challenge",
+      "title": "Polycarp and String Transformation",
+      "source": "Codeforces",
+      "ref": "1560/E",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1560/E",
+      "rating": 1800,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "implementation",
+        "sortings",
+        "strings"
+      ],
+      "tags": [
+        "strings",
+        "frequency",
+        "reverse processing"
+      ],
+      "hints": [
+        "t-ийн хамгийн сүүлд үзэгдэх characters нь хамгийн сүүлд deleted болсон characters-той яаж холбоотой вэ?",
+        "t-ийг reverse scan хийж distinct characters-ийн order аваад reverse хийвэл deletion order гарна.",
+        "Deletion order дахь 1-based step j-ийн character total t-д j удаагийн copies-оор гарсан. Frequency нь j-д divisible байх ёстой. Original frequencies-ийн sum L-г олж t-ийн length-L prefix-ийг s болго; process-ийг simulate хийгээд яг t болдог эсэхийг шалга."
+      ],
+      "lesson": "Counting-оор candidate restore хийгээд full simulation-аар verify хий.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/94009",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1450D",
+      "pack": "challenge",
+      "title": "Rating Compression",
+      "source": "Codeforces",
+      "ref": "1450/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1450/D",
+      "rating": 1800,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "data structures",
+        "greedy",
+        "implementation",
+        "two pointers"
+      ],
+      "tags": [
+        "array",
+        "two pointers",
+        "permutation"
+      ],
+      "hints": [
+        "k=1 бол original array permutation байх ёстой. k=n үед зөвхөн minimum=1 хэрэгтэй.",
+        "k>1 үед compression дотор 1 ганц удаа гарахын тулд array дахь 1 ямар position-д, хэдэн удаа байх вэ?",
+        "Smallest values-ийг 1,2,... гэсэн order-оор ends-ээс peel хий. Value v байгаа үед k=n-v+1 candidate valid; next value рүү үргэлжлэхийн тулд v unique бөгөөд current left/right end-д байх ёстой. k=1-ийг original permutation check-ээр тусад нь шийд."
+      ],
+      "lesson": "Sliding minima-ийн олон queries-ийг boundary peeling structure болгон хувирга.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/85348",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1367D",
+      "pack": "challenge",
+      "title": "Task On The Board",
+      "source": "Codeforces",
+      "ref": "1367/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1367/D",
+      "rating": 1800,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "greedy",
+        "implementation",
+        "sortings"
+      ],
+      "tags": [
+        "strings",
+        "constructive algorithms",
+        "greedy"
+      ],
+      "hints": [
+        "b[i]=0 байрлалд одоо үлдсэн character-уудаас хамгийн том нь тавигдах ёстой юу?",
+        "Ижил round-ийн бүх zero position нэг character авна. s дотор тэдний тоонд хүрэх frequency-тай хамгийн том eligible character сонго.",
+        "Zero positions-ийн group-д сонгосон character тавь. Remaining b[j]-ээс group-ийн бүх i-д abs(i-j)-ийн sum-ийг хас. Дараагийн round-д strictly smaller character ашигла; group-ийн frequency хүрэх ёстой."
+      ],
+      "lesson": "Distance constraints-ийг хамгийн том characters-оос эхэлж арилгах reverse construction болгон хар.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/78864",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1508A",
+      "pack": "stretch",
+      "title": "Binary Literature",
+      "source": "Codeforces",
+      "ref": "1508/A",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1508/A",
+      "rating": 1900,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "greedy",
+        "implementation",
+        "strings",
+        "two pointers"
+      ],
+      "tags": [
+        "strings",
+        "constructive algorithms",
+        "two pointers"
+      ],
+      "hints": [
+        "Гурван binary string тус бүр length 2n. Хоёр string ижил majority character-тай байх ёстой юу?",
+        "Тэр хоёр string тус бүрд нэг character c дор хаяж n удаа байна. c-ийн occurrences-ийг align хийвэл хэдэн character хэмнэх вэ?",
+        "Same majority c-тай хоёр string сонго. Хоёр pointer c дээр байвал c-г нэг удаа append хийгээд хоёуланг нь хөдөлгө; бусад үед c биш next character-ийг append хий. Leftover-ийг залгахад length<=3n."
+      ],
+      "lesson": "Pigeonhole principle-ийг common subsequence ба short supersequence-тэй холбо.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/89644",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1354D",
+      "pack": "stretch",
+      "title": "Multiset",
+      "source": "Codeforces",
+      "ref": "1354/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1354/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "data structures"
+      ],
+      "tags": [
+        "binary search",
+        "offline queries",
+        "frequency"
+      ],
+      "hints": [
+        "Бүх multiset-ийг хадгалахгүйгээр эцэст x-ээс ихгүй хэдэн element үлдэхийг тооцож болох уу?",
+        "Insert v нь v<=x үед count нэмнэ. k-th smallest deletion нь k<=count үед count-ийг нэгээр багасгана.",
+        "Candidate x бүрд бүх queries-ийг энэ ганц count дээр simulate хий. Final count>0 monotone тул smallest existing value-г binary search-аар ол. x=n дээр final count=0 бол multiset empty тул 0 хэвлэ."
+      ],
+      "lesson": "Order-statistics data structure-ийн оронд answer threshold simulation хэрэглэ.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/77593",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1288D",
+      "pack": "stretch",
+      "title": "Minimax Problem",
+      "source": "Codeforces",
+      "ref": "1288/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1288/D",
+      "rating": 2000,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "bitmasks",
+        "dp"
+      ],
+      "tags": [
+        "binary search",
+        "bitmasks",
+        "array"
+      ],
+      "hints": [
+        "Answer>=x эсэхэд row бүрийн яг values хэрэгтэй юу, эсвэл columns x хүрсэн эсэх нь хангалттай юу?",
+        "m<=8 тул row-ийн qualifying columns-ийг bitmask болго. Хоёр row-ийн masks OR хийхэд all-ones бол feasible.",
+        "x дээр binary search хий. Mask бүрд нэг representative row index хадгалж, 2^m masks-ийн бүх pairs-ийг турш; OR==2^m-1 бол хоёр indices-ийг хадгал. i=j зөвшөөрөгдөнө."
+      ],
+      "lesson": "Нэг dimension маш жижиг үед threshold + bitmask compression хэрэглэ.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/73105",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1360H",
+      "pack": "stretch",
+      "title": "Binary Median",
+      "source": "Codeforces",
+      "ref": "1360/H",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1360/H",
+      "rating": 2100,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "bitmasks",
+        "brute force",
+        "constructive algorithms"
+      ],
+      "tags": [
+        "binary search",
+        "bitmasks",
+        "order statistics"
+      ],
+      "hints": [
+        "Length m-тэй binary strings-ийг 0..2^m-1 гэсэн integers гэж үз. Allowed numbers-ийн rank-ийг тооц.",
+        "x-ээс ихгүй allowed count = x+1 - removed numbers <=x. Removed list-ийг sort хий.",
+        "K=2^m-n, wanted zero-based rank=(K-1)/2. Allowed count >= wanted+1 болдог хамгийн бага x-ийг binary search-аар ол; түүнийг leading zeros-тай m-bit string болго. 64-bit integers хэрэглэ."
+      ],
+      "lesson": "Huge universe-ийг generate хийхгүйгээр rank query-гаар хай.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/77846",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1486D",
+      "pack": "stretch",
+      "title": "Max Median",
+      "source": "Codeforces",
+      "ref": "1486/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1486/D",
+      "rating": 2100,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "binary search",
+        "data structures",
+        "dp"
+      ],
+      "tags": [
+        "binary search",
+        "prefix sums",
+        "median"
+      ],
+      "hints": [
+        "Answer>=x байх боломжтой эсэхийг шалгах decision problem болгож үз.",
+        "a[i]>=x бол +1, бусад нь -1. Энэ бодлогын even-length median нь lower median гэдгийг анхаар.",
+        "Length>=k subarray-ийн transformed sum strictly positive байвал median>=x. Prefix sum P дээр i>=k бүрд P[i]-min(P[0..i-k])>0 эсэхийг O(n)-д шалгаад x дээр binary search хий. >=0 гэж шалгаж болохгүй."
+      ],
+      "lesson": "Median threshold-ийг positive-sum condition болгон хувирга.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/87849",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1406D",
+      "pack": "advanced",
+      "title": "Three Sequences",
+      "source": "Codeforces",
+      "ref": "1406/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1406/D",
+      "rating": 2200,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "data structures",
+        "greedy",
+        "math"
+      ],
+      "tags": [
+        "difference array",
+        "invariant",
+        "math"
+      ],
+      "hints": [
+        "b non-decreasing, c non-increasing тул objective нь max(b[n],c[1]). Adjacent a-differences b-д ямар minimum өсөлт шаардах вэ?",
+        "D=sum max(0,a[i]-a[i-1]). b[n]>=b[1]+D, c[1]=a[1]-b[1] тул b[1]-ийн integer choice-ийг optimize хий.",
+        "Answer=ceil((a[1]+D)/2). Range add нь a[1] болон difference array-ийн зөвхөн l, r+1 boundaries-г өөрчилнө. D-ээс old positive contribution-ийг хасаад new-ийг нэм. Negative answer дээр signed ceiling division-оо зөв хий."
+      ],
+      "lesson": "Monotone decomposition-ийг ганц invariant sum ба хоёр update boundary болгож шах.",
+      "priority": true,
+      "editorialUrl": "https://codeforces.com/blog/entry/82560",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1494D",
+      "pack": "advanced",
+      "title": "Dogeforces",
+      "source": "Codeforces",
+      "ref": "1494/D",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1494/D",
+      "rating": 2300,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "constructive algorithms",
+        "data structures",
+        "dfs and similar",
+        "divide and conquer",
+        "dsu",
+        "greedy",
+        "sortings",
+        "trees"
+      ],
+      "tags": [
+        "trees",
+        "divide and conquer",
+        "dsu"
+      ],
+      "hints": [
+        "Group дахь leaves-ийн LCA salary хамгийн их matrix value-тай root болох ёстой.",
+        "Root salary M үед a[i][j]<M гэсэн leaves нэг child subtree-д орно. a[i][j]=M бол өөр child groups-д байна.",
+        "Group-ийг a[i][j]<M relation-аар partition хийгээд child group бүрд recurse; singleton нь original leaf. Эсвэл equal salary pair-уудыг batch DSU merge хий. Equal salary дотор binary chain үүсгэж болохгүй: supervisor salary strictly greater байх ёстой."
+      ],
+      "lesson": "Pairwise LCA values-ээс hierarchy restore хий; internal node бүр дор хаяж 2 child-той байна.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/88344",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cf-1479C",
+      "pack": "advanced",
+      "title": "Continuous City",
+      "source": "Codeforces",
+      "ref": "1479/C",
+      "level": "Practice",
+      "url": "https://codeforces.com/problemset/problem/1479/C",
+      "rating": 2500,
+      "ratingKind": "official",
+      "ratingVerifiedAt": "2026-10-05",
+      "ratingSource": "https://codeforces.com/api/problemset.problems",
+      "sourceTags": [
+        "bitmasks",
+        "constructive algorithms"
+      ],
+      "tags": [
+        "bitmasks",
+        "constructive algorithms",
+        "graphs"
+      ],
+      "hints": [
+        "Binary powers-ийн subset sums-ийг DAG paths-аар encode хийж үз. Edge weights positive, path length бүр unique байх ёстой.",
+        "Core entry E[k]-ээс sink хүртэл paths [1,2^k]-ийн length-үүдийг яг нэг удаа гаргадаг gadget байгуул. E[k]→sink weight 1; E[k]→E[j], j<k, weight 2^j.",
+        "Direct source→sink weight L тавь. R-L-ийг binary blocks болгон салга. Block [s,s+2^k-1], s>=L+1 бүрд source→E[k] weight s-1 тавь. Core nodes-ийг k decreasing order-оор label хийвэл бүх edge smaller→larger; <=23 nodes, positive weights, disjoint length intervals болно."
+      ],
+      "lesson": "Construction-ийн coverage, uniqueness, positive weights, node bound-ийг тус бүр батал.",
+      "priority": false,
+      "editorialUrl": "https://codeforces.com/blog/entry/87598",
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     },
     {
       "id": "cses-1070",
@@ -359,56 +2658,25 @@
       "title": "Permutations",
       "source": "CSES",
       "ref": "1070",
-      "level": "Халаалт · байгуулах",
+      "level": "≈ CF баримжаа",
       "url": "https://cses.fi/problemset/task/1070/",
       "hints": [
-        "Жижиг n-үүдийн боломжийг шалга. Ямар хөршүүдийг салгах хэрэгтэй вэ?",
-        "Парити ижил тоонуудыг зэрэгцүүлбэл ялгаа хэд вэ?",
-        "n=1 тусдаа; n=2,3 боломжгүй. n>=4 үед тэгш тоонуудыг, дараа нь сондгой тоонуудыг өсөхөөр хэвлэ."
+        "n=1,2,3 гэсэн жижиг cases-ийг эхлээд шалга.",
+        "Ижил parity-тай numbers-ийг зэрэгцүүлбэл adjacent difference дор хаяж хэд вэ?",
+        "n=1 бол 1; n=2,3 бол NO SOLUTION. n>=4 үед evens ascending, дараа нь odds ascending order-оор хэвлэ. Хоёр group-ийн boundary-г мөн шалга."
       ],
       "tags": [
-        "parity",
-        "constructive"
+        "constructive algorithms",
+        "parity"
       ],
-      "lesson": "Хоёр бүлгийн зааг дээрх ялгааг заавал шалга."
-    },
-    {
-      "id": "cses-1092",
-      "pack": "cses",
-      "title": "Two Sets",
-      "source": "CSES",
-      "ref": "1092",
-      "level": "Халаалт · хуваалт",
-      "url": "https://cses.fi/problemset/task/1092/",
-      "hints": [
-        "Нийт нийлбэр сондгой бол боломжтой юу?",
-        "Нэг set-ийн зорилтот нийлбэр нийт нийлбэрийн тал. Том тооноос эхэлж авбал яах вэ?",
-        "n-ээс 1 хүртэл бууж, үлдсэн зорилтоос ихгүй тоог эхний set-д ав. Бусдыг хоёр дахь set-д хий."
-      ],
-      "tags": [
-        "greedy",
-        "нийлбэр"
-      ],
-      "lesson": "1..n гэсэн тасралтгүй тоонууд greedy сонголтыг яагаад боломжтой болгодог вэ?"
-    },
-    {
-      "id": "cses-1072",
-      "pack": "cses",
-      "title": "Two Knights",
-      "source": "CSES",
-      "ref": "1072",
-      "level": "Тоолох дасгал",
-      "url": "https://cses.fi/problemset/task/1072/",
-      "hints": [
-        "Бүх хоёр байрлалын сонголтоос дайралцдаг хосуудыг хасах хувилбарыг турш.",
-        "Дайралцдаг хоёр морь 2×3 эсвэл 3×2 тэгш өнцөгт дотор багтана.",
-        "k×k самбарт C(k*k,2)-оос 4*(k-1)*(k-2)-ыг хас. Том тоонд 64-bit хэрэглэ."
-      ],
-      "tags": [
-        "combinatorics",
-        "complement"
-      ],
-      "lesson": "Шууд тоолохоос эсрэг нөхцөлийг тоолох нь хэзээ амар байдаг вэ?"
+      "lesson": "Parity grouping ба boundary exception-ийг батал.",
+      "rating": 900,
+      "ratingKind": "estimated",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     },
     {
       "id": "cses-1755",
@@ -416,18 +2684,26 @@
       "title": "Palindrome Reorder",
       "source": "CSES",
       "ref": "1755",
-      "level": "Байгуулах дасгал",
+      "level": "≈ CF баримжаа",
       "url": "https://cses.fi/problemset/task/1755/",
       "hints": [
-        "Palindrome-ийн хоёр тал дахь үсгүүд хослоно. Хосгүй үлдэж болох нь хэд вэ?",
-        "Давтамж нь сондгой үсэг хэд байгаа вэ?",
-        "Сондгой давтамжтай үсэг нэгээс олон бол боломжгүй. Үсэг бүрийн хагасыг зүүнд, ганц сондгой үсгийг төвд, зүүнийг урвуулж баруунд тавь."
+        "Palindrome-ийн хоёр талын characters pair болно. Odd frequency-тай хэдэн character байж болох вэ?",
+        "Center-д хамгийн ихдээ нэг unpaired character тавьж болно.",
+        "Odd frequency нэгээс олон бол NO SOLUTION. Character бүрийн frequency/2 copies-ийг left-д тавь; odd character байвал center-д нэг тавиад reverse(left)-ийг залга."
       ],
       "tags": [
-        "давтамж",
-        "constructive"
+        "strings",
+        "frequency",
+        "constructive algorithms"
       ],
-      "lesson": "Боломжгүйг батлах нөхцөлөөс боломжтой байгууламж гарга."
+      "lesson": "Feasibility condition-оос construction гарга.",
+      "rating": 1000,
+      "ratingKind": "estimated",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     },
     {
       "id": "cses-2165",
@@ -435,18 +2711,132 @@
       "title": "Tower of Hanoi",
       "source": "CSES",
       "ref": "2165",
-      "level": "Дараагийн алхам · recursion",
+      "level": "≈ CF баримжаа",
       "url": "https://cses.fi/problemset/task/2165/",
       "hints": [
-        "Хамгийн том дискийг хөдөлгөхийн өмнө бусдыг хаана байлгах вэ?",
-        "n диск шилжүүлэхийг хоёр удаагийн n-1 диск шилжүүлэхэд бууруул.",
-        "n-1 дискийг туслах багана руу, томыг зорилтот багана руу, дараа нь n-1-ийг зорилтот руу шилжүүл. T(n)=2*T(n-1)+1."
+        "Largest disk-ийг target peg рүү зөөхийн өмнө жижиг disks хаана байх хэрэгтэй вэ?",
+        "n-1 disks-ийг helper peg рүү, largest-ийг target руу, дараа нь n-1-ийг target руу шилжүүл.",
+        "Move(n,from,to,helper) recursion хэрэглэ; n=0 үед return. Minimum moves=2^n-1, дараа нь recursion-ийн moves-ийг хэвлэ."
       ],
       "tags": [
         "recursion",
-        "доод хязгаар"
+        "constructive algorithms"
       ],
-      "lesson": "Энэ тооны хөдөлгөөн зайлшгүй хэрэгтэй бөгөөд хүрч болохыг хоёуланг батал."
+      "lesson": "Recurrence-ийн upper болон lower bound-ийг хоёуланг батал.",
+      "rating": 1100,
+      "ratingKind": "estimated",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cses-1092",
+      "pack": "cses",
+      "title": "Two Sets",
+      "source": "CSES",
+      "ref": "1092",
+      "level": "≈ CF баримжаа",
+      "url": "https://cses.fi/problemset/task/1092/",
+      "hints": [
+        "Total sum odd бол equal partition боломжтой юу?",
+        "Target=total/2. Largest numbers-оос эхэлж remaining target-ээс ихгүй value авбал яах вэ?",
+        "Total even үед n..1 descending scan хийж remaining target-ээс ихгүй number-ийг first set-д ав; бусдыг second set-д хий. Consecutive integers тул target-д яг хүрнэ."
+      ],
+      "tags": [
+        "constructive algorithms",
+        "greedy",
+        "math"
+      ],
+      "lesson": "1..n гэсэн consecutive values greedy-г яагаад зөв болгодог вэ?",
+      "rating": 1100,
+      "ratingKind": "estimated",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cses-1097",
+      "pack": "cses",
+      "title": "Apple Division",
+      "source": "CSES",
+      "ref": "1097",
+      "level": "≈ CF баримжаа",
+      "url": "https://cses.fi/problemset/task/1097/",
+      "rating": 1200,
+      "ratingKind": "estimated",
+      "tags": [
+        "brute force",
+        "subset sums"
+      ],
+      "hints": [
+        "Two groups-ийн sum difference-ийг нэг chosen subset-ийн sum-аар илэрхийл.",
+        "n<=20 тул бүх subsets-ийг enumerate хийх боломжтой.",
+        "Subset sum S бүрд abs(total-2*S)-г minimum болго. 64-bit sum хэрэглэ; desired grouping-ийг шууд enumerate хийж болно."
+      ],
+      "lesson": "Small n constraints нь exhaustive search-ийг зөв solution болгодог.",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cses-1072",
+      "pack": "cses",
+      "title": "Two Knights",
+      "source": "CSES",
+      "ref": "1072",
+      "level": "≈ CF баримжаа",
+      "url": "https://cses.fi/problemset/task/1072/",
+      "hints": [
+        "Бүх хоёр cell-ийн choices-оос attacking pairs-ийг хас.",
+        "Attacking knights pair бүр 2×3 эсвэл 3×2 rectangle дотор орно.",
+        "k×k board дээр C(k*k,2)-4*(k-1)*(k-2). Rectangle бүр 2 attacking pair өгдөг; хоёр orientations-ийг тоол. 64-bit multiplication хэрэглэ."
+      ],
+      "tags": [
+        "combinatorics",
+        "grid",
+        "complement counting"
+      ],
+      "lesson": "Direct counting-ийн оронд forbidden pairs-ийг тоол.",
+      "rating": 1200,
+      "ratingKind": "estimated",
+      "priority": true,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cses-1624",
+      "pack": "cses",
+      "title": "Chessboard and Queens",
+      "source": "CSES",
+      "ref": "1624",
+      "level": "≈ CF баримжаа",
+      "url": "https://cses.fi/problemset/task/1624/",
+      "rating": 1400,
+      "ratingKind": "estimated",
+      "tags": [
+        "grid",
+        "backtracking",
+        "diagonals"
+      ],
+      "hints": [
+        "Row бүрд яг нэг queen тавьж болох уу?",
+        "Occupied column, row-col diagonal, row+col diagonal-уудыг хадгал.",
+        "Row-by-row backtracking хий. Allowed cell бөгөөд column/хоёр diagonal free үед queen тавьж recurse; буцахдаа marks-аа арилга. 8 rows дуусвал нэг valid placement."
+      ],
+      "lesson": "Grid conflict-уудыг гурван жижиг state болгон шах.",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     },
     {
       "id": "cses-1141",
@@ -454,18 +2844,80 @@
       "title": "Playlist",
       "source": "CSES",
       "ref": "1141",
-      "level": "Дараагийн алхам · дараалал",
+      "level": "≈ CF баримжаа",
       "url": "https://cses.fi/problemset/task/1141/",
       "hints": [
-        "Нэг зөв хэсэг дээр шинэ дуу нэмэхэд юу л зөрчил үүсгэж болох вэ?",
-        "Давтагдсан дууны хамгийн сүүлийн байрлалыг мэдвэл зүүн заагийг яаж өөрчлөх вэ?",
-        "Баруун заагийг урагшлуул. left=max(left,last[song]+1) болгож, тухайн дууны last-ийг шинэчил; хамгийн урт хэсгийг хадгал."
+        "Window дээр шинэ song нэмэхэд зөвхөн тэр song-ийн duplicate зөрчил үүсгэнэ.",
+        "Song бүрийн last occurrence-ийг хадгалбал left boundary-г хаашаа move хийх вэ?",
+        "Right index r бүрд left=max(left,last[song]+1) update хийгээд last[song]=r болго. max(r-left+1)-ийг хадгал; left-ийг хэзээ ч буцааж багасгахгүй."
       ],
       "tags": [
+        "array",
         "sliding window",
-        "last occurrence"
+        "two pointers"
       ],
-      "lesson": "left яагаад хэзээ ч хойшлох ёсгүйг эсрэг жишээгээр үзүүл."
+      "lesson": "Last occurrence хангалттай state болдгийг батал.",
+      "rating": 1400,
+      "ratingKind": "estimated",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cses-2431",
+      "pack": "cses",
+      "title": "Digit Queries",
+      "source": "CSES",
+      "ref": "2431",
+      "level": "≈ CF баримжаа",
+      "url": "https://cses.fi/problemset/task/2431/",
+      "rating": 1600,
+      "ratingKind": "estimated",
+      "tags": [
+        "digits",
+        "math",
+        "indexing"
+      ],
+      "hints": [
+        "1-digit numbers, 2-digit numbers, ... гэсэн blocks-ийн lengths-ийг тооц.",
+        "d-digit block нь 9*10^(d-1) numbers, d*9*10^(d-1) characters-тай.",
+        "1-based k-ээс бүтэн blocks-ийг хас. Үлдсэн block-д number=10^(d-1)+(k-1)/d, digit index=(k-1)%d. 64-bit болон 1-based/0-based conversion-оо анхаар."
+      ],
+      "lesson": "Infinite string-ийг block arithmetic-аар random access хий.",
+      "priority": true,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
+    },
+    {
+      "id": "cses-2217",
+      "pack": "cses",
+      "title": "Collecting Numbers II",
+      "source": "CSES",
+      "ref": "2217",
+      "level": "≈ CF баримжаа",
+      "url": "https://cses.fi/problemset/task/2217/",
+      "rating": 1700,
+      "ratingKind": "estimated",
+      "tags": [
+        "permutation",
+        "local changes",
+        "set"
+      ],
+      "hints": [
+        "Permutation дээр rounds=1+count(pos[v]>pos[v+1]).",
+        "Swap хийсэн values x,y бол зөвхөн x-1,x,y-1,y гэсэн adjacent-value pair indices affected.",
+        "Эдгээр valid pair indices-ийг set болгон давхардлыг арилга. Old contributions-ийг хасаад swap болон positions update хийж new contributions нэм. x,y adjacent эсвэл ижил position үед давхар тоолохгүй."
+      ],
+      "lesson": "Large global answer-ийн update зөвхөн local relations-оос хамаарна.",
+      "priority": true,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     },
     {
       "id": "egoi-2023-inflation",
@@ -473,18 +2925,27 @@
       "title": "Inflation",
       "source": "EGOI",
       "ref": "2023 · Day 1",
-      "level": "Subtask → бүтэн бодлого",
+      "level": "Full task ≈ CF 1800 · subtask-аас эхэл",
       "url": "https://egoi23.se/assets/tasks/day1/inflation/statement_en.pdf",
       "hints": [
-        "Эхлээд жижиг хязгаарт бүх үнийг шууд шинэчил. Дараа нь зөвхөн INFLATION байдаг хувилбарыг бод.",
-        "Бүх үнийг нэмэхийн оронд нэг global offset хадгал. Ижил үнэтэй хоолнуудыг давтамжаар бүлэглэ.",
-        "Үнийг offset-гүй key-ээр хадгал. SET x y үед x-offset бүлгийн тоог y-offset руу шилжүүлж, sum-д count*(y-x) нэм; x=y бол өөрчлөхгүй."
+        "Эхлээд small constraints дээр array-ийн prices-ийг шууд update хий. Зөвхөн INFLATION queries-тэй subtask-д total sum яаж өөрчлөгдөх вэ?",
+        "Бүх prices-д нэмсэн global offset-ийг тусад нь хадгал. Ижил current price-тай dishes-ийг frequency-гаар group хий.",
+        "Base price=current price-offset гэсэн key-ээр frequency map хадгал. INFLATION x үед offset+=x, sum+=N*x. SET x y үед count[x-offset]-ийг y-offset руу шилжүүлээд sum+=count*(y-x); x=y бол юу ч өөрчлөхгүй. 64-bit key/sum хэрэглэ."
       ],
       "tags": [
+        "frequency",
         "lazy offset",
-        "frequency map"
+        "hash map"
       ],
-      "lesson": "Албан subtask: N=1; жижиг хязгаар; зөвхөн INFLATION; зөвхөн SET; бүтэн. Бүтэн бодлогыг CF rating-тай дүйцүүлээгүй."
+      "lesson": "Full task-ийн баримжаа rating нь 1800. Албан subtasks: N=1; small constraints; зөвхөн INFLATION; зөвхөн SET; full constraints. Offset ба grouped frequencies-ийг салгаж бод.",
+      "rating": 1800,
+      "ratingKind": "estimated",
+      "priority": true,
+      "editorialUrl": "https://egoi23.se/assets/solutions/day1/inflation.pdf",
+      "hintReview": {
+        "method": "official statement + solution + reasoning review",
+        "reviewedAt": "2026-10-05"
+      }
     }
   ]
 }

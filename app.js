@@ -1,9 +1,11 @@
 import {EMPTY, cleanEntry, parseBackup} from './progress.js';
 import {getProfile, putProfile, getSolvers, profileError} from './community.js';
+import {filterProblems, getTags, ratingLabel} from './catalog.js';
 const $ = id => document.getElementById(id);
 const STATUS = {new:'Эхлээгүй',trying:'Оролдож байгаа',solved:'Бодсон'};
 let data, selectedPack='', selectedProblem, state={}, dirty={}, user=null, client=null, loading=false, syncing=false, syncAgain=false, epoch=0;
 let username=null, profileLoading=false, profileSaving=false, solverRequest=0, solverNames=[], solverTotal=0;
+let detailTagsShown=false;
 const cfg=window.THINK_CP_CONFIG || {};
 const configured=Boolean(cfg.supabaseUrl && cfg.supabaseKey);
 const key=()=> 'think-cp:v1:'+(user?.id || 'guest');
@@ -24,17 +26,23 @@ function render() {
   const trying=data.problems.filter(p=>entry(p.id).status==='trying').length;
   const percent=Math.round(solved/data.problems.length*100);
   $('total').textContent=data.problems.length;$('solved').textContent=solved;$('trying').textContent=trying;$('percent').textContent=percent+'%';$('progress').value=percent;
-  const query=$('search').value.trim().toLowerCase(), source=$('source').value, status=$('status-filter').value;
+  const filters={query:$('search').value,source:$('source').value,status:$('status-filter').value,pack:selectedPack,tag:$('tag-filter').value,ratingBand:$('rating-filter').value,priorityOnly:$('priority-only').checked,sort:$('sort').value};
   $('packs').replaceChildren();
   for(const pack of [{id:'',title:'Бүгд'},...data.packs]) {
     const b=el('button',pack.id===selectedPack?'active':'',pack.title);b.setAttribute('aria-pressed',String(pack.id===selectedPack));b.onclick=()=>{selectedPack=pack.id;render();};$('packs').append(b);
   }
-  $('pack-note').textContent=data.packs.find(p=>p.id===selectedPack)?.description || 'Эхлээд “Халаалт”, дараа нь “Өөр өнцөг” багцыг туршаарай. Сэдвүүд бодсоны дараа нээгдэнэ.';
+  $('pack-note').textContent=data.packs.find(p=>p.id===selectedPack)?.description || '★ Priority бодлогууд нь observation болон creative reasoning-д онцгой анхаарсан сонголт. Rating бол чиг баримжаа; өөрийн түвшинд тохируулж сонго.';
   $('problems').replaceChildren();
-  const filtered=data.problems.filter(p=>(!selectedPack||p.pack===selectedPack)&&(!source||p.source===source)&&(!query||(p.title+' '+p.id+' '+p.ref).toLowerCase().includes(query))&&(!status||(status==='hinted'?entry(p.id).hints>0:entry(p.id).status===status)));
+  const filtered=filterProblems(data.problems,state,filters);
+  $('results-count').textContent=filtered.length+' / '+data.problems.length+' бодлого';
   for(const p of filtered) {
-    const row=el('article','problem'), n=el('span','number',String(data.problems.indexOf(p)+1).padStart(2,'0')), b=el('button','open');b.disabled=loading;
-    b.append(el('h3','',p.title),el('small','',p.source+' · '+p.ref+' · '+p.level));b.onclick=()=>openProblem(p);
+    const row=el('article','problem'+(p.priority?' is-priority':'')), n=el('span','number',String(data.problems.indexOf(p)+1).padStart(2,'0')), b=el('button','open');b.disabled=loading;
+    const heading=el('h3','',p.title);
+    if(p.priority){const star=el('span','priority-star','★');star.title='Priority бодлого';star.setAttribute('aria-label','Priority');heading.prepend(star);}
+    const meta=el('div','problem-meta');const rating=el('span','rating rating-'+Math.floor(p.rating/100),ratingLabel(p));rating.title=p.ratingKind==='official'?'Codeforces-ийн албан rating':'CF difficulty-ийн баримжаа; албан rating биш';
+    meta.append(rating,el('small','',p.source+' · '+p.ref+(p.level==='Interactive'?' · Interactive':'')));
+    b.append(heading,meta);b.onclick=()=>openProblem(p);
+    if($('show-tags').checked||entry(p.id).status==='solved'){const tags=el('div','tag-chips');for(const tag of p.tags)tags.append(el('span','tag-chip',tag));b.append(tags);}
     const badge=el('span','badge '+entry(p.id).status,STATUS[entry(p.id).status]);
     const arrow=el('button','arrow','↗');arrow.setAttribute('aria-label',p.title+' нээх');arrow.disabled=loading;arrow.onclick=()=>openProblem(p);
     if(entry(p.id).hints) b.append(el('span','hint-used','Hint '+entry(p.id).hints+'/3'));
@@ -42,11 +50,14 @@ function render() {
   }
   if(!filtered.length)$('problems').append(el('p','muted','Тохирох бодлого олдсонгүй. Шүүлтүүрээ өөрчлөөрэй.'));
 }
-function openProblem(p) {selectedProblem=p;$('detail-title').textContent=p.title;$('detail-source').textContent=p.source+' · '+p.ref;$('detail-note').textContent=p.level;$('problem-link').href=p.url;$('notes').value=entry(p.id).notes;$('detail-feedback').textContent='';renderDetail();$('detail').showModal();void loadSolvers();}
+function openProblem(p) {selectedProblem=p;detailTagsShown=false;$('detail-title').textContent=(p.priority?'★ ':'')+p.title;$('detail-source').textContent=p.source+' · '+p.ref;$('detail-note').textContent=ratingLabel(p)+(p.ratingKind==='official'?' · CF албан rating':' · CF difficulty-ийн баримжаа')+(p.level==='Interactive'?' · Interactive':'')+(p.source==='EGOI'?' · Full task; subtask-аас эхэл':'')+(p.priority?' · Priority':'');$('problem-link').href=p.url;$('notes').value=entry(p.id).notes;$('detail-feedback').textContent='';renderDetail();$('detail').showModal();void loadSolvers();}
 function renderDetail() {
   if(!selectedProblem)return;const p=selectedProblem,e=entry(p.id);$('problem-status').value=e.status;$('hint-list').replaceChildren();
   p.hints.slice(0,e.hints).forEach((hint,i)=>{const h=el('div','hint');h.append(el('b','','HINT '+(i+1)),el('span','',hint));$('hint-list').append(h);});
   $('next-hint').hidden=e.hints===3;$('next-hint').textContent='Hint '+(e.hints+1)+' нээх';$('reflection').hidden=e.status!=='solved';$('tags').textContent='Сэдэв: '+p.tags.join(' · ');$('lesson').textContent=p.lesson;
+  const tagsVisible=$('show-tags').checked||detailTagsShown||e.status==='solved';$('detail-tags').hidden=!tagsVisible;$('detail-tags').replaceChildren();for(const tag of p.tags)$('detail-tags').append(el('span','tag-chip',tag));
+  $('reveal-detail-tags').hidden=$('show-tags').checked||e.status==='solved';$('reveal-detail-tags').textContent=detailTagsShown?'Tags нуух':'Tags харуулах';
+  $('editorial-link').hidden=!p.editorialUrl;if(p.editorialUrl)$('editorial-link').href=p.editorialUrl;
 }
 async function switchUser(next) {
   if(user?.id===next?.id)return;
@@ -122,7 +133,15 @@ async function authAction(signup) {
 }
 async function init() {
   const response=await fetch('./problems.json');if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();readLocal();render();updateAccount();
-  for(const id of ['search','source','status-filter'])$(id).addEventListener('input',render);
+  for(const tag of getTags(data.problems)){const option=el('option','',tag);option.value=tag;$('tag-filter').append(option);}
+  try {const prefs=JSON.parse(localStorage.getItem('think-cp:catalog-preferences')||'{}');$('show-tags').checked=prefs.showTags===true;if(['rating-asc','rating-desc','priority','title'].includes(prefs.sort))$('sort').value=prefs.sort;}catch{}
+  const savePreferences=()=>{try{localStorage.setItem('think-cp:catalog-preferences',JSON.stringify({showTags:$('show-tags').checked,sort:$('sort').value}));}catch{}};
+  for(const id of ['search','source','status-filter','tag-filter','rating-filter','priority-only'])$(id).addEventListener('input',render);
+  $('sort').addEventListener('change',()=>{savePreferences();render();});
+  $('show-tags').addEventListener('change',()=>{savePreferences();render();if(selectedProblem)renderDetail();});
+  $('reveal-detail-tags').onclick=()=>{detailTagsShown=!detailTagsShown;renderDetail();};
+  $('reset-filters').onclick=()=>{selectedPack='';for(const id of ['search','source','status-filter','tag-filter','rating-filter'])$(id).value='';$('priority-only').checked=false;$('sort').value='rating-asc';savePreferences();render();};
+  render();
   document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
   $('account').onclick=()=>{updateAccount();$('auth').showModal();};
   $('profile-form').onsubmit=event=>void saveProfile(event);
