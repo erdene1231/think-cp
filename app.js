@@ -1,11 +1,11 @@
 import {EMPTY, cleanEntry, parseBackup} from './progress.js';
 import {getSolvers} from './community.js?v=6';
-import {setupAdmin} from './admin.js?v=7';
-import {parseCatalog,hintTexts} from './problem-store.js?v=7';
+import {setupAdmin} from './admin.js?v=8';
+import {parseCatalog,hintTexts} from './problem-store.js?v=8';
 import {rpc} from './accounts.js?v=6';
 import {ownProfile,saveOwnProfile,avatarUrl,accountError} from './accounts.js?v=6';
-import {setupSocial} from './social.js?v=7';
-import {filterProblems, getTags, ratingLabel} from './catalog.js?v=7';
+import {setupSocial} from './social.js?v=8';
+import {filterProblems, getTags, ratingLabel} from './catalog.js?v=8';
 const $ = id => document.getElementById(id);
 const STATUS = {new:'Эхлээгүй',trying:'Оролдож байгаа',solved:'Бодсон'};
 let data, selectedPack='', selectedProblem, state={}, dirty={}, user=null, client=null, loading=false, syncing=false, syncAgain=false, epoch=0;
@@ -159,7 +159,7 @@ async function refreshCatalog(){if(!client){catalogLoading=false;render();notice
  finally{catalogLoading=false;render();}
 }
 async function init() {
-  const response=await fetch('./problems.json?v=7', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();catalogIds=new Set(data.problems.map(p=>p.id));catalogLoading=configured;
+  const response=await fetch('./problems.json?v=8', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();catalogIds=new Set(data.problems.map(p=>p.id));catalogLoading=configured;
   try{const cached=parseCatalog(JSON.parse(localStorage.getItem('think-cp:online-catalog')||'null'));data.problems=cached.problems;for(const id of cached.knownIds)catalogIds.add(id);}catch{}
   readLocal();render();updateAccount();
   populateTags();

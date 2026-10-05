@@ -1,0 +1,29 @@
+{
+  "problems": [
+    {
+      "title": "Хоёр тооны нийлбэр — жишээ",
+      "source": "Other",
+      "ref": "sample-two-sum",
+      "url": "https://example.com/problems/two-sum",
+      "rating": 1000,
+      "ratingKind": "estimated",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "array",
+        "two pointers"
+      ],
+      "hints": [
+        "Array-г sort хийвэл хос хайх нь яаж өөрчлөгдөх вэ?",
+        "Two pointers-ийг array-ийн хоёр захад байрлуул.",
+        "Нийлбэр бага бол зүүн pointer, их бол баруун pointer-ийг хөдөлгө."
+      ],
+      "hintsEn": [
+        "How does sorting the array help you find a pair?",
+        "Place two pointers at opposite ends of the sorted array.",
+        "If the sum is too small, move the left pointer; if it is too large, move the right pointer."
+      ],
+      "lesson": "Two pointers хөдөлгөхөд ямар хосуудыг хасаж байгааг тайлбарла."
+    }
+  ]
+}

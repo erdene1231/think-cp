@@ -21,3 +21,18 @@ export function parseCatalog(document) {
  return document;
 }
 export function hintTexts(problem,language) {return language==='en'?problem.hintsEn:problem.hints;}
+
+export function parseProblemImport(document) {
+ const list=Array.isArray(document)?document:Array.isArray(document?.problems)?document.problems:[document];
+ if(list.length<1||list.length>100)throw new Error('Нэг удаад 1–100 бодлого оруулна уу.');
+ const urls=new Set(),refs=new Set();
+ return list.map((input,index)=>{
+  try {
+   if(!input||typeof input!=='object'||Array.isArray(input)||!Array.isArray(input.tags))throw new Error('Бодлогын object болон tags array шаардлагатай.');
+   if(typeof input.priority!=='boolean')throw new Error('Priority нь true эсвэл false байна.');
+   const p=validateProblem(input),key=p.source+'|'+p.ref.toLowerCase();
+   if(urls.has(p.url)||refs.has(key))throw new Error('Файл дотор бодлого давхардсан байна.');
+   urls.add(p.url);refs.add(key);return p;
+  }catch(e){throw new Error('Бодлого '+(index+1)+': '+e.message);}
+ });
+}

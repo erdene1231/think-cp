@@ -1,8 +1,8 @@
 import {rpc,accountError} from './accounts.js?v=6';
-import {validateProblem} from './problem-store.js?v=7';
+import {validateProblem,parseProblemImport} from './problem-store.js?v=8';
 export function setupAdmin(ctx) {
- const $=id=>document.getElementById(id);let rows=[],selected=null,admin=false,accountId=null,token=0,busy=false;
- function setBusy(value){busy=value;for(const el of $('admin-form').querySelectorAll('input,select,textarea,button'))el.disabled=value;$('admin-choose').disabled=value;$('admin-new').disabled=value;$('admin-reload').disabled=value;}
+ const $=id=>document.getElementById(id);let rows=[],selected=null,admin=false,accountId=null,token=0,busy=false,pendingImport=[],grantTarget=null,fileToken=0; 
+ function setBusy(value){busy=value;for(const el of $('admin-form').querySelectorAll('input,select,textarea,button'))el.disabled=value;$('admin-choose').disabled=value;$('admin-new').disabled=value;$('admin-reload').disabled=value;for(const id of ['admin-import-file','admin-grant-username','admin-grant-find','admin-grant-submit'])$(id).disabled=value;$('admin-import-submit').disabled=value||!pendingImport.length;}
  function renderChoices(){const query=$('admin-search').value.trim().toLowerCase();$('admin-choose').replaceChildren();const option=(value,label)=>{const n=document.createElement('option');n.value=value;n.textContent=label;$('admin-choose').append(n);};option('','Шинэ бодлого нэмэх');
   for(const p of rows.filter(p=>(!p.archived||$('admin-show-archived').checked||p.number===selected?.number)&&([p.title,p.number,'#'+p.number,'#'+String(p.number).padStart(3,'0'),...p.tags].join(' ').toLowerCase().includes(query)||p.number===selected?.number)))option(String(p.number),'#'+p.number+' · '+p.title+(p.archived?' · Хассан':''));$('admin-choose').value=selected?String(selected.number):'';
  }
@@ -16,7 +16,7 @@ export function setupAdmin(ctx) {
   catch(e){if(request===token)$('admin-message').textContent=accountError(e);}
  }
  async function checkRole(){const request=++token,uid=ctx.user()?.id;admin=false;rows=[];selected=null;$('admin-section').hidden=true;$('admin-nav').hidden=true;if(!uid||!ctx.client())return;
-  try{const allowed=await rpc(ctx.client(),'is_admin');if(request!==token||uid!==ctx.user()?.id)return;admin=allowed===true;$('admin-nav').hidden=!admin;$('admin-section').hidden=!admin;if(admin){edit(null);void load();}}
+  try{const allowed=await rpc(ctx.client(),'is_admin');if(request!==token||uid!==ctx.user()?.id)return;admin=allowed===true;$('admin-nav').hidden=!admin;$('admin-section').hidden=!admin;if(admin){edit(null);void load();void loadAdmins();}}
   catch{ /* No client-side email or metadata fallback can grant admin rights. */ }
  }
  function input(){return validateProblem({title:$('admin-title').value,source:$('admin-source').value,ref:$('admin-ref').value,url:$('admin-url').value.trim(),rating:$('admin-rating').value,ratingKind:$('admin-rating-kind').value,level:$('admin-level').value,priority:$('admin-priority').checked,tags:$('admin-tags').value.split(','),hints:Array.from({length:3},(_,i)=>$('admin-hint-mn-'+i).value.trim()),hintsEn:Array.from({length:3},(_,i)=>$('admin-hint-en-'+i).value.trim()),lesson:$('admin-lesson').value,editorialUrl:$('admin-editorial').value.trim()});}
@@ -30,5 +30,24 @@ export function setupAdmin(ctx) {
  };
  $('admin-choose').onchange=()=>{edit(rows.find(p=>p.number===Number($('admin-choose').value))||null);$('admin-message').textContent='';};$('admin-new').onclick=()=>{edit(null);$('admin-message').textContent='';};$('admin-reload').onclick=()=>void load();$('admin-search').addEventListener('input',renderChoices);$('admin-show-archived').onchange=renderChoices;
  $('admin-source').onchange=()=>{if($('admin-source').value!=='Codeforces')$('admin-rating-kind').value='estimated';};
- return {accountChanged(){const id=ctx.user()?.id||null;if(id===accountId)return;accountId=id;token++;setBusy(false);$('admin-form').reset();void checkRole();},connected(){void checkRole();}};
+
+ async function loadAdmins(){const uid=ctx.user()?.id;try{const list=await rpc(ctx.client(),'admin_list');if(uid!==ctx.user()?.id||!admin)return;$('admin-list').replaceChildren();for(const p of list||[]){const li=document.createElement('li');li.textContent='@'+p.username+(p.full_name?' · '+p.full_name:'')+(p.is_primary?' · Үндсэн админ':'');$('admin-list').append(li);}}catch(e){if(uid===ctx.user()?.id)$('admin-grant-message').textContent=accountError(e);}}
+ $('admin-import-file').onchange=async()=>{const request=++fileToken,uid=ctx.user()?.id;pendingImport=[];$('admin-import-submit').disabled=true;$('admin-import-preview').replaceChildren();$('admin-import-message').textContent='';const file=$('admin-import-file').files[0];if(!file||!admin)return;
+  try{if(file.size>2097152)throw new Error('JSON файл 2 MB хүртэл байна.');let document;try{document=JSON.parse((await file.text()).replace(/^\uFEFF/,''));}catch{throw new Error('JSON файлын бичлэг буруу байна.');}if(request!==fileToken||uid!==ctx.user()?.id)return;const list=parseProblemImport(document);for(const p of list)if(rows.some(r=>r.url===p.url||(r.source===p.source&&r.ref.toLowerCase()===p.ref.toLowerCase())))throw new Error(p.title+': энэ бодлого санд байна (хассан бодлого ч багтана).');pendingImport=list;for(const p of list){const li=window.document.createElement('li');li.textContent=p.title+' · '+p.source+' '+p.ref+' · '+p.rating;$('admin-import-preview').append(li);}$('admin-import-message').textContent=list.length+' бодлого бэлэн. Нэмэх товчийг дарж хадгална.';$('admin-import-submit').disabled=busy;}
+  catch(e){if(request===fileToken&&uid===ctx.user()?.id)$('admin-import-message').textContent=e.message;}
+ };
+ $('admin-import-submit').onclick=async()=>{if(!admin||busy||!pendingImport.length)return;const uid=ctx.user()?.id,payload=pendingImport;setBusy(true);$('admin-import-message').textContent='Нэмж байна…';
+  try{const saved=await rpc(ctx.client(),'admin_import_problems',{p_problems:payload});if(uid!==ctx.user()?.id)return;pendingImport=[];$('admin-import-file').value='';$('admin-import-preview').replaceChildren();await ctx.refreshCatalog();setBusy(false);await load();$('admin-import-message').textContent=saved.length+' бодлого нэмэгдлээ. ID: '+saved.map(p=>'#'+p.number).join(', ');}
+  catch(e){if(uid===ctx.user()?.id)$('admin-import-message').textContent=accountError(e);}finally{setBusy(false);}
+ };
+ $('admin-grant-username').oninput=()=>{grantTarget=null;$('admin-grant-submit').hidden=true;$('admin-grant-preview').textContent='';$('admin-grant-message').textContent='';};
+ $('admin-grant-form').onsubmit=async event=>{event.preventDefault();if(!admin||busy)return;grantTarget=null;$('admin-grant-submit').hidden=true;const uid=ctx.user()?.id,name=$('admin-grant-username').value.trim().replace(/^@/,'').toLowerCase();setBusy(true);
+  try{const id=await rpc(ctx.client(),'get_profile_id',{p_username:name});if(!id)throw new Error('Хэрэглэгч олдсонгүй.');const profiles=await rpc(ctx.client(),'get_public_profile',{p_user_id:id}),p=profiles?.[0];if(uid!==ctx.user()?.id)return;if(!p)throw new Error('Profile олдсонгүй.');grantTarget=id;$('admin-grant-preview').textContent='@'+p.username+' · '+(p.full_name||'Нэр оруулаагүй')+' · '+(p.school||'Сургууль оруулаагүй');$('admin-grant-message').textContent='Энэ хэрэглэгчийг админ болгох бол доорх товчийг дарна уу.';$('admin-grant-submit').hidden=false;}
+  catch(e){if(uid===ctx.user()?.id)$('admin-grant-message').textContent=accountError(e);}finally{setBusy(false);}
+ };
+ $('admin-grant-submit').onclick=async()=>{if(!admin||busy||!grantTarget)return;const uid=ctx.user()?.id,target=grantTarget;setBusy(true);
+  try{await rpc(ctx.client(),'admin_grant',{p_user_id:target});if(uid!==ctx.user()?.id)return;grantTarget=null;$('admin-grant-submit').hidden=true;$('admin-grant-message').textContent='Админ эрх олголоо. Тухайн хэрэглэгч дахин нэвтэрч Admin хэсгээ нээнэ.';await loadAdmins();}
+  catch(e){if(uid===ctx.user()?.id)$('admin-grant-message').textContent=accountError(e);}finally{setBusy(false);}
+ };
+ return {accountChanged(){const id=ctx.user()?.id||null;if(id===accountId)return;accountId=id;token++;fileToken++;pendingImport=[];grantTarget=null;$('admin-import-file').value='';$('admin-import-preview').replaceChildren();$('admin-list').replaceChildren();$('admin-grant-form').reset();$('admin-grant-submit').hidden=true;for(const key of ['admin-import-message','admin-grant-message','admin-grant-preview'])$(key).textContent='';setBusy(false);$('admin-form').reset();void checkRole();},connected(){void checkRole();}};
 }
