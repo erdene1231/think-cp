@@ -1,5 +1,7 @@
 import {EMPTY, cleanEntry, parseBackup} from './progress.js';
-import {getProfile, putProfile, getSolvers, profileError} from './community.js';
+import {getSolvers} from './community.js?v=6';
+import {ownProfile,saveOwnProfile,avatarUrl,accountError} from './accounts.js?v=6';
+import {setupSocial} from './social.js?v=6';
 import {filterProblems, getTags, ratingLabel} from './catalog.js?v=4';
 const $ = id => document.getElementById(id);
 const STATUS = {new:'Эхлээгүй',trying:'Оролдож байгаа',solved:'Бодсон'};
@@ -7,6 +9,7 @@ let data, selectedPack='', selectedProblem, state={}, dirty={}, user=null, clien
 let username=null, profileLoading=false, profileSaving=false, solverRequest=0, solverNames=[], solverTotal=0;
 let detailTagsShown=false;
 const hiddenHints=new Set();
+let social=null, myProfile=null, avatarPreviewUrl=null;
 const cfg=window.THINK_CP_CONFIG || {};
 const configured=Boolean(cfg.supabaseUrl && cfg.supabaseKey);
 const key=()=> 'think-cp:v1:'+(user?.id || 'guest');
@@ -67,7 +70,7 @@ function renderDetail() {
 }
 async function switchUser(next) {
   if(user?.id===next?.id)return;
-  const turn=++epoch;user=next;username=null;profileLoading=false;profileSaving=false;$('username').value='';$('profile-feedback').textContent='';loading=!!user;$('detail').close();readLocal();render();updateAccount();
+  const turn=++epoch;user=next;username=null;myProfile=null;if(avatarPreviewUrl){URL.revokeObjectURL(avatarPreviewUrl);avatarPreviewUrl=null;}for(const id of ['full-name','school','avatar-file'])$(id).value='';$('remove-avatar').checked=false;renderOwnAvatar();profileLoading=false;profileSaving=false;$('username').value='';$('profile-feedback').textContent='';loading=!!user;$('detail').close();readLocal();render();updateAccount();
   if(user) {
     void loadProfile();
     try {
@@ -91,25 +94,31 @@ async function sync() {
   } catch(error) {if(turn===epoch)notice('Онлайн хадгалалт амжилтгүй. Browser-т хадгалсан; дахин оролдох боломжтой. '+error.message);}
   finally {syncing=false;updateAccount();if(syncAgain){syncAgain=false;void sync();}}
 }
+function renderOwnAvatar() {
+  const url=avatarPreviewUrl||avatarUrl(client,myProfile);$('own-avatar').hidden=!url;if(url)$('own-avatar').src=url;else $('own-avatar').removeAttribute('src');$('own-avatar-fallback').hidden=!!url;$('own-avatar-fallback').textContent=((myProfile?.full_name||myProfile?.username||'?')[0]||'?').toUpperCase();
+}
 function updateAccount() {
+  social?.accountChanged();
+  for(const id of ['full-name','school','avatar-file','remove-avatar'])$(id).disabled=profileLoading||profileSaving||!myProfile;
+  $('reload-profile').hidden=!user||!!myProfile;$('reload-profile').disabled=profileLoading;
   $('account').textContent=user?(username?'@'+username:'Миний account'):'Нэвтрэх';$('storage-label').textContent=user?'Account + энэ browser':'Энэ browser-т хадгална';
   $('auth-form').hidden=!client||!!user;$('signout').hidden=!user;$('retry-sync').hidden=!user||!Object.keys(dirty).length;
-  $('profile-form').hidden=!client||!user;$('save-username').disabled=profileLoading||profileSaving;$('username').disabled=profileLoading||profileSaving;
+  $('profile-form').hidden=!client||!user;$('save-username').disabled=profileLoading||profileSaving||!myProfile;$('username').disabled=profileLoading||profileSaving||!myProfile;
   $('current-username').textContent=username?'Одоогийн нэр: @'+username:'Username-ээ тохируулсны дараа бодсон хүмүүсийн жагсаалтад гарна.';
   $('auth-info').textContent=user?'Нэвтэрсэн: '+user.email:client?'Email-аар бүртгүүлж, бусад төхөөрөмжөөс progress-оо үргэлжлүүлээрэй. Зочин progress автоматаар account руу шилжихгүй; татаж аваад нэвтэрсний дараа сэргээж болно.':'Account хараахан идэвхжээгүй. Одоогоор зочин горимоор ашиглаж, progress-оо энэ browser-т хадгалах эсвэл файл болгож татах боломжтой.';
 }
 async function loadProfile() {
   const turn=epoch, uid=user?.id;if(!client||!uid)return;
   profileLoading=true;updateAccount();
-  try {const name=await getProfile(client,uid);if(turn!==epoch)return;username=name;$('username').value=name||'';}
-  catch(error){if(turn===epoch)$('profile-feedback').textContent=profileError(error);}
+  try {const profile=await ownProfile(client,uid);if(turn!==epoch)return;myProfile=profile;username=myProfile.username;$('username').value=username||'';$('full-name').value=myProfile.full_name||'';$('school').value=myProfile.school||'';renderOwnAvatar();}
+  catch(error){if(turn===epoch)$('profile-feedback').textContent=accountError(error);}
   finally {if(turn===epoch){profileLoading=false;updateAccount();}}
 }
 async function saveProfile(event) {
-  event.preventDefault();if(!user||!client||profileLoading||profileSaving||!$('profile-form').reportValidity())return;
-  const turn=epoch, uid=user.id;profileSaving=true;updateAccount();$('profile-feedback').textContent='Username хадгалж байна…';
-  try {const name=await putProfile(client,uid,$('username').value);if(turn!==epoch)return;username=name;$('username').value=name;$('profile-feedback').textContent='Username хадгалагдлаа: @'+name;}
-  catch(error){if(turn===epoch)$('profile-feedback').textContent=profileError(error);}
+  event.preventDefault();if(!user||!client||!myProfile||profileLoading||profileSaving||!$('profile-form').reportValidity())return;
+  const turn=epoch, uid=user.id;profileSaving=true;updateAccount();$('profile-feedback').textContent='Profile хадгалж байна…';
+  try {const saved=await saveOwnProfile(client,uid,{username:$('username').value,full_name:$('full-name').value,school:$('school').value,avatar_path:$('remove-avatar').checked?null:myProfile?.avatar_path},$('remove-avatar').checked?null:$('avatar-file').files?.[0],myProfile?.avatar_path);if(turn!==epoch)return;myProfile=saved;username=saved.username;$('username').value=username;$('avatar-file').value='';$('remove-avatar').checked=false;if(avatarPreviewUrl){URL.revokeObjectURL(avatarPreviewUrl);avatarPreviewUrl=null;}renderOwnAvatar();$('profile-feedback').textContent='Profile хадгалагдлаа.';social?.connected();}
+  catch(error){if(turn===epoch)$('profile-feedback').textContent=accountError(error);}
   finally {if(turn===epoch){profileSaving=false;updateAccount();}}
 }
 async function loadSolvers(append=false) {
@@ -123,7 +132,7 @@ async function loadSolvers(append=false) {
     const result=await getSolvers(client,pid,offset);
     if(request!==solverRequest||turn!==epoch||selectedProblem.id!==pid||!$('detail').open)return;
     solverNames=[...new Set([...solverNames,...result.names])];solverTotal=result.total||solverNames.length;
-    $('solver-list').replaceChildren();for(const name of solverNames)$('solver-list').append(el('li',name===username?'mine':'','@'+name+(name===username?' · чи':'')));
+    $('solver-list').replaceChildren();for(const name of solverNames){const li=el('li',name===username?'mine':''),button=el('button','','@'+name+(name===username?' · чи':''));button.onclick=()=>{ $('detail').close();void social?.byUsername(name);};li.append(button);$('solver-list').append(li);}
     $('solver-count').textContent='('+solverTotal+')';$('solvers-message').textContent=solverNames.length?'':'Одоогоор username-тай хэрэглэгч “Бодсон” гэж тэмдэглээгүй байна.';
     $('more-solvers').hidden=!result.names.length||solverNames.length>=solverTotal;
   } catch(error){if(request===solverRequest&&turn===epoch){$('solvers-message').textContent='Жагсаалтыг ачаалж чадсангүй. Шинэчлэх товчоор дахин оролдоорой.';}}
@@ -150,7 +159,11 @@ async function init() {
   render();
   document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
   $('account').onclick=()=>{updateAccount();$('auth').showModal();};
+  social=setupSocial({client:()=>client,user:()=>user,problems:()=>data.problems,openProblem,openAccount:()=>{$('account').onclick();},notice});
+  $('avatar-file').onchange=()=>{if(avatarPreviewUrl)URL.revokeObjectURL(avatarPreviewUrl);avatarPreviewUrl=null;const file=$('avatar-file').files?.[0];if(file){avatarPreviewUrl=URL.createObjectURL(file);$('remove-avatar').checked=false;}renderOwnAvatar();};
+  $('remove-avatar').onchange=()=>{if($('remove-avatar').checked){$('avatar-file').value='';if(avatarPreviewUrl)URL.revokeObjectURL(avatarPreviewUrl);avatarPreviewUrl=null;$('own-avatar').hidden=true;$('own-avatar-fallback').hidden=false;}else renderOwnAvatar();};
   $('profile-form').onsubmit=event=>void saveProfile(event);
+  $('reload-profile').onclick=()=>void loadProfile();
   $('refresh-solvers').onclick=()=>void loadSolvers();$('more-solvers').onclick=()=>void loadSolvers(true);
   $('detail').addEventListener('close',()=>{solverRequest++;selectedProblem=null;});
   $('problem-status').onchange=()=>{setEntry(selectedProblem.id,{status:$('problem-status').value});renderDetail();};
@@ -169,8 +182,8 @@ async function init() {
   if(configured) {
     try {
       const {createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');client=createClient(cfg.supabaseUrl,cfg.supabaseKey);
-      const {data:sessionData,error}=await client.auth.getSession();if(error)throw error;await switchUser(sessionData.session?.user || null);
-      client.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>void switchUser(session?.user || null),0);});updateAccount();
+      client.auth.onAuthStateChange((event,session)=>{social.authEvent(event,session);setTimeout(()=>void switchUser(session?.user || null),0);});
+      const {data:sessionData,error}=await client.auth.getSession();if(error)throw error;await switchUser(sessionData.session?.user || null);updateAccount();social.connected();
     } catch(error){client=null;updateAccount();notice('Account холболт ажилласангүй: '+error.message);}
   }
 }
