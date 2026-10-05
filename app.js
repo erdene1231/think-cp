@@ -1,16 +1,17 @@
 import {EMPTY, cleanEntry, parseBackup} from './progress.js';
 import {getSolvers} from './community.js?v=6';
-import {setupAdmin} from './admin.js?v=9';
-import {parseCatalog,hintTexts} from './problem-store.js?v=9';
+import {setupAdmin} from './admin.js?v=10';
+import {parseCatalog,hintTexts,getSources} from './problem-store.js?v=10';
 import {rpc} from './accounts.js?v=6';
 import {ownProfile,saveOwnProfile,avatarUrl,accountError} from './accounts.js?v=6';
-import {setupSocial} from './social.js?v=9';
-import {filterProblems, getTags, ratingLabel} from './catalog.js?v=9';
+import {setupSocial} from './social.js?v=10';
+import {filterProblems, getTags, ratingLabel} from './catalog.js?v=10';
 const $ = id => document.getElementById(id);
 const STATUS = {new:'Эхлээгүй',trying:'Оролдож байгаа',solved:'Бодсон'};
 let data, selectedPack='', selectedProblem, state={}, dirty={}, user=null, client=null, loading=false, syncing=false, syncAgain=false, epoch=0;
 let username=null, profileLoading=false, profileSaving=false, solverRequest=0, solverNames=[], solverTotal=0;
-let detailTagsShown=false;
+let detailTagsShown=false,problemPage=0,lastFilterKey='';
+const PROBLEMS_PER_PAGE=100;
 const hiddenHints=new Set();
 let social=null, adminUI=null, myProfile=null, avatarPreviewUrl=null, catalogLoading=false;
 let catalogIds=new Set(),hintLanguage='mn';
@@ -35,16 +36,23 @@ function render() {
   const trying=data.problems.filter(p=>entry(p.id).status==='trying').length;
   const percent=(data.problems.length?Math.round(solved/data.problems.length*100):0);
   $('total').textContent=data.problems.length;$('solved').textContent=solved;$('trying').textContent=trying;$('percent').textContent=percent+'%';$('progress').value=percent;
-  const filters={query:$('search').value,source:$('source').value,status:$('status-filter').value,pack:selectedPack,tag:$('tag-filter').value,ratingBand:$('rating-filter').value,priorityOnly:$('priority-only').checked,sort:$('sort').value};
+  const filters={query:$('search').value,source:$('source').value,status:$('status-filter').value,pack:selectedPack,tag:$('tag-filter').value,ratingBand:$('rating-filter').value,minRating:$('min-rating').value,maxRating:$('max-rating').value,priorityOnly:$('priority-only').checked,sort:$('sort').value};
+  const filterKey=JSON.stringify(filters);if(filterKey!==lastFilterKey){problemPage=0;lastFilterKey=filterKey;}
   $('packs').replaceChildren();
   for(const pack of [{id:'',title:'Бүгд'},...data.packs]) {
     const b=el('button',pack.id===selectedPack?'active':'',pack.title);b.setAttribute('aria-pressed',String(pack.id===selectedPack));b.onclick=()=>{selectedPack=pack.id;render();};$('packs').append(b);
   }
   $('pack-note').textContent=data.packs.find(p=>p.id===selectedPack)?.description || '★ Priority бодлогууд нь observation болон creative reasoning-д онцгой анхаарсан сонголт. Rating бол чиг баримжаа; өөрийн түвшинд тохируулж сонго.';
   $('problems').replaceChildren();
-  const filtered=filterProblems(data.problems,state,filters);
+  const invalidRange=!$('min-rating').checkValidity()||!$('max-rating').checkValidity()||($('min-rating').value!==''&&$('max-rating').value!==''&&Number($('min-rating').value)>Number($('max-rating').value));
+  const filtered=invalidRange?[]:filterProblems(data.problems,state,filters);
   $('results-count').textContent=filtered.length+' / '+data.problems.length+' бодлого';
-  for(const p of filtered) {
+  const pageCount=Math.ceil(filtered.length/PROBLEMS_PER_PAGE);problemPage=Math.max(0,Math.min(problemPage,pageCount-1));
+  const start=problemPage*PROBLEMS_PER_PAGE,end=Math.min(start+PROBLEMS_PER_PAGE,filtered.length);
+  $('problem-prev').disabled=problemPage===0||!pageCount;$('problem-next').disabled=!pageCount||problemPage>=pageCount-1;
+  $('problem-page').textContent=pageCount?(problemPage+1)+' / '+pageCount+' хуудас · '+(start+1)+'–'+end+' / '+filtered.length+' бодлого':'0 бодлого';
+  $('rating-range-message').textContent=invalidRange?'Rating хязгаар 0–4000 бүхэл тоо байна. Min rating нь Max rating-аас их байж болохгүй.':'';
+  for(const p of filtered.slice(start,end)) {
     const row=el('article','problem'+(p.priority?' is-priority':'')), n=el('span','number','#'+String(p.number).padStart(3,'0')), b=el('button','open');b.disabled=loading||catalogLoading;
     const heading=el('h3','',p.title);
     if(p.priority){const star=el('span','priority-star','★');star.title='Priority бодлого';star.setAttribute('aria-label','Priority');heading.prepend(star);}
@@ -151,33 +159,35 @@ async function authAction(signup) {
     if(result.error)throw result.error;$('password').value='';$('auth-feedback').textContent=result.data.session?'Амжилттай нэвтэрлээ.':'Email баталгаажуулах холбоосоо шалгаад нэвтэрнэ үү.';await switchUser(result.data.session?.user || null);
   } catch(error){$('auth-feedback').textContent=error.message;}finally{buttons.forEach(b=>b.disabled=false);}
 }
+function populateSources(){for(const id of ['source','admin-source']){const chosen=$(id).value;$(id).replaceChildren();if(id==='source'){const option=el('option','','Бүгд');option.value='';$(id).append(option);}for(const source of getSources(data.problems,data.sources||[])){const option=el('option','',source);option.value=source;$(id).append(option);}$(id).value=[...$(id).options].some(o=>o.value===chosen)?chosen:(id==='source'?'':'Codeforces');}adminUI?.sourcesChanged();}
 function populateTags(){const chosen=$('tag-filter').value;$('tag-filter').replaceChildren(el('option','','Бүх tags'));$('tag-filter').children[0].value='';for(const tag of getTags(data.problems)){const option=el('option','',tag);option.value=tag;$('tag-filter').append(option);}$('tag-filter').value=getTags(data.problems).includes(chosen)?chosen:'';}
 async function refreshCatalog(){if(!client){catalogLoading=false;render();notice('Онлайн бодлогын сангийн холболт шаардлагатай.');return false;}catalogLoading=true;render();
- try{const document=parseCatalog(await rpc(client,'get_catalog'));data.problems=document.problems;for(const id of document.knownIds)catalogIds.add(id);try{localStorage.setItem('think-cp:online-catalog',JSON.stringify(document));}catch{}populateTags();
+ try{const document=parseCatalog(await rpc(client,'get_catalog'));data.problems=document.problems;data.sources=document.sources||[];for(const id of document.knownIds)catalogIds.add(id);try{localStorage.setItem('think-cp:online-catalog',JSON.stringify(document));}catch{}populateTags();populateSources();
   if(selectedProblem){selectedProblem=data.problems.find(p=>p.id===selectedProblem.id);if(selectedProblem)renderDetail();else $('detail').close();}social?.connected();return true;
  }catch(error){notice('Онлайн бодлогын сан шинэчлэгдсэнгүй. Одоогийн хуулбарыг харуулж байна. '+accountError(error));return false;}
  finally{catalogLoading=false;render();}
 }
 async function init() {
-  const response=await fetch('./problems.json?v=9', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();catalogIds=new Set(data.problems.map(p=>p.id));catalogLoading=configured;
-  try{const cached=parseCatalog(JSON.parse(localStorage.getItem('think-cp:online-catalog')||'null'));data.problems=cached.problems;for(const id of cached.knownIds)catalogIds.add(id);}catch{}
+  const response=await fetch('./problems.json?v=10', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();catalogIds=new Set(data.problems.map(p=>p.id));catalogLoading=configured;
+  try{const cached=parseCatalog(JSON.parse(localStorage.getItem('think-cp:online-catalog')||'null'));data.problems=cached.problems;data.sources=cached.sources||[];for(const id of cached.knownIds)catalogIds.add(id);}catch{}
   readLocal();render();updateAccount();
-  populateTags();
+  populateTags();populateSources();
   try{hintLanguage=localStorage.getItem('think-cp:hint-language')==='en'?'en':'mn';}catch{}$('hint-language').value=hintLanguage;
   $('hint-language').onchange=()=>{hintLanguage=$('hint-language').value;try{localStorage.setItem('think-cp:hint-language',hintLanguage);}catch{}renderDetail();};
   $('refresh-catalog').onclick=()=>void refreshCatalog();
   try {const prefs=JSON.parse(localStorage.getItem('think-cp:catalog-preferences')||'{}');$('show-tags').checked=prefs.showTags===true;if(['rating-asc','rating-desc','priority','title','number-asc'].includes(prefs.sort))$('sort').value=prefs.sort;}catch{}
   const savePreferences=()=>{try{localStorage.setItem('think-cp:catalog-preferences',JSON.stringify({showTags:$('show-tags').checked,sort:$('sort').value}));}catch{}};
-  for(const id of ['search','source','status-filter','tag-filter','rating-filter','priority-only'])$(id).addEventListener('input',render);
+  for(const id of ['search','source','status-filter','tag-filter','rating-filter','min-rating','max-rating','priority-only'])$(id).addEventListener('input',render);
+  for(const [id,delta] of [['problem-prev',-1],['problem-next',1]])$(id).onclick=()=>{problemPage+=delta;render();$('packs').scrollIntoView({block:'start'});};
   $('sort').addEventListener('change',()=>{savePreferences();render();});
   $('show-tags').addEventListener('change',()=>{savePreferences();render();if(selectedProblem)renderDetail();});
   $('reveal-detail-tags').onclick=()=>{detailTagsShown=!detailTagsShown;renderDetail();};
-  $('reset-filters').onclick=()=>{selectedPack='';for(const id of ['search','source','status-filter','tag-filter','rating-filter'])$(id).value='';$('priority-only').checked=false;$('sort').value='rating-asc';savePreferences();render();};
+  $('reset-filters').onclick=()=>{selectedPack='';for(const id of ['search','source','status-filter','tag-filter','rating-filter','min-rating','max-rating'])$(id).value='';$('priority-only').checked=false;$('sort').value='rating-asc';savePreferences();render();};
   render();
   document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
   $('account').onclick=()=>{updateAccount();$('auth').showModal();};
   social=setupSocial({client:()=>client,user:()=>user,problems:()=>data.problems,openProblem,openAccount:()=>{$('account').onclick();},notice});
-  adminUI=setupAdmin({client:()=>client,user:()=>user,refreshCatalog});
+  adminUI=setupAdmin({client:()=>client,user:()=>user,refreshCatalog,sources:()=>getSources(data.problems,data.sources||[])});
   $('avatar-file').onchange=()=>{if(avatarPreviewUrl)URL.revokeObjectURL(avatarPreviewUrl);avatarPreviewUrl=null;const file=$('avatar-file').files?.[0];if(file){avatarPreviewUrl=URL.createObjectURL(file);$('remove-avatar').checked=false;}renderOwnAvatar();};
   $('remove-avatar').onchange=()=>{if($('remove-avatar').checked){$('avatar-file').value='';if(avatarPreviewUrl)URL.revokeObjectURL(avatarPreviewUrl);avatarPreviewUrl=null;$('own-avatar').hidden=true;$('own-avatar-fallback').hidden=false;}else renderOwnAvatar();};
   $('profile-form').onsubmit=event=>void saveProfile(event);
