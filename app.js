@@ -1,7 +1,9 @@
 import {EMPTY, cleanEntry, parseBackup} from './progress.js';
+import {getProfile, putProfile, getSolvers, profileError} from './community.js';
 const $ = id => document.getElementById(id);
 const STATUS = {new:'Эхлээгүй',trying:'Оролдож байгаа',solved:'Бодсон'};
 let data, selectedPack='', selectedProblem, state={}, dirty={}, user=null, client=null, loading=false, syncing=false, syncAgain=false, epoch=0;
+let username=null, profileLoading=false, profileSaving=false, solverRequest=0, solverNames=[], solverTotal=0;
 const cfg=window.THINK_CP_CONFIG || {};
 const configured=Boolean(cfg.supabaseUrl && cfg.supabaseKey);
 const key=()=> 'think-cp:v1:'+(user?.id || 'guest');
@@ -40,7 +42,7 @@ function render() {
   }
   if(!filtered.length)$('problems').append(el('p','muted','Тохирох бодлого олдсонгүй. Шүүлтүүрээ өөрчлөөрэй.'));
 }
-function openProblem(p) {selectedProblem=p;$('detail-title').textContent=p.title;$('detail-source').textContent=p.source+' · '+p.ref;$('detail-note').textContent=p.level;$('problem-link').href=p.url;$('notes').value=entry(p.id).notes;$('detail-feedback').textContent='';renderDetail();$('detail').showModal();}
+function openProblem(p) {selectedProblem=p;$('detail-title').textContent=p.title;$('detail-source').textContent=p.source+' · '+p.ref;$('detail-note').textContent=p.level;$('problem-link').href=p.url;$('notes').value=entry(p.id).notes;$('detail-feedback').textContent='';renderDetail();$('detail').showModal();void loadSolvers();}
 function renderDetail() {
   if(!selectedProblem)return;const p=selectedProblem,e=entry(p.id);$('problem-status').value=e.status;$('hint-list').replaceChildren();
   p.hints.slice(0,e.hints).forEach((hint,i)=>{const h=el('div','hint');h.append(el('b','','HINT '+(i+1)),el('span','',hint));$('hint-list').append(h);});
@@ -48,8 +50,9 @@ function renderDetail() {
 }
 async function switchUser(next) {
   if(user?.id===next?.id)return;
-  const turn=++epoch;user=next;loading=!!user;$('detail').close();readLocal();render();updateAccount();
+  const turn=++epoch;user=next;username=null;profileLoading=false;profileSaving=false;$('username').value='';$('profile-feedback').textContent='';loading=!!user;$('detail').close();readLocal();render();updateAccount();
   if(user) {
+    void loadProfile();
     try {
       const {data:rows,error}=await client.from('progress').select('problem_id,status,hints,notes').eq('user_id',user.id);
       if(error)throw error;if(turn!==epoch)return;
@@ -67,13 +70,47 @@ async function sync() {
     const {error}=await client.from('progress').upsert(Object.entries(batch).map(([problem_id,e])=>({user_id:uid,problem_id,...e})),{onConflict:'user_id,problem_id'});
     if(error)throw error;if(turn!==epoch)return;
     for(const id of Object.keys(batch))if(dirty[id]===batch[id])delete dirty[id];persist();notice(Object.keys(dirty).length?'Өөрчлөлтийг хадгалж байна…':'Онлайн progress хадгалагдлаа.');
+    if($('detail').open && batch[selectedProblem?.id])void loadSolvers();
   } catch(error) {if(turn===epoch)notice('Онлайн хадгалалт амжилтгүй. Browser-т хадгалсан; дахин оролдох боломжтой. '+error.message);}
   finally {syncing=false;updateAccount();if(syncAgain){syncAgain=false;void sync();}}
 }
 function updateAccount() {
-  $('account').textContent=user?'Миний account':'Нэвтрэх';$('storage-label').textContent=user?'Account + энэ browser':'Энэ browser-т хадгална';
+  $('account').textContent=user?(username?'@'+username:'Миний account'):'Нэвтрэх';$('storage-label').textContent=user?'Account + энэ browser':'Энэ browser-т хадгална';
   $('auth-form').hidden=!client||!!user;$('signout').hidden=!user;$('retry-sync').hidden=!user||!Object.keys(dirty).length;
+  $('profile-form').hidden=!client||!user;$('save-username').disabled=profileLoading||profileSaving;$('username').disabled=profileLoading||profileSaving;
+  $('current-username').textContent=username?'Одоогийн нэр: @'+username:'Username-ээ тохируулсны дараа бодсон хүмүүсийн жагсаалтад гарна.';
   $('auth-info').textContent=user?'Нэвтэрсэн: '+user.email:client?'Email-аар бүртгүүлж, бусад төхөөрөмжөөс progress-оо үргэлжлүүлээрэй. Зочин progress автоматаар account руу шилжихгүй; татаж аваад нэвтэрсний дараа сэргээж болно.':'Account хараахан идэвхжээгүй. Одоогоор зочин горимоор ашиглаж, progress-оо энэ browser-т хадгалах эсвэл файл болгож татах боломжтой.';
+}
+async function loadProfile() {
+  const turn=epoch, uid=user?.id;if(!client||!uid)return;
+  profileLoading=true;updateAccount();
+  try {const name=await getProfile(client,uid);if(turn!==epoch)return;username=name;$('username').value=name||'';}
+  catch(error){if(turn===epoch)$('profile-feedback').textContent=profileError(error);}
+  finally {if(turn===epoch){profileLoading=false;updateAccount();}}
+}
+async function saveProfile(event) {
+  event.preventDefault();if(!user||!client||profileLoading||profileSaving||!$('profile-form').reportValidity())return;
+  const turn=epoch, uid=user.id;profileSaving=true;updateAccount();$('profile-feedback').textContent='Username хадгалж байна…';
+  try {const name=await putProfile(client,uid,$('username').value);if(turn!==epoch)return;username=name;$('username').value=name;$('profile-feedback').textContent='Username хадгалагдлаа: @'+name;}
+  catch(error){if(turn===epoch)$('profile-feedback').textContent=profileError(error);}
+  finally {if(turn===epoch){profileSaving=false;updateAccount();}}
+}
+async function loadSolvers(append=false) {
+  if(!selectedProblem || !$('detail').open)return;
+  const request=++solverRequest, pid=selectedProblem.id, turn=epoch, offset=append?solverNames.length:0;
+  if(!append){solverNames=[];solverTotal=0;$('solver-list').replaceChildren();$('solver-count').textContent='';}
+  $('more-solvers').hidden=true;$('refresh-solvers').disabled=true;
+  if(!client){$('solvers-message').textContent='Бодсон хүмүүсийг харахад онлайн холболт шаардлагатай.';$('refresh-solvers').disabled=false;return;}
+  $('solvers-message').textContent='Бодсон хүмүүсийг ачаалж байна…';
+  try {
+    const result=await getSolvers(client,pid,offset);
+    if(request!==solverRequest||turn!==epoch||selectedProblem.id!==pid||!$('detail').open)return;
+    solverNames=[...new Set([...solverNames,...result.names])];solverTotal=result.total||solverNames.length;
+    $('solver-list').replaceChildren();for(const name of solverNames)$('solver-list').append(el('li',name===username?'mine':'','@'+name+(name===username?' · чи':'')));
+    $('solver-count').textContent='('+solverTotal+')';$('solvers-message').textContent=solverNames.length?'':'Одоогоор username-тай хэрэглэгч “Бодсон” гэж тэмдэглээгүй байна.';
+    $('more-solvers').hidden=!result.names.length||solverNames.length>=solverTotal;
+  } catch(error){if(request===solverRequest&&turn===epoch){$('solvers-message').textContent='Жагсаалтыг ачаалж чадсангүй. Шинэчлэх товчоор дахин оролдоорой.';}}
+  finally {if(request===solverRequest&&turn===epoch)$('refresh-solvers').disabled=false;}
 }
 async function authAction(signup) {
   if(!$('auth-form').reportValidity())return;const buttons=$('auth-form').querySelectorAll('button');buttons.forEach(b=>b.disabled=true);$('auth-feedback').textContent='Түр хүлээнэ үү…';
@@ -88,6 +125,9 @@ async function init() {
   for(const id of ['search','source','status-filter'])$(id).addEventListener('input',render);
   document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
   $('account').onclick=()=>{updateAccount();$('auth').showModal();};
+  $('profile-form').onsubmit=event=>void saveProfile(event);
+  $('refresh-solvers').onclick=()=>void loadSolvers();$('more-solvers').onclick=()=>void loadSolvers(true);
+  $('detail').addEventListener('close',()=>{solverRequest++;selectedProblem=null;});
   $('problem-status').onchange=()=>{setEntry(selectedProblem.id,{status:$('problem-status').value});renderDetail();};
   $('next-hint').onclick=()=>{const e=entry(selectedProblem.id);setEntry(selectedProblem.id,{hints:Math.min(e.hints+1,3),status:e.status==='new'?'trying':e.status});renderDetail();};
   $('save-note').onclick=()=>{setEntry(selectedProblem.id,{notes:$('notes').value});$('detail-feedback').textContent='Тэмдэглэлийг progress-д нэмлээ. Хадгалалтын төлөвийг үндсэн хуудаснаас харна уу.';};
