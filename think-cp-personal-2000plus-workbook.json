@@ -1,0 +1,2913 @@
+{
+  "metadata": {
+    "name": "MunkhErdene — Workbook + Codeforces 2000+",
+    "createdAt": "2026-10-05",
+    "count": 159,
+    "workbookTasksIncluded": 119,
+    "additional2000Plus": 40,
+    "priorityCount": 44,
+    "hints": "Энэ багцад hint, thinking lens, solution, lesson оруулаагүй. Tags-ийг сайт дээр хүсвэл нээж харж болно.",
+    "ratings": "Codeforces official problemset/API metadata. HTML-ийн бүх 120 ID API-д байгаа; rating өөрчлөгдөөгүй. HTML-ийн 1600–3000 бодлогуудыг шүүлгүй хадгалсан. Нэмэлт 40 бодлого 2000–2700; 2200–2600-ыг түлхүү сонгосон.",
+    "selection": "Observation, invariants, constructive reasoning, DP modelling, graphs, bitwise reasoning, randomized reasoning and proof-driven implementation. Workbook priority retained; additional priority is an editorial recommendation.",
+    "grouping": "Бүгд personal practice tag-тай. HTML-ээс ирсэн нь workbook, нэмэлт нь 2000+ tag-тай.",
+    "import": "Эхлээд 006-optional-hints.sql болон v9 frontend шинэчлэлтийг суулга. Дараа нь Admin → JSON upload → энэ файл → 159 бодлогын preview → Нэмэх. Numeric ID автоматаар олгогдоно; workbook эхний дарааллаараа, дараа нь нэмэлт 40.",
+    "duplicates": [
+      {
+        "ref": "1398/C",
+        "title": "Good Subarrays",
+        "reason": "Өмнөх санд байгаа; давхар нэмэхгүй."
+      }
+    ],
+    "liveStatus": "JSON бэлтгэсэн; live Supabase санд хараахан нэмээгүй. Өмнөх 85+53 бодлогын багцтай давхцахгүй шалгасан. Live санд өөр нэмэлт бодлого байвал importer давхардлыг дахин шалгана.",
+    "sources": [
+      "Uploaded Codeforces_Creative_Problem_Solving_Workbook_MunkhErdene (1)(1).html, workbookData JSON (120 tasks)",
+      "https://codeforces.com/api/problemset.problems"
+    ]
+  },
+  "problems": [
+    {
+      "title": "Strange Function",
+      "source": "Codeforces",
+      "ref": "1542/C",
+      "url": "https://codeforces.com/problemset/problem/1542/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Ehab and Prefix MEXs",
+      "source": "Codeforces",
+      "ref": "1364/C",
+      "url": "https://codeforces.com/problemset/problem/1364/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "constructive algorithms",
+        "greedy",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Maximum Sum of Products",
+      "source": "Codeforces",
+      "ref": "1519/D",
+      "url": "https://codeforces.com/problemset/problem/1519/D",
+      "rating": 1600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "dp",
+        "implementation",
+        "math",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Running Miles",
+      "source": "Codeforces",
+      "ref": "1826/D",
+      "url": "https://codeforces.com/problemset/problem/1826/D",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "dp",
+        "greedy",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Ehab the Xorcist",
+      "source": "Codeforces",
+      "ref": "1325/D",
+      "url": "https://codeforces.com/problemset/problem/1325/D",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "bitmasks",
+        "constructive algorithms",
+        "greedy",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "XOR Equation",
+      "source": "Codeforces",
+      "ref": "627/A",
+      "url": "https://codeforces.com/problemset/problem/627/A",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dp",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Max GEQ Sum",
+      "source": "Codeforces",
+      "ref": "1691/D",
+      "url": "https://codeforces.com/problemset/problem/1691/D",
+      "rating": 1800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "binary search",
+        "constructive algorithms",
+        "data structures",
+        "divide and conquer",
+        "implementation",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Modulo Sum",
+      "source": "Codeforces",
+      "ref": "577/B",
+      "url": "https://codeforces.com/problemset/problem/577/B",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "combinatorics",
+        "data structures",
+        "dp",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Zigzags",
+      "source": "Codeforces",
+      "ref": "1400/D",
+      "url": "https://codeforces.com/problemset/problem/1400/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "combinatorics",
+        "data structures",
+        "math",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Serval and The Formula",
+      "source": "Codeforces",
+      "ref": "2085/C",
+      "url": "https://codeforces.com/problemset/problem/2085/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "constructive algorithms",
+        "dp",
+        "greedy",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Partitioning the Array",
+      "source": "Codeforces",
+      "ref": "1920/C",
+      "url": "https://codeforces.com/problemset/problem/1920/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Permute Digits",
+      "source": "Codeforces",
+      "ref": "915/C",
+      "url": "https://codeforces.com/problemset/problem/915/C",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dp",
+        "greedy",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Array Painting",
+      "source": "Codeforces",
+      "ref": "1849/D",
+      "url": "https://codeforces.com/problemset/problem/1849/D",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "greedy",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Neutral Tonality",
+      "source": "Codeforces",
+      "ref": "1893/B",
+      "url": "https://codeforces.com/problemset/problem/1893/B",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "greedy",
+        "sortings",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Squaring",
+      "source": "Codeforces",
+      "ref": "1995/C",
+      "url": "https://codeforces.com/problemset/problem/1995/C",
+      "rating": 1800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "constructive algorithms",
+        "greedy",
+        "implementation",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Binary String Sorting",
+      "source": "Codeforces",
+      "ref": "1809/D",
+      "url": "https://codeforces.com/problemset/problem/1809/D",
+      "rating": 1800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "greedy",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Messenger in MAC",
+      "source": "Codeforces",
+      "ref": "1935/C",
+      "url": "https://codeforces.com/problemset/problem/1935/C",
+      "rating": 1800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "binary search",
+        "brute force",
+        "constructive algorithms",
+        "data structures",
+        "dp",
+        "greedy",
+        "sortings",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Dual (Hard Version)",
+      "source": "Codeforces",
+      "ref": "1854/A2",
+      "url": "https://codeforces.com/problemset/problem/1854/A2",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "constructive algorithms",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Absolute Beauty",
+      "source": "Codeforces",
+      "ref": "1898/D",
+      "url": "https://codeforces.com/problemset/problem/1898/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "greedy",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Longest Max Min Subsequence",
+      "source": "Codeforces",
+      "ref": "2001/D",
+      "url": "https://codeforces.com/problemset/problem/2001/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "brute force",
+        "constructive algorithms",
+        "data structures",
+        "greedy",
+        "implementation",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Minimize the Difference",
+      "source": "Codeforces",
+      "ref": "2013/D",
+      "url": "https://codeforces.com/problemset/problem/2013/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "greedy",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Perform Operations to Maximize Score",
+      "source": "Codeforces",
+      "ref": "1998/C",
+      "url": "https://codeforces.com/problemset/problem/1998/C",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "brute force",
+        "constructive algorithms",
+        "greedy",
+        "implementation",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Manhattan Pairs",
+      "source": "Codeforces",
+      "ref": "2122/C",
+      "url": "https://codeforces.com/problemset/problem/2122/C",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "geometry",
+        "greedy",
+        "math",
+        "sortings",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Genius's Gambit",
+      "source": "Codeforces",
+      "ref": "1492/D",
+      "url": "https://codeforces.com/problemset/problem/1492/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "bitmasks",
+        "constructive algorithms",
+        "greedy",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Nene's Magical Matrix",
+      "source": "Codeforces",
+      "ref": "1956/C",
+      "url": "https://codeforces.com/problemset/problem/1956/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "greedy",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Cells Arrangement",
+      "source": "Codeforces",
+      "ref": "1968/E",
+      "url": "https://codeforces.com/problemset/problem/1968/E",
+      "rating": 1600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Simple Permutation",
+      "source": "Codeforces",
+      "ref": "2089/A",
+      "url": "https://codeforces.com/problemset/problem/2089/A",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Shohag Loves GCD",
+      "source": "Codeforces",
+      "ref": "2039/D",
+      "url": "https://codeforces.com/problemset/problem/2039/D",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "greedy",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Matrix Cascade",
+      "source": "Codeforces",
+      "ref": "1864/D",
+      "url": "https://codeforces.com/problemset/problem/1864/D",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "constructive algorithms",
+        "data structures",
+        "dp",
+        "greedy",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Non Prime Tree",
+      "source": "Codeforces",
+      "ref": "2040/D",
+      "url": "https://codeforces.com/problemset/problem/2040/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "brute force",
+        "constructive algorithms",
+        "dfs and similar",
+        "greedy",
+        "number theory",
+        "trees",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Prime XOR Coloring",
+      "source": "Codeforces",
+      "ref": "1991/D",
+      "url": "https://codeforces.com/problemset/problem/1991/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "constructive algorithms",
+        "graphs",
+        "greedy",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Buying Jewels",
+      "source": "Codeforces",
+      "ref": "1951/D",
+      "url": "https://codeforces.com/problemset/problem/1951/D",
+      "rating": 2000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "greedy",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Make it Zero",
+      "source": "Codeforces",
+      "ref": "2124/E",
+      "url": "https://codeforces.com/problemset/problem/2124/E",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "constructive algorithms",
+        "greedy",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Great Grids",
+      "source": "Codeforces",
+      "ref": "1844/E",
+      "url": "https://codeforces.com/problemset/problem/1844/E",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "2-sat",
+        "constructive algorithms",
+        "dfs and similar",
+        "dsu",
+        "graphs",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Turtle and Multiplication",
+      "source": "Codeforces",
+      "ref": "1981/D",
+      "url": "https://codeforces.com/problemset/problem/1981/D",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "dfs and similar",
+        "graphs",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "The BOSS Can Count Pairs",
+      "source": "Codeforces",
+      "ref": "1830/B",
+      "url": "https://codeforces.com/problemset/problem/1830/B",
+      "rating": 2000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "brute force",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "A BIT of an Inequality",
+      "source": "Codeforces",
+      "ref": "1957/D",
+      "url": "https://codeforces.com/problemset/problem/1957/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "bitmasks",
+        "brute force",
+        "dp",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "XOR Construction",
+      "source": "Codeforces",
+      "ref": "1895/D",
+      "url": "https://codeforces.com/problemset/problem/1895/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "constructive algorithms",
+        "data structures",
+        "math",
+        "string suffix structures",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Almost Difference",
+      "source": "Codeforces",
+      "ref": "903/D",
+      "url": "https://codeforces.com/problemset/problem/903/D",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Count Pairs",
+      "source": "Codeforces",
+      "ref": "1188/B",
+      "url": "https://codeforces.com/problemset/problem/1188/B",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "math",
+        "matrices",
+        "number theory",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "MEX of LCM",
+      "source": "Codeforces",
+      "ref": "1834/E",
+      "url": "https://codeforces.com/problemset/problem/1834/E",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "data structures",
+        "implementation",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Pairwise Modulo",
+      "source": "Codeforces",
+      "ref": "1553/F",
+      "url": "https://codeforces.com/problemset/problem/1553/F",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "data structures",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Maximum Value",
+      "source": "Codeforces",
+      "ref": "484/B",
+      "url": "https://codeforces.com/problemset/problem/484/B",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "math",
+        "sortings",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Power Products",
+      "source": "Codeforces",
+      "ref": "1225/D",
+      "url": "https://codeforces.com/problemset/problem/1225/D",
+      "rating": 1800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "hashing",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Koxia and Number Theory",
+      "source": "Codeforces",
+      "ref": "1770/C",
+      "url": "https://codeforces.com/problemset/problem/1770/C",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "chinese remainder theorem",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Number of Parallelograms",
+      "source": "Codeforces",
+      "ref": "660/D",
+      "url": "https://codeforces.com/problemset/problem/660/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "geometry",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Subsequences",
+      "source": "Codeforces",
+      "ref": "597/C",
+      "url": "https://codeforces.com/problemset/problem/597/C",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "dp",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Once Again...",
+      "source": "Codeforces",
+      "ref": "582/B",
+      "url": "https://codeforces.com/problemset/problem/582/B",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "dp",
+        "matrices",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Ranom Numbers",
+      "source": "Codeforces",
+      "ref": "1841/C",
+      "url": "https://codeforces.com/problemset/problem/1841/C",
+      "rating": 1800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "brute force",
+        "dp",
+        "greedy",
+        "math",
+        "strings",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "The Omnipotent Monster Killer",
+      "source": "Codeforces",
+      "ref": "1988/D",
+      "url": "https://codeforces.com/problemset/problem/1988/D",
+      "rating": 2000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "brute force",
+        "dfs and similar",
+        "dp",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Blocking Elements",
+      "source": "Codeforces",
+      "ref": "1918/D",
+      "url": "https://codeforces.com/problemset/problem/1918/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "binary search",
+        "data structures",
+        "dp",
+        "implementation",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Shuffling Songs",
+      "source": "Codeforces",
+      "ref": "1950/G",
+      "url": "https://codeforces.com/problemset/problem/1950/G",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "dfs and similar",
+        "dp",
+        "graphs",
+        "hashing",
+        "implementation",
+        "strings",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Color Rows and Columns",
+      "source": "Codeforces",
+      "ref": "2000/F",
+      "url": "https://codeforces.com/problemset/problem/2000/F",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dp",
+        "greedy",
+        "implementation",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Round Subset",
+      "source": "Codeforces",
+      "ref": "837/D",
+      "url": "https://codeforces.com/problemset/problem/837/D",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dp",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Modular Sequence",
+      "source": "Codeforces",
+      "ref": "1928/E",
+      "url": "https://codeforces.com/problemset/problem/1928/E",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "constructive algorithms",
+        "dp",
+        "graphs",
+        "greedy",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Cosmic Rays",
+      "source": "Codeforces",
+      "ref": "2002/E",
+      "url": "https://codeforces.com/problemset/problem/2002/E",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "data structures",
+        "dp",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Cases",
+      "source": "Codeforces",
+      "ref": "1995/D",
+      "url": "https://codeforces.com/problemset/problem/1995/D",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "brute force",
+        "dp",
+        "strings",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Count Supersequences",
+      "source": "Codeforces",
+      "ref": "1838/E",
+      "url": "https://codeforces.com/problemset/problem/1838/E",
+      "rating": 2500,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "combinatorics",
+        "dp",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "New Year and Original Order",
+      "source": "Codeforces",
+      "ref": "908/G",
+      "url": "https://codeforces.com/problemset/problem/908/G",
+      "rating": 2800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dp",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Round Dance",
+      "source": "Codeforces",
+      "ref": "1833/E",
+      "url": "https://codeforces.com/problemset/problem/1833/E",
+      "rating": 1600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dfs and similar",
+        "dsu",
+        "graphs",
+        "shortest paths",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Tree XOR",
+      "source": "Codeforces",
+      "ref": "1882/D",
+      "url": "https://codeforces.com/problemset/problem/1882/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "bitmasks",
+        "dfs and similar",
+        "dp",
+        "greedy",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Non-academic Problem",
+      "source": "Codeforces",
+      "ref": "1986/F",
+      "url": "https://codeforces.com/problemset/problem/1986/F",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dfs and similar",
+        "graphs",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Funny Game",
+      "source": "Codeforces",
+      "ref": "1994/D",
+      "url": "https://codeforces.com/problemset/problem/1994/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "dsu",
+        "graphs",
+        "greedy",
+        "math",
+        "number theory",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Graph and Graph",
+      "source": "Codeforces",
+      "ref": "2059/D",
+      "url": "https://codeforces.com/problemset/problem/2059/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "data structures",
+        "graphs",
+        "greedy",
+        "shortest paths",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Ancient Tree",
+      "source": "Codeforces",
+      "ref": "2127/E",
+      "url": "https://codeforces.com/problemset/problem/2127/E",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "data structures",
+        "dfs and similar",
+        "dsu",
+        "greedy",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Rada and the Chamomile Valley",
+      "source": "Codeforces",
+      "ref": "2132/F",
+      "url": "https://codeforces.com/problemset/problem/2132/F",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dfs and similar",
+        "graphs",
+        "shortest paths",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "The Shortest Statement",
+      "source": "Codeforces",
+      "ref": "1051/F",
+      "url": "https://codeforces.com/problemset/problem/1051/F",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "graphs",
+        "shortest paths",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Lomsat gelral",
+      "source": "Codeforces",
+      "ref": "600/E",
+      "url": "https://codeforces.com/problemset/problem/600/E",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "dfs and similar",
+        "dsu",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Xor-MST",
+      "source": "Codeforces",
+      "ref": "888/G",
+      "url": "https://codeforces.com/problemset/problem/888/G",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "bitmasks",
+        "constructive algorithms",
+        "data structures",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Mocha and Diana (Hard Version)",
+      "source": "Codeforces",
+      "ref": "1559/D2",
+      "url": "https://codeforces.com/problemset/problem/1559/D2",
+      "rating": 2500,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "constructive algorithms",
+        "dfs and similar",
+        "dsu",
+        "graphs",
+        "greedy",
+        "trees",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Tenzing and Tree",
+      "source": "Codeforces",
+      "ref": "1842/F",
+      "url": "https://codeforces.com/problemset/problem/1842/F",
+      "rating": 2500,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dfs and similar",
+        "greedy",
+        "shortest paths",
+        "sortings",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Two Divisors",
+      "source": "Codeforces",
+      "ref": "1366/D",
+      "url": "https://codeforces.com/problemset/problem/1366/D",
+      "rating": 2000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "constructive algorithms",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Unusual Sequences",
+      "source": "Codeforces",
+      "ref": "900/D",
+      "url": "https://codeforces.com/problemset/problem/900/D",
+      "rating": 2000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "combinatorics",
+        "dp",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Cobb",
+      "source": "Codeforces",
+      "ref": "1554/B",
+      "url": "https://codeforces.com/problemset/problem/1554/B",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "brute force",
+        "greedy",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Birthday Gift",
+      "source": "Codeforces",
+      "ref": "1946/D",
+      "url": "https://codeforces.com/problemset/problem/1946/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "brute force",
+        "constructive algorithms",
+        "greedy",
+        "implementation",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Zebra-like Numbers",
+      "source": "Codeforces",
+      "ref": "2086/E",
+      "url": "https://codeforces.com/problemset/problem/2086/E",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "brute force",
+        "constructive algorithms",
+        "dfs and similar",
+        "dp",
+        "greedy",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Bitwise Slides",
+      "source": "Codeforces",
+      "ref": "2066/C",
+      "url": "https://codeforces.com/problemset/problem/2066/C",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "bitmasks",
+        "combinatorics",
+        "dp",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Another MEX Problem",
+      "source": "Codeforces",
+      "ref": "1870/E",
+      "url": "https://codeforces.com/problemset/problem/1870/E",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "brute force",
+        "dp",
+        "shortest paths",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "MST in Modulo Graph",
+      "source": "Codeforces",
+      "ref": "2081/D",
+      "url": "https://codeforces.com/problemset/problem/2081/D",
+      "rating": 2600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "dsu",
+        "graphs",
+        "greedy",
+        "math",
+        "number theory",
+        "sortings",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Product Oriented Recurrence",
+      "source": "Codeforces",
+      "ref": "1182/E",
+      "url": "https://codeforces.com/problemset/problem/1182/E",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dp",
+        "math",
+        "matrices",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "The Sum of the k-th Powers",
+      "source": "Codeforces",
+      "ref": "622/F",
+      "url": "https://codeforces.com/problemset/problem/622/F",
+      "rating": 2600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Classical?",
+      "source": "Codeforces",
+      "ref": "1285/F",
+      "url": "https://codeforces.com/problemset/problem/1285/F",
+      "rating": 2900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "combinatorics",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Sum Over Subsets",
+      "source": "Codeforces",
+      "ref": "1436/F",
+      "url": "https://codeforces.com/problemset/problem/1436/F",
+      "rating": 2800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "combinatorics",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Nested Segments",
+      "source": "Codeforces",
+      "ref": "652/D",
+      "url": "https://codeforces.com/problemset/problem/652/D",
+      "rating": 1800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "sortings",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Not Equal on a Segment",
+      "source": "Codeforces",
+      "ref": "622/C",
+      "url": "https://codeforces.com/problemset/problem/622/C",
+      "rating": 1700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "implementation",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Buy Low Sell High",
+      "source": "Codeforces",
+      "ref": "865/D",
+      "url": "https://codeforces.com/problemset/problem/865/D",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "data structures",
+        "greedy",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Minimum Array",
+      "source": "Codeforces",
+      "ref": "1887/C",
+      "url": "https://codeforces.com/problemset/problem/1887/C",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "binary search",
+        "brute force",
+        "constructive algorithms",
+        "data structures",
+        "greedy",
+        "hashing",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Tree Queries",
+      "source": "Codeforces",
+      "ref": "1904/E",
+      "url": "https://codeforces.com/problemset/problem/1904/E",
+      "rating": 2500,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "dfs and similar",
+        "graphs",
+        "implementation",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Manhattan Triangle",
+      "source": "Codeforces",
+      "ref": "1979/E",
+      "url": "https://codeforces.com/problemset/problem/1979/E",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "constructive algorithms",
+        "data structures",
+        "geometry",
+        "implementation",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "DFS Checker (Hard Version)",
+      "source": "Codeforces",
+      "ref": "2002/D2",
+      "url": "https://codeforces.com/problemset/problem/2002/D2",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "binary search",
+        "data structures",
+        "dfs and similar",
+        "graphs",
+        "hashing",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Big Wins! (easy version)",
+      "source": "Codeforces",
+      "ref": "2126/G1",
+      "url": "https://codeforces.com/problemset/problem/2126/G1",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "data structures",
+        "dp",
+        "dsu",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Big Wins!  (hard version)",
+      "source": "Codeforces",
+      "ref": "2126/G2",
+      "url": "https://codeforces.com/problemset/problem/2126/G2",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "data structures",
+        "divide and conquer",
+        "dsu",
+        "trees",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Another Exercise on Graphs (Easy Version)",
+      "source": "Codeforces",
+      "ref": "2057/E1",
+      "url": "https://codeforces.com/problemset/problem/2057/E1",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "brute force",
+        "dp",
+        "dsu",
+        "graphs",
+        "shortest paths",
+        "sortings",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Isolation",
+      "source": "Codeforces",
+      "ref": "1129/D",
+      "url": "https://codeforces.com/problemset/problem/1129/D",
+      "rating": 2900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "dp",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Permutation",
+      "source": "Codeforces",
+      "ref": "452/F",
+      "url": "https://codeforces.com/problemset/problem/452/F",
+      "rating": 2700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "divide and conquer",
+        "hashing",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "To Become Max",
+      "source": "Codeforces",
+      "ref": "1856/C",
+      "url": "https://codeforces.com/problemset/problem/1856/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "brute force",
+        "data structures",
+        "dp",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Tracking Segments",
+      "source": "Codeforces",
+      "ref": "1843/E",
+      "url": "https://codeforces.com/problemset/problem/1843/E",
+      "rating": 1600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "brute force",
+        "data structures",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Ntarsis' Set",
+      "source": "Codeforces",
+      "ref": "1852/A",
+      "url": "https://codeforces.com/problemset/problem/1852/A",
+      "rating": 1800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Hungry Games",
+      "source": "Codeforces",
+      "ref": "1994/C",
+      "url": "https://codeforces.com/problemset/problem/1994/C",
+      "rating": 1600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "dp",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Bomb",
+      "source": "Codeforces",
+      "ref": "1996/F",
+      "url": "https://codeforces.com/problemset/problem/1996/F",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "greedy",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Black Cells",
+      "source": "Codeforces",
+      "ref": "1821/D",
+      "url": "https://codeforces.com/problemset/problem/1821/D",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "brute force",
+        "greedy",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Submedians (Easy Version)",
+      "source": "Codeforces",
+      "ref": "2128/E1",
+      "url": "https://codeforces.com/problemset/problem/2128/E1",
+      "rating": 1900,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "binary search",
+        "data structures",
+        "dp",
+        "greedy",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Submedians (Hard Version)",
+      "source": "Codeforces",
+      "ref": "2128/E2",
+      "url": "https://codeforces.com/problemset/problem/2128/E2",
+      "rating": 2600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "constructive algorithms",
+        "data structures",
+        "math",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Yamakasi",
+      "source": "Codeforces",
+      "ref": "2121/F",
+      "url": "https://codeforces.com/problemset/problem/2121/F",
+      "rating": 1800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "brute force",
+        "data structures",
+        "greedy",
+        "two pointers",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Sakurako's Task",
+      "source": "Codeforces",
+      "ref": "2008/G",
+      "url": "https://codeforces.com/problemset/problem/2008/G",
+      "rating": 1800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "greedy",
+        "math",
+        "number theory",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Red-Blue Operations (Hard Version)",
+      "source": "Codeforces",
+      "ref": "1832/D2",
+      "url": "https://codeforces.com/problemset/problem/1832/D2",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "constructive algorithms",
+        "greedy",
+        "implementation",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Monster",
+      "source": "Codeforces",
+      "ref": "2035/E",
+      "url": "https://codeforces.com/problemset/problem/2035/E",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "brute force",
+        "constructive algorithms",
+        "greedy",
+        "implementation",
+        "math",
+        "ternary search",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Swapping Problem",
+      "source": "Codeforces",
+      "ref": "1513/F",
+      "url": "https://codeforces.com/problemset/problem/1513/F",
+      "rating": 2500,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "brute force",
+        "constructive algorithms",
+        "data structures",
+        "sortings",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Bits And Pieces",
+      "source": "Codeforces",
+      "ref": "1208/F",
+      "url": "https://codeforces.com/problemset/problem/1208/F",
+      "rating": 2600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "bitmasks",
+        "dfs and similar",
+        "dp",
+        "greedy",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Permutation Counting",
+      "source": "Codeforces",
+      "ref": "1671/F",
+      "url": "https://codeforces.com/problemset/problem/1671/F",
+      "rating": 2700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "combinatorics",
+        "dp",
+        "fft",
+        "math",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Edge coloring of bipartite graph",
+      "source": "Codeforces",
+      "ref": "600/F",
+      "url": "https://codeforces.com/problemset/problem/600/F",
+      "rating": 2800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "graphs",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "The Classic Problem",
+      "source": "Codeforces",
+      "ref": "464/E",
+      "url": "https://codeforces.com/problemset/problem/464/E",
+      "rating": 3000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "graphs",
+        "shortest paths",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Two Centroids",
+      "source": "Codeforces",
+      "ref": "1827/D",
+      "url": "https://codeforces.com/problemset/problem/1827/D",
+      "rating": 2800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "dfs and similar",
+        "greedy",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Tree Weights",
+      "source": "Codeforces",
+      "ref": "1844/G",
+      "url": "https://codeforces.com/problemset/problem/1844/G",
+      "rating": 3000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "constructive algorithms",
+        "data structures",
+        "dfs and similar",
+        "implementation",
+        "math",
+        "matrices",
+        "number theory",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "I Yearned For The Mines",
+      "source": "Codeforces",
+      "ref": "2133/E",
+      "url": "https://codeforces.com/problemset/problem/2133/E",
+      "rating": 2500,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "dfs and similar",
+        "dp",
+        "greedy",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Traffic Lights",
+      "source": "Codeforces",
+      "ref": "2122/D",
+      "url": "https://codeforces.com/problemset/problem/2122/D",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "data structures",
+        "divide and conquer",
+        "dp",
+        "graphs",
+        "greedy",
+        "shortest paths",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Sliding Tree",
+      "source": "Codeforces",
+      "ref": "2134/D",
+      "url": "https://codeforces.com/problemset/problem/2134/D",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "dfs and similar",
+        "greedy",
+        "implementation",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Power Boxes",
+      "source": "Codeforces",
+      "ref": "2134/E",
+      "url": "https://codeforces.com/problemset/problem/2134/E",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Interactive",
+      "priority": false,
+      "tags": [
+        "constructive algorithms",
+        "dp",
+        "implementation",
+        "interactive",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Digital Village (Extreme Version)",
+      "source": "Codeforces",
+      "ref": "2021/E3",
+      "url": "https://codeforces.com/problemset/problem/2021/E3",
+      "rating": 2800,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "dfs and similar",
+        "dp",
+        "dsu",
+        "graphs",
+        "greedy",
+        "math",
+        "trees",
+        "personal practice",
+        "workbook"
+      ]
+    },
+    {
+      "title": "Minimum Path",
+      "source": "Codeforces",
+      "ref": "1473/E",
+      "url": "https://codeforces.com/problemset/problem/1473/E",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "graphs",
+        "shortest paths",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Moving to the Capital",
+      "source": "Codeforces",
+      "ref": "1472/G",
+      "url": "https://codeforces.com/problemset/problem/1472/G",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "dfs and similar",
+        "dp",
+        "graphs",
+        "shortest paths",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "GCD of an Array",
+      "source": "Codeforces",
+      "ref": "1493/D",
+      "url": "https://codeforces.com/problemset/problem/1493/D",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "data structures",
+        "hashing",
+        "implementation",
+        "math",
+        "number theory",
+        "sortings",
+        "two pointers",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Permutation Shift",
+      "source": "Codeforces",
+      "ref": "1553/E",
+      "url": "https://codeforces.com/problemset/problem/1553/E",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "combinatorics",
+        "constructive algorithms",
+        "dfs and similar",
+        "dsu",
+        "graphs",
+        "math",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Erase and Extend (Hard Version)",
+      "source": "Codeforces",
+      "ref": "1537/E2",
+      "url": "https://codeforces.com/problemset/problem/1537/E2",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "binary search",
+        "data structures",
+        "greedy",
+        "hashing",
+        "string suffix structures",
+        "strings",
+        "two pointers",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Sum of Paths",
+      "source": "Codeforces",
+      "ref": "1467/D",
+      "url": "https://codeforces.com/problemset/problem/1467/D",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "combinatorics",
+        "dp",
+        "math",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Cheap Dinner",
+      "source": "Codeforces",
+      "ref": "1487/E",
+      "url": "https://codeforces.com/problemset/problem/1487/E",
+      "rating": 2000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "data structures",
+        "graphs",
+        "greedy",
+        "implementation",
+        "sortings",
+        "two pointers",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Tree Array",
+      "source": "Codeforces",
+      "ref": "1540/B",
+      "url": "https://codeforces.com/problemset/problem/1540/B",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "combinatorics",
+        "dp",
+        "graphs",
+        "math",
+        "probabilities",
+        "trees",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Love-Hate",
+      "source": "Codeforces",
+      "ref": "1523/D",
+      "url": "https://codeforces.com/problemset/problem/1523/D",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "bitmasks",
+        "brute force",
+        "dp",
+        "probabilities",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Paired Payment",
+      "source": "Codeforces",
+      "ref": "1486/E",
+      "url": "https://codeforces.com/problemset/problem/1486/E",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "brute force",
+        "constructive algorithms",
+        "dp",
+        "flows",
+        "graphs",
+        "shortest paths",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Two chandeliers",
+      "source": "Codeforces",
+      "ref": "1500/B",
+      "url": "https://codeforces.com/problemset/problem/1500/B",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "brute force",
+        "chinese remainder theorem",
+        "math",
+        "number theory",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Christmas Game",
+      "source": "Codeforces",
+      "ref": "1498/F",
+      "url": "https://codeforces.com/problemset/problem/1498/F",
+      "rating": 2500,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "data structures",
+        "dfs and similar",
+        "dp",
+        "games",
+        "math",
+        "trees",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Xor Tree",
+      "source": "Codeforces",
+      "ref": "1446/C",
+      "url": "https://codeforces.com/problemset/problem/1446/C",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "binary search",
+        "bitmasks",
+        "data structures",
+        "divide and conquer",
+        "dp",
+        "trees",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Frequency Problem (Easy Version)",
+      "source": "Codeforces",
+      "ref": "1446/D1",
+      "url": "https://codeforces.com/problemset/problem/1446/D1",
+      "rating": 2600,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "greedy",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Carrots for Rabbits",
+      "source": "Codeforces",
+      "ref": "1428/E",
+      "url": "https://codeforces.com/problemset/problem/1428/E",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "binary search",
+        "data structures",
+        "greedy",
+        "math",
+        "sortings",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Unshuffling a Deck",
+      "source": "Codeforces",
+      "ref": "1427/D",
+      "url": "https://codeforces.com/problemset/problem/1427/D",
+      "rating": 2000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "constructive algorithms",
+        "implementation",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Returning Home",
+      "source": "Codeforces",
+      "ref": "1422/D",
+      "url": "https://codeforces.com/problemset/problem/1422/D",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "graphs",
+        "shortest paths",
+        "sortings",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Three Occurrences",
+      "source": "Codeforces",
+      "ref": "1418/G",
+      "url": "https://codeforces.com/problemset/problem/1418/G",
+      "rating": 2500,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "data structures",
+        "divide and conquer",
+        "hashing",
+        "two pointers",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Avoid Rainbow Cycles",
+      "source": "Codeforces",
+      "ref": "1408/E",
+      "url": "https://codeforces.com/problemset/problem/1408/E",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "dsu",
+        "graphs",
+        "greedy",
+        "sortings",
+        "trees",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Discrete Centrifugal Jumps",
+      "source": "Codeforces",
+      "ref": "1407/D",
+      "url": "https://codeforces.com/problemset/problem/1407/D",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "data structures",
+        "dp",
+        "graphs",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Fixed Point Removal",
+      "source": "Codeforces",
+      "ref": "1404/C",
+      "url": "https://codeforces.com/problemset/problem/1404/C",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "binary search",
+        "constructive algorithms",
+        "data structures",
+        "greedy",
+        "two pointers",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Omkar and Duck",
+      "source": "Codeforces",
+      "ref": "1392/E",
+      "url": "https://codeforces.com/problemset/problem/1392/E",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Interactive",
+      "priority": false,
+      "tags": [
+        "bitmasks",
+        "constructive algorithms",
+        "interactive",
+        "math",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Network Coverage",
+      "source": "Codeforces",
+      "ref": "1373/F",
+      "url": "https://codeforces.com/problemset/problem/1373/F",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "constructive algorithms",
+        "data structures",
+        "greedy",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "DeadLee",
+      "source": "Codeforces",
+      "ref": "1369/E",
+      "url": "https://codeforces.com/problemset/problem/1369/E",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "dfs and similar",
+        "greedy",
+        "implementation",
+        "sortings",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Tree Shuffling",
+      "source": "Codeforces",
+      "ref": "1363/E",
+      "url": "https://codeforces.com/problemset/problem/1363/E",
+      "rating": 2000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "dfs and similar",
+        "dp",
+        "greedy",
+        "trees",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Graph Coloring",
+      "source": "Codeforces",
+      "ref": "1354/E",
+      "url": "https://codeforces.com/problemset/problem/1354/E",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "dfs and similar",
+        "dp",
+        "graphs",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Orac and Game of Life",
+      "source": "Codeforces",
+      "ref": "1349/C",
+      "url": "https://codeforces.com/problemset/problem/1349/C",
+      "rating": 2000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "dfs and similar",
+        "graphs",
+        "implementation",
+        "shortest paths",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Phoenix and Berries",
+      "source": "Codeforces",
+      "ref": "1348/E",
+      "url": "https://codeforces.com/problemset/problem/1348/E",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "brute force",
+        "dp",
+        "greedy",
+        "math",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Kaavi and Magic Spell",
+      "source": "Codeforces",
+      "ref": "1336/C",
+      "url": "https://codeforces.com/problemset/problem/1336/C",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dp",
+        "strings",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Make k Equal",
+      "source": "Codeforces",
+      "ref": "1328/F",
+      "url": "https://codeforces.com/problemset/problem/1328/F",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "greedy",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Team Building",
+      "source": "Codeforces",
+      "ref": "1316/E",
+      "url": "https://codeforces.com/problemset/problem/1316/E",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "bitmasks",
+        "dp",
+        "greedy",
+        "sortings",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "1-Trees and Queries",
+      "source": "Codeforces",
+      "ref": "1304/E",
+      "url": "https://codeforces.com/problemset/problem/1304/E",
+      "rating": 2000,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "dfs and similar",
+        "shortest paths",
+        "trees",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Water Balance",
+      "source": "Codeforces",
+      "ref": "1299/C",
+      "url": "https://codeforces.com/problemset/problem/1299/C",
+      "rating": 2100,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "data structures",
+        "geometry",
+        "greedy",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Voting (Hard Version)",
+      "source": "Codeforces",
+      "ref": "1251/E2",
+      "url": "https://codeforces.com/problemset/problem/1251/E2",
+      "rating": 2400,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "binary search",
+        "data structures",
+        "greedy",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Keyboard Purchase",
+      "source": "Codeforces",
+      "ref": "1238/E",
+      "url": "https://codeforces.com/problemset/problem/1238/E",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "bitmasks",
+        "dp",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Sum Queries?",
+      "source": "Codeforces",
+      "ref": "1217/E",
+      "url": "https://codeforces.com/problemset/problem/1217/E",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "greedy",
+        "implementation",
+        "math",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Radio Stations",
+      "source": "Codeforces",
+      "ref": "1215/F",
+      "url": "https://codeforces.com/problemset/problem/1215/F",
+      "rating": 2700,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "2-sat",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Rotate Columns (hard version)",
+      "source": "Codeforces",
+      "ref": "1209/E2",
+      "url": "https://codeforces.com/problemset/problem/1209/E2",
+      "rating": 2500,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": true,
+      "tags": [
+        "bitmasks",
+        "dp",
+        "greedy",
+        "sortings",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Rectangle Painting 1",
+      "source": "Codeforces",
+      "ref": "1198/D",
+      "url": "https://codeforces.com/problemset/problem/1198/D",
+      "rating": 2300,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "dp",
+        "personal practice",
+        "2000+"
+      ]
+    },
+    {
+      "title": "Special Segments of Permutation",
+      "source": "Codeforces",
+      "ref": "1156/E",
+      "url": "https://codeforces.com/problemset/problem/1156/E",
+      "rating": 2200,
+      "ratingKind": "official",
+      "level": "Practice",
+      "priority": false,
+      "tags": [
+        "data structures",
+        "divide and conquer",
+        "dsu",
+        "two pointers",
+        "personal practice",
+        "2000+"
+      ]
+    }
+  ]
+}

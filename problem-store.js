@@ -1,5 +1,5 @@
 export function validateProblem(input) {
- const p={title:String(input.title||'').trim(),source:input.source,ref:String(input.ref||'').trim(),url:input.url,rating:Number(input.rating),ratingKind:input.ratingKind,level:input.level||'Practice',priority:input.priority===true,tags:[...new Set((input.tags||[]).map(t=>String(t).trim().toLowerCase()).filter(Boolean))],hints:input.hints,hintsEn:input.hintsEn,lesson:String(input.lesson||'').trim()};
+ const p={title:String(input.title||'').trim(),source:input.source,ref:String(input.ref||'').trim(),url:input.url,rating:Number(input.rating),ratingKind:input.ratingKind,level:input.level||'Practice',priority:input.priority===true,tags:[...new Set((input.tags||[]).map(t=>String(t).trim().toLowerCase()).filter(Boolean))],hints:input.hints===undefined?[]:input.hints,hintsEn:input.hintsEn===undefined?[]:input.hintsEn,lesson:String(input.lesson||'').trim()};
  if(!p.title||p.title.length>200||!p.ref||p.ref.length>80)throw new Error('Бодлогын нэр болон эх бодлогын ID-гаа шалгана уу.');
  if(!['Codeforces','CSES','EGOI','Other'].includes(p.source))throw new Error('Эх сурвалж сонгоно уу.');
  const validUrl=s=>{try{const u=new URL(s);return u.protocol==='https:'&&!u.username&&!u.password&&String(s).length<=1000&&!/\s/.test(s);}catch{return false;}};
@@ -9,8 +9,9 @@ export function validateProblem(input) {
  if(!['official','estimated'].includes(p.ratingKind)||(p.ratingKind==='official'&&p.source!=='Codeforces'))throw new Error('Rating-ийн төрлийг зөв сонгоно уу.');
  if(!['Practice','Interactive'].includes(p.level))throw new Error('Бодлогын төрөл сонгоно уу.');
  if(p.tags.length<1||p.tags.length>20||p.tags.some(t=>!/^[a-zA-Z0-9 +/&()_-]{1,50}$/.test(t)))throw new Error('1–20 English tag оруулна уу; tag тус бүр 50 тэмдэгт хүртэл.');
- for(const hints of [p.hints,p.hintsEn])if(!Array.isArray(hints)||hints.length!==3||hints.some(h=>typeof h!=='string'||!h.trim()||h.length>3000))throw new Error('Хэл тус бүрд 3 hint, hint бүр 1–3000 тэмдэгт байна.');
- if(!p.lesson||p.lesson.length>2000)throw new Error('Бодсоны дараах тайлбар 1–2000 тэмдэгт байна.');
+ for(const hints of [p.hints,p.hintsEn])if(!Array.isArray(hints)||![0,3].includes(hints.length)||hints.some(h=>typeof h!=='string'||!h.trim()||h.length>3000))throw new Error('Hint-гүй бол хоёуланг нь орхи; hint-тэй бол хэл тус бүрд 3 hint, hint бүр 1–3000 тэмдэгт байна.');
+ if(p.hints.length!==p.hintsEn.length)throw new Error('Монгол болон English hint-ийн тоо ижил байна.');
+ if(p.lesson.length>2000)throw new Error('Бодсоны дараах тайлбар 2000 тэмдэгт хүртэл байна.');
  return p;
 }
 export function parseCatalog(document) {
@@ -20,11 +21,11 @@ export function parseCatalog(document) {
  if(document.knownIds.some(id=>typeof id!=='string'||!/^[a-zA-Z0-9_-]{1,100}$/.test(id))||[...ids].some(id=>!document.knownIds.includes(id)))throw new Error('Бодлогын ID жагсаалт буруу байна.');
  return document;
 }
-export function hintTexts(problem,language) {return language==='en'?problem.hintsEn:problem.hints;}
+export function hintTexts(problem,language) {return (language==='en'?problem.hintsEn:problem.hints)||[];}
 
 export function parseProblemImport(document) {
  const list=Array.isArray(document)?document:Array.isArray(document?.problems)?document.problems:[document];
- if(list.length<1||list.length>100)throw new Error('Нэг удаад 1–100 бодлого оруулна уу.');
+ if(list.length<1||list.length>200)throw new Error('Нэг удаад 1–200 бодлого оруулна уу.');
  const urls=new Set(),refs=new Set();
  return list.map((input,index)=>{
   try {

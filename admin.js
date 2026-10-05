@@ -1,5 +1,5 @@
 import {rpc,accountError} from './accounts.js?v=6';
-import {validateProblem,parseProblemImport} from './problem-store.js?v=8';
+import {validateProblem,parseProblemImport} from './problem-store.js?v=9';
 export function setupAdmin(ctx) {
  const $=id=>document.getElementById(id);let rows=[],selected=null,admin=false,accountId=null,token=0,busy=false,pendingImport=[],grantTarget=null,fileToken=0; 
  function setBusy(value){busy=value;for(const el of $('admin-form').querySelectorAll('input,select,textarea,button'))el.disabled=value;$('admin-choose').disabled=value;$('admin-new').disabled=value;$('admin-reload').disabled=value;for(const id of ['admin-import-file','admin-grant-username','admin-grant-find','admin-grant-submit'])$(id).disabled=value;$('admin-import-submit').disabled=value||!pendingImport.length;}
@@ -19,7 +19,7 @@ export function setupAdmin(ctx) {
   try{const allowed=await rpc(ctx.client(),'is_admin');if(request!==token||uid!==ctx.user()?.id)return;admin=allowed===true;$('admin-nav').hidden=!admin;$('admin-section').hidden=!admin;if(admin){edit(null);void load();void loadAdmins();}}
   catch{ /* No client-side email or metadata fallback can grant admin rights. */ }
  }
- function input(){return validateProblem({title:$('admin-title').value,source:$('admin-source').value,ref:$('admin-ref').value,url:$('admin-url').value.trim(),rating:$('admin-rating').value,ratingKind:$('admin-rating-kind').value,level:$('admin-level').value,priority:$('admin-priority').checked,tags:$('admin-tags').value.split(','),hints:Array.from({length:3},(_,i)=>$('admin-hint-mn-'+i).value.trim()),hintsEn:Array.from({length:3},(_,i)=>$('admin-hint-en-'+i).value.trim()),lesson:$('admin-lesson').value,editorialUrl:$('admin-editorial').value.trim()});}
+ function input(){return validateProblem({title:$('admin-title').value,source:$('admin-source').value,ref:$('admin-ref').value,url:$('admin-url').value.trim(),rating:$('admin-rating').value,ratingKind:$('admin-rating-kind').value,level:$('admin-level').value,priority:$('admin-priority').checked,tags:$('admin-tags').value.split(','),hints:Array.from({length:3},(_,i)=>$('admin-hint-mn-'+i).value.trim()).filter((v,_,all)=>all.some(Boolean)),hintsEn:Array.from({length:3},(_,i)=>$('admin-hint-en-'+i).value.trim()).filter((v,_,all)=>all.some(Boolean)),lesson:$('admin-lesson').value,editorialUrl:$('admin-editorial').value.trim()});}
  $('admin-form').onsubmit=async event=>{event.preventDefault();if(!admin||busy||!$('admin-form').reportValidity())return;const uid=ctx.user()?.id;let payload;try{payload=input();}catch(e){$('admin-message').textContent=e.message;return;}setBusy(true);$('admin-message').textContent='Хадгалж байна…';
   try{const saved=await rpc(ctx.client(),'admin_save_problem',{p_body:payload,p_number:selected?.number||null,p_revision:selected?.revision||null});if(uid!==ctx.user()?.id)return;selected=saved;await ctx.refreshCatalog();setBusy(false);await load();$('admin-message').textContent='#'+saved.number+' хадгалагдлаа.';}
   catch(e){if(uid===ctx.user()?.id)$('admin-message').textContent=accountError(e);}finally{setBusy(false);}
