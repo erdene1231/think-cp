@@ -1,21 +1,26 @@
 import {EMPTY, cleanEntry, parseBackup} from './progress.js';
 import {getSolvers} from './community.js?v=6';
+import {setupAdmin} from './admin.js?v=7';
+import {parseCatalog,hintTexts} from './problem-store.js?v=7';
+import {rpc} from './accounts.js?v=6';
 import {ownProfile,saveOwnProfile,avatarUrl,accountError} from './accounts.js?v=6';
-import {setupSocial} from './social.js?v=6';
-import {filterProblems, getTags, ratingLabel} from './catalog.js?v=4';
+import {setupSocial} from './social.js?v=7';
+import {filterProblems, getTags, ratingLabel} from './catalog.js?v=7';
 const $ = id => document.getElementById(id);
 const STATUS = {new:'Эхлээгүй',trying:'Оролдож байгаа',solved:'Бодсон'};
 let data, selectedPack='', selectedProblem, state={}, dirty={}, user=null, client=null, loading=false, syncing=false, syncAgain=false, epoch=0;
 let username=null, profileLoading=false, profileSaving=false, solverRequest=0, solverNames=[], solverTotal=0;
 let detailTagsShown=false;
 const hiddenHints=new Set();
-let social=null, myProfile=null, avatarPreviewUrl=null;
+let social=null, adminUI=null, myProfile=null, avatarPreviewUrl=null, catalogLoading=false;
+let catalogIds=new Set(),hintLanguage='mn';
 const cfg=window.THINK_CP_CONFIG || {};
 const configured=Boolean(cfg.supabaseUrl && cfg.supabaseKey);
 const key=()=> 'think-cp:v1:'+(user?.id || 'guest');
 function notice(message) { $('notice').textContent=message; }
+const validProgressId=id=>typeof id==='string'&&/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,99}$/.test(id)&&!['constructor','prototype'].includes(id);
 function readLocal() {
-  try { const saved=JSON.parse(localStorage.getItem(key()) || '{}'); state={}; dirty={}; for(const [id,entry] of Object.entries(saved.progress || {})) if(data.problems.some(p=>p.id===id)) state[id]=cleanEntry(entry); for(const id of saved.dirty || []) if(state[id]) dirty[id]=state[id]; }
+  try { const saved=JSON.parse(localStorage.getItem(key()) || '{}'); state={}; dirty={}; for(const [id,entry] of Object.entries(saved.progress || {})) if(validProgressId(id)) state[id]=cleanEntry(entry); for(const id of saved.dirty || []) if(state[id]) dirty[id]=state[id]; }
   catch {state={};dirty={};notice('Өмнөх хадгалалтыг уншиж чадсангүй. Progress татах боломжийг ашиглаарай.');}
 }
 function persist() {
@@ -28,7 +33,7 @@ function el(tag, cls, text) {const node=document.createElement(tag); if(cls)node
 function render() {
   const solved=data.problems.filter(p=>entry(p.id).status==='solved').length;
   const trying=data.problems.filter(p=>entry(p.id).status==='trying').length;
-  const percent=Math.round(solved/data.problems.length*100);
+  const percent=(data.problems.length?Math.round(solved/data.problems.length*100):0);
   $('total').textContent=data.problems.length;$('solved').textContent=solved;$('trying').textContent=trying;$('percent').textContent=percent+'%';$('progress').value=percent;
   const filters={query:$('search').value,source:$('source').value,status:$('status-filter').value,pack:selectedPack,tag:$('tag-filter').value,ratingBand:$('rating-filter').value,priorityOnly:$('priority-only').checked,sort:$('sort').value};
   $('packs').replaceChildren();
@@ -40,7 +45,7 @@ function render() {
   const filtered=filterProblems(data.problems,state,filters);
   $('results-count').textContent=filtered.length+' / '+data.problems.length+' бодлого';
   for(const p of filtered) {
-    const row=el('article','problem'+(p.priority?' is-priority':'')), n=el('span','number',String(data.problems.indexOf(p)+1).padStart(2,'0')), b=el('button','open');b.disabled=loading;
+    const row=el('article','problem'+(p.priority?' is-priority':'')), n=el('span','number','#'+String(p.number).padStart(3,'0')), b=el('button','open');b.disabled=loading||catalogLoading;
     const heading=el('h3','',p.title);
     if(p.priority){const star=el('span','priority-star','★');star.title='Priority бодлого';star.setAttribute('aria-label','Priority');heading.prepend(star);}
     const meta=el('div','problem-meta');const rating=el('span','rating rating-'+Math.floor(p.rating/100),ratingLabel(p));rating.title=p.ratingKind==='official'?'Codeforces-ийн албан rating':'CF difficulty-ийн баримжаа; албан rating биш';
@@ -48,16 +53,16 @@ function render() {
     b.append(heading,meta);b.onclick=()=>openProblem(p);
     if($('show-tags').checked||entry(p.id).status==='solved'){const tags=el('div','tag-chips');for(const tag of p.tags)tags.append(el('span','tag-chip',tag));b.append(tags);}
     const badge=el('span','badge '+entry(p.id).status,STATUS[entry(p.id).status]);
-    const arrow=el('button','arrow','↗');arrow.setAttribute('aria-label',p.title+' нээх');arrow.disabled=loading;arrow.onclick=()=>openProblem(p);
+    const arrow=el('button','arrow','↗');arrow.setAttribute('aria-label',p.title+' нээх');arrow.disabled=loading||catalogLoading;arrow.onclick=()=>openProblem(p);
     if(entry(p.id).hints) b.append(el('span','hint-used','Hint '+entry(p.id).hints+'/3'));
     row.append(n,b,badge,arrow);$('problems').append(row);
   }
   if(!filtered.length)$('problems').append(el('p','muted','Тохирох бодлого олдсонгүй. Шүүлтүүрээ өөрчлөөрэй.'));
 }
-function openProblem(p) {selectedProblem=p;detailTagsShown=false;$('detail-title').textContent=(p.priority?'★ ':'')+p.title;$('detail-source').textContent=p.source+' · '+p.ref;$('detail-note').textContent=ratingLabel(p)+(p.ratingKind==='official'?' · CF албан rating':' · CF difficulty-ийн баримжаа')+(p.level==='Interactive'?' · Interactive':'')+(p.source==='EGOI'?' · Full task; subtask-аас эхэл':'')+(p.priority?' · Priority':'');$('problem-link').href=p.url;$('notes').value=entry(p.id).notes;$('detail-feedback').textContent='';renderDetail();$('detail').showModal();void loadSolvers();}
+function openProblem(p) {selectedProblem=p;detailTagsShown=false;$('detail-title').textContent=(p.priority?'★ ':'')+p.title;$('detail-source').textContent='#'+p.number+' · '+p.source+' · '+p.ref;$('detail-note').textContent=ratingLabel(p)+(p.ratingKind==='official'?' · CF албан rating':' · CF difficulty-ийн баримжаа')+(p.level==='Interactive'?' · Interactive':'')+(p.source==='EGOI'?' · Full task; subtask-аас эхэл':'')+(p.priority?' · Priority':'');$('problem-link').href=p.url;$('notes').value=entry(p.id).notes;$('detail-feedback').textContent='';renderDetail();$('detail').showModal();void loadSolvers();}
 function renderDetail() {
   if(!selectedProblem)return;const p=selectedProblem,e=entry(p.id);$('problem-status').value=e.status;$('hint-list').replaceChildren();
-  p.hints.slice(0,e.hints).forEach((hint,i)=>{const h=el('div','hint');h.append(el('b','','HINT '+(i+1)),el('span','',hint));$('hint-list').append(h);});
+  hintTexts(p,hintLanguage).slice(0,e.hints).forEach((hint,i)=>{const h=el('div','hint');h.append(el('b','','HINT '+(i+1)),el('span','',hint));$('hint-list').append(h);});
   const hintsVisible=!hiddenHints.has(p.id);
   $('hint-list').hidden=!hintsVisible;
   $('toggle-hints').hidden=e.hints===0;
@@ -76,7 +81,7 @@ async function switchUser(next) {
     try {
       const {data:rows,error}=await client.from('progress').select('problem_id,status,hints,notes').eq('user_id',user.id);
       if(error)throw error;if(turn!==epoch)return;
-      const remote={};for(const row of rows)if(data.problems.some(p=>p.id===row.problem_id))remote[row.problem_id]=cleanEntry(row);
+      const remote={};for(const row of rows)if(validProgressId(row.problem_id))remote[row.problem_id]=cleanEntry(row);
       state={...remote,...dirty};persist();notice('Account-ын progress ачаалагдлаа.');
     } catch(error) {if(turn===epoch)notice('Онлайн progress ачаалагдсангүй. Энэ төхөөрөмжийн хуулбарыг ашиглаж байна: '+error.message);}
     finally {if(turn===epoch){loading=false;render();void sync();}}
@@ -98,7 +103,7 @@ function renderOwnAvatar() {
   const url=avatarPreviewUrl||avatarUrl(client,myProfile);$('own-avatar').hidden=!url;if(url)$('own-avatar').src=url;else $('own-avatar').removeAttribute('src');$('own-avatar-fallback').hidden=!!url;$('own-avatar-fallback').textContent=((myProfile?.full_name||myProfile?.username||'?')[0]||'?').toUpperCase();
 }
 function updateAccount() {
-  social?.accountChanged();
+  social?.accountChanged();adminUI?.accountChanged();
   for(const id of ['full-name','school','avatar-file','remove-avatar'])$(id).disabled=profileLoading||profileSaving||!myProfile;
   $('reload-profile').hidden=!user||!!myProfile;$('reload-profile').disabled=profileLoading;
   $('account').textContent=user?(username?'@'+username:'Миний account'):'Нэвтрэх';$('storage-label').textContent=user?'Account + энэ browser':'Энэ browser-т хадгална';
@@ -146,10 +151,22 @@ async function authAction(signup) {
     if(result.error)throw result.error;$('password').value='';$('auth-feedback').textContent=result.data.session?'Амжилттай нэвтэрлээ.':'Email баталгаажуулах холбоосоо шалгаад нэвтэрнэ үү.';await switchUser(result.data.session?.user || null);
   } catch(error){$('auth-feedback').textContent=error.message;}finally{buttons.forEach(b=>b.disabled=false);}
 }
+function populateTags(){const chosen=$('tag-filter').value;$('tag-filter').replaceChildren(el('option','','Бүх tags'));$('tag-filter').children[0].value='';for(const tag of getTags(data.problems)){const option=el('option','',tag);option.value=tag;$('tag-filter').append(option);}$('tag-filter').value=getTags(data.problems).includes(chosen)?chosen:'';}
+async function refreshCatalog(){if(!client){catalogLoading=false;render();notice('Онлайн бодлогын сангийн холболт шаардлагатай.');return false;}catalogLoading=true;render();
+ try{const document=parseCatalog(await rpc(client,'get_catalog'));data.problems=document.problems;for(const id of document.knownIds)catalogIds.add(id);try{localStorage.setItem('think-cp:online-catalog',JSON.stringify(document));}catch{}populateTags();
+  if(selectedProblem){selectedProblem=data.problems.find(p=>p.id===selectedProblem.id);if(selectedProblem)renderDetail();else $('detail').close();}social?.connected();return true;
+ }catch(error){notice('Онлайн бодлогын сан шинэчлэгдсэнгүй. Одоогийн хуулбарыг харуулж байна. '+accountError(error));return false;}
+ finally{catalogLoading=false;render();}
+}
 async function init() {
-  const response=await fetch('./problems.json?v=4', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();readLocal();render();updateAccount();
-  for(const tag of getTags(data.problems)){const option=el('option','',tag);option.value=tag;$('tag-filter').append(option);}
-  try {const prefs=JSON.parse(localStorage.getItem('think-cp:catalog-preferences')||'{}');$('show-tags').checked=prefs.showTags===true;if(['rating-asc','rating-desc','priority','title'].includes(prefs.sort))$('sort').value=prefs.sort;}catch{}
+  const response=await fetch('./problems.json?v=7', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();catalogIds=new Set(data.problems.map(p=>p.id));catalogLoading=configured;
+  try{const cached=parseCatalog(JSON.parse(localStorage.getItem('think-cp:online-catalog')||'null'));data.problems=cached.problems;for(const id of cached.knownIds)catalogIds.add(id);}catch{}
+  readLocal();render();updateAccount();
+  populateTags();
+  try{hintLanguage=localStorage.getItem('think-cp:hint-language')==='en'?'en':'mn';}catch{}$('hint-language').value=hintLanguage;
+  $('hint-language').onchange=()=>{hintLanguage=$('hint-language').value;try{localStorage.setItem('think-cp:hint-language',hintLanguage);}catch{}renderDetail();};
+  $('refresh-catalog').onclick=()=>void refreshCatalog();
+  try {const prefs=JSON.parse(localStorage.getItem('think-cp:catalog-preferences')||'{}');$('show-tags').checked=prefs.showTags===true;if(['rating-asc','rating-desc','priority','title','number-asc'].includes(prefs.sort))$('sort').value=prefs.sort;}catch{}
   const savePreferences=()=>{try{localStorage.setItem('think-cp:catalog-preferences',JSON.stringify({showTags:$('show-tags').checked,sort:$('sort').value}));}catch{}};
   for(const id of ['search','source','status-filter','tag-filter','rating-filter','priority-only'])$(id).addEventListener('input',render);
   $('sort').addEventListener('change',()=>{savePreferences();render();});
@@ -160,6 +177,7 @@ async function init() {
   document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
   $('account').onclick=()=>{updateAccount();$('auth').showModal();};
   social=setupSocial({client:()=>client,user:()=>user,problems:()=>data.problems,openProblem,openAccount:()=>{$('account').onclick();},notice});
+  adminUI=setupAdmin({client:()=>client,user:()=>user,refreshCatalog});
   $('avatar-file').onchange=()=>{if(avatarPreviewUrl)URL.revokeObjectURL(avatarPreviewUrl);avatarPreviewUrl=null;const file=$('avatar-file').files?.[0];if(file){avatarPreviewUrl=URL.createObjectURL(file);$('remove-avatar').checked=false;}renderOwnAvatar();};
   $('remove-avatar').onchange=()=>{if($('remove-avatar').checked){$('avatar-file').value='';if(avatarPreviewUrl)URL.revokeObjectURL(avatarPreviewUrl);avatarPreviewUrl=null;$('own-avatar').hidden=true;$('own-avatar-fallback').hidden=false;}else renderOwnAvatar();};
   $('profile-form').onsubmit=event=>void saveProfile(event);
@@ -173,7 +191,7 @@ async function init() {
   $('export').onclick=()=>{const blob=new Blob([JSON.stringify({version:1,progress:state},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=el('a');a.href=url;a.download='think-cp-progress.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
   $('import').onchange=async event=>{
     const file=event.target.files[0],turn=epoch;if(!file)return;
-    try {if(loading)throw new Error('Account ачаалагдаж байна. Түр хүлээгээд дахин сонгоно уу.');if(file.size>2_000_000)throw new Error('Файл хэт том байна.');const imported=parseBackup(JSON.parse(await file.text()),new Set(data.problems.map(p=>p.id)));if(turn!==epoch)throw new Error('Account солигдлоо. Файлаа дахин сонгоно уу.');if(!confirm('Файлд байгаа бодлогуудын progress-ийг сэргээх үү? Одоогийн ижил бодлогын төлөв солигдоно.'))return;for(const [id,e] of Object.entries(imported)){state[id]=e;dirty[id]=e;}const saved=persist();render();if(saved)notice('Progress сэргээгдлээ.');void sync();}
+    try {if(loading)throw new Error('Account ачаалагдаж байна. Түр хүлээгээд дахин сонгоно уу.');if(file.size>2_000_000)throw new Error('Файл хэт том байна.');const imported=parseBackup(JSON.parse(await file.text()),catalogIds);if(turn!==epoch)throw new Error('Account солигдлоо. Файлаа дахин сонгоно уу.');if(!confirm('Файлд байгаа бодлогуудын progress-ийг сэргээх үү? Одоогийн ижил бодлогын төлөв солигдоно.'))return;for(const [id,e] of Object.entries(imported)){state[id]=e;dirty[id]=e;}const saved=persist();render();if(saved)notice('Progress сэргээгдлээ.');void sync();}
     catch(error){notice(error.message);}finally{event.target.value='';}
   };
   $('auth-form').onsubmit=event=>{event.preventDefault();void authAction(false);};$('signup').onclick=()=>void authAction(true);
@@ -183,8 +201,9 @@ async function init() {
     try {
       const {createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');client=createClient(cfg.supabaseUrl,cfg.supabaseKey);
       client.auth.onAuthStateChange((event,session)=>{social.authEvent(event,session);setTimeout(()=>void switchUser(session?.user || null),0);});
-      const {data:sessionData,error}=await client.auth.getSession();if(error)throw error;await switchUser(sessionData.session?.user || null);updateAccount();social.connected();
-    } catch(error){client=null;updateAccount();notice('Account холболт ажилласангүй: '+error.message);}
+      await refreshCatalog();
+      const {data:sessionData,error}=await client.auth.getSession();if(error)throw error;await switchUser(sessionData.session?.user || null);updateAccount();social.connected();adminUI.connected();
+    } catch(error){client=null;catalogLoading=false;render();updateAccount();notice('Account холболт ажилласангүй: '+error.message);}
   }
 }
 init().catch(error=>{$('problems').textContent=error.message;notice('Хуудсаа дахин ачаалаарай.');});

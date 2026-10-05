@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "updatedAt": "2026-10-05",
   "ratingNote": "Codeforces: official API snapshot. CSES/EGOI: approximate CF difficulty estimates; EGOI full task only.",
   "packs": [
@@ -73,7 +73,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Which value should the final array contain? Compare the initial frequencies.",
+        "If f positions already contain that value, how many more can one cloning operation make available for swaps?",
+        "Start with the maximum frequency f. Each clone allows min(f,n-f) useful swaps. Grow f accordingly; count clones and the n-f_initial swaps separately."
+      ],
+      "number": 3
     },
     {
       "id": "cf-1440B",
@@ -107,7 +113,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/84731"
+      "editorialUrl": "https://codeforces.com/blog/entry/84731",
+      "hintsEn": [
+        "How many elements must lie to the right of each group's median?",
+        "Reserve the right halves using the largest remaining elements of the sorted list.",
+        "From the end, skip floor(n/2) elements and take a median. Repeat with a step of floor(n/2)+1, taking k medians. The remaining small elements fill the left halves."
+      ],
+      "number": 51
     },
     {
       "id": "cf-1831B",
@@ -141,7 +153,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "For each value, find its longest consecutive run in each array.",
+        "A merge preserves the order within each original array. Can two separated runs from one array become one run?",
+        "For each value, add the two longest run lengths and take the maximum. The selected runs can be placed together; intervening different values prevent combining separate runs from the same array."
+      ],
+      "number": 2
     },
     {
       "id": "cf-1691B",
@@ -177,7 +195,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "What happens if a shoe size occurs only once?",
+        "All assigned shoes must fit. Summing the size inequalities shows every assigned size must equal the original size.",
+        "Cyclically shift indices inside each equal-size group. If any group has size one, output -1. The sorted input makes equal-size groups contiguous."
+      ],
+      "number": 1
     },
     {
       "id": "cf-1624C",
@@ -214,7 +238,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/98942"
+      "editorialUrl": "https://codeforces.com/blog/entry/98942",
+      "hintsEn": [
+        "List the values reachable by repeatedly dividing each number by two.",
+        "Process larger numbers first. Which reachable unused number should each one take?",
+        "Sort in decreasing order. Divide by two while the value exceeds n or is used. Mark the first unused value in 1..n; reaching zero means NO."
+      ],
+      "number": 8
     },
     {
       "id": "cf-1304B",
@@ -251,7 +281,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/73934"
+      "editorialUrl": "https://codeforces.com/blog/entry/73934",
+      "hintsEn": [
+        "Which string can mirror a chosen string on the opposite side of the palindrome?",
+        "Pair each string with its reverse. How many unpaired palindromic strings can occupy the center?",
+        "Build a left half from disjoint reverse pairs. Choose one unused palindromic string as the center, if available. Return left + center + reverse(left); never reuse an input string."
+      ],
+      "number": 25
     },
     {
       "id": "cf-1741C",
@@ -287,7 +323,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Once you choose the end of the first segment, what is the target sum?",
+        "Try every prefix sum as the target. All array values are positive.",
+        "For each target, scan left to right and cut whenever the sum reaches it. Reject overshoots or a nonzero remainder. Minimize the maximum segment length among valid partitions."
+      ],
+      "number": 4
     },
     {
       "id": "cf-1616B",
@@ -321,7 +363,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Compare the first differing position of the palindromes formed by two consecutive prefix lengths.",
+        "Handle equal first and second characters separately. Later equal characters behave differently.",
+        "If the first two characters are equal, use the first character twice. Otherwise take the longest non-increasing prefix and append its reverse. Handle n=1 as well."
+      ],
+      "number": 12
     },
     {
       "id": "cf-1618C",
@@ -354,7 +402,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/97927"
+      "editorialUrl": "https://codeforces.com/blog/entry/97927",
+      "hintsEn": [
+        "Adjacent elements must receive different colors. What does that imply about index parity?",
+        "Every value of one parity must be divisible by d, and no value of the other parity may be divisible by d.",
+        "Try the gcd of each parity group. Accept it only if it divides none of the opposite-parity values. If neither candidate works, output zero."
+      ],
+      "number": 6
     },
     {
       "id": "cf-1382B",
@@ -388,7 +442,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "A pile of size one forces a move. What choices become available at the first larger pile?",
+        "Count the leading ones and distinguish the all-ones case.",
+        "If all piles are one, First wins iff n is odd. Otherwise First wins iff the number of leading ones is even. At the first larger pile, the player can control who faces the next pile."
+      ],
+      "number": 42
     },
     {
       "id": "cf-1343C",
@@ -423,7 +483,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "How many elements can a longest alternating subsequence take from a consecutive same-sign run?",
+        "It takes one element from every maximal run. Which choice maximizes the sum?",
+        "Sum the numerical maximum of each same-sign run. In a negative run, choose the negative value closest to zero."
+      ],
+      "number": 30
     },
     {
       "id": "cf-1497B",
@@ -458,7 +524,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/88677"
+      "editorialUrl": "https://codeforces.com/blog/entry/88677",
+      "hintsEn": [
+        "Work with remainders modulo m. Which remainder can follow r?",
+        "Alternate remainders r and m-r. What remains if their frequencies differ greatly?",
+        "A nonempty remainder-zero group needs one array; so does m/2 when m is even. Each other nonempty complementary pair contributes 1+max(0,abs(f[r]-f[m-r])-1). Count each pair once."
+      ],
+      "number": 7
     },
     {
       "id": "cf-1354B",
@@ -494,7 +566,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "A valid substring must contain each of the input characters 1, 2 and 3.",
+        "Maintain their counts in a sliding window. When can you move the left boundary?",
+        "Expand the right boundary, then shrink while all three counts are positive, updating the minimum length. Output zero if no valid window exists."
+      ],
+      "number": 33
     },
     {
       "id": "cf-1364A",
@@ -530,7 +608,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "If the total sum is not divisible by x, the whole array works.",
+        "Otherwise remove the shortest prefix or suffix whose sum is not divisible by x.",
+        "If every element is divisible by x, output -1. Otherwise use the first and last non-divisible elements to determine the two removable boundaries and take the larger remaining length."
+      ],
+      "number": 37
     },
     {
       "id": "cf-1601A",
@@ -566,7 +650,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Count how many array elements contain each bit. How does an operation change these counts?",
+        "If a bit is set in the selected elements' AND, the operation removes exactly k copies of that bit.",
+        "Output every k in 1..n dividing the gcd of the bit counts. If all counts are zero, every k works. For sufficiency, repeatedly use k largest remaining values sharing their highest set bit."
+      ],
+      "number": 16
     },
     {
       "id": "cf-1661B",
@@ -605,7 +695,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Fifteen doublings always reach zero modulo 32768. How many initial increments are worth trying?",
+        "Try add=0..15, then count trailing zero bits in the resulting value.",
+        "For x=(a+add)%32768, use zero doublings if x=0, otherwise 15-v2(x). Minimize add+doublings. Reverse BFS over all 32768 states is another exact solution."
+      ],
+      "number": 75
     },
     {
       "id": "cf-1534C",
@@ -642,7 +738,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "If you swap one column, what does the other occurrence of each affected value require?",
+        "The mapping a[i] to b[i] decomposes into cycles because both rows are permutations.",
+        "Every cycle must be entirely swapped or entirely unchanged. With c cycles, the answer is 2^c modulo 1e9+7. The initially solved grid has no equal values within a column."
+      ],
+      "number": 65
     },
     {
       "id": "cf-1401C",
@@ -678,7 +780,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Which values can be swapped with the array minimum m?",
+        "Every multiple of m can be rearranged using the minimum as a helper. Other values cannot move.",
+        "Compare the original array with its sorted version. Every mismatching original value must be divisible by m. If so, output YES; otherwise NO."
+      ],
+      "number": 47
     },
     {
       "id": "cf-1654C",
@@ -714,7 +822,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "The original cake has weight equal to the sum of the target pieces.",
+        "Compare the largest current piece with the largest remaining target. When is splitting unavoidable or already impossible?",
+        "Use two max-heaps. Equal largest values are consumed; a larger current piece splits into floor(x/2),ceil(x/2); a smaller one means NO. Also reject if pending pieces outnumber remaining targets."
+      ],
+      "number": 74
     },
     {
       "id": "cf-1520E",
@@ -748,7 +862,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Let the sheep positions be p[i]. Consecutive target positions have the form x+i.",
+        "Rewrite the movement cost as sum abs((p[i]-i)-x).",
+        "Take the median of q[i]=p[i]-i and sum the absolute differences from it. Crossing sheep is unnecessary. With no sheep, the answer is zero."
+      ],
+      "number": 63
     },
     {
       "id": "cf-1332B",
@@ -785,7 +905,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/75432"
+      "editorialUrl": "https://codeforces.com/blog/entry/75432",
+      "hintsEn": [
+        "Numbers sharing a prime divisor can safely share a color.",
+        "A composite number at most 1000 has a small prime divisor. How large can its smallest prime divisor be?",
+        "Group by the first divisor among 2,3,5,7,11,13,17,19,23,29,31. Compress the used groups into color IDs 1..m; at most eleven colors are needed."
+      ],
+      "number": 28
     },
     {
       "id": "cf-1380C",
@@ -822,7 +948,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Team strength equals team size times its minimum skill. Start with the highest skills.",
+        "In decreasing order, the current skill is the minimum of the team being built.",
+        "Sort decreasingly and grow a current group. Whenever size*a[i]>=x, complete one team and reset its size. Ignore an unfinished final group."
+      ],
+      "number": 41
     },
     {
       "id": "cf-1605C",
@@ -858,7 +990,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "A shortest valid substring has no useless prefix or suffix. Examine gaps between a characters.",
+        "First inspect lengths two through four. If they fail, how can b and c be distributed between a characters?",
+        "The minimum occurs among aa, aba, aca, abca, acba, abbacca, accabba. Search these patterns, or check all windows of lengths 2..7. Every longer valid substring contains one of these short valid patterns."
+      ],
+      "number": 71
     },
     {
       "id": "cf-1506D",
@@ -892,7 +1030,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Removing two elements preserves the parity of the remaining length.",
+        "Let f be the maximum frequency. Pair its copies with all other n-f elements.",
+        "The answer is max(n%2,2*f-n). A dominating value leaves unavoidable excess copies; without dominance, different-value pairs can reduce the array to the parity lower bound."
+      ],
+      "number": 11
     },
     {
       "id": "cf-1526B",
@@ -927,7 +1071,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/91195"
+      "editorialUrl": "https://codeforces.com/blog/entry/91195",
+      "hintsEn": [
+        "Express longer all-ones numbers using nonnegative combinations of 11 and 111.",
+        "Eleven copies of 111 can be replaced by copies of 11. How many 111 terms need testing?",
+        "Try b=0..10. Check whether x-111*b is nonnegative and divisible by 11. This covers every representation x=11*a+111*b with a,b nonnegative."
+      ],
+      "number": 5
     },
     {
       "id": "cf-1627C",
@@ -963,7 +1113,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "At a vertex of degree at least three, can three prime edge weights have all pairwise sums prime?",
+        "Among three primes, either two are odd or two are equal to two; that pair has a composite sum.",
+        "If any degree is at least three, output -1. Otherwise the tree is a path. Traverse from an endpoint and alternate weights 2 and 3, then output in original edge order."
+      ],
+      "number": 17
     },
     {
       "id": "cf-1370C",
@@ -998,7 +1154,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Separate n=1, n=2, odd numbers and powers of two.",
+        "For even n, examine the special form 2*p with p an odd prime.",
+        "The losing states are 1, powers of two greater than 2, and 2*p for odd prime p. All other states win. In particular, n=2 is winning."
+      ],
+      "number": 13
     },
     {
       "id": "cf-1324D",
@@ -1034,7 +1196,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/74714"
+      "editorialUrl": "https://codeforces.com/blog/entry/74714",
+      "hintsEn": [
+        "Move the b terms to the other side of the inequality.",
+        "Define c[i]=a[i]-b[i]. Count pairs satisfying c[i]+c[j]>0.",
+        "Sort c. For every i, use upper_bound among j>i to find c[j]>-c[i], or use two pointers. Do not count equality; use a 64-bit answer."
+      ],
+      "number": 26
     },
     {
       "id": "cf-1515C",
@@ -1069,7 +1237,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Try placing each next block on a currently shortest tower.",
+        "Consider the last block placed on the tower that ends up tallest.",
+        "Use a min-heap of tower heights. Before that last block, its tower was no taller than any other tower; all heights only increase afterward. Since every block height is at most x, the final spread is at most x."
+      ],
+      "number": 10
     },
     {
       "id": "cf-1451C",
@@ -1106,7 +1280,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Swaps remove the importance of character order. Work with frequencies.",
+        "Process characters from smallest to largest. Can a shortage be repaired using larger characters?",
+        "For each character a..z, reject if source count is below target count. The surplus must be divisible by k; transfer it to the next character. At z, the counts must match exactly."
+      ],
+      "number": 54
     },
     {
       "id": "cf-1363B",
@@ -1140,7 +1320,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "A binary string avoiding both 010 and 101 as subsequences changes character at most once.",
+        "The final form is either 0*1* or 1*0*. Try every split position.",
+        "Minimize prefix ones + suffix zeros, and prefix zeros + suffix ones, over all splits. The operation flips a character; it does not delete it."
+      ],
+      "number": 36
     },
     {
       "id": "cf-1374D",
@@ -1175,7 +1361,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Each non-divisible value needs d=(k-a[i]%k)%k added. Why do equal d values conflict?",
+        "A required remainder d can be used at times d,d+k,d+2*k,... as x increases.",
+        "For each d>0 with frequency f, its last required x is d+(f-1)*k. Take the maximum plus one. If all values are divisible already, output zero."
+      ],
+      "number": 40
     },
     {
       "id": "cf-1466D",
@@ -1211,7 +1403,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "How many times can a vertex's weight contribute across the component partitions?",
+        "A degree-d vertex supplies d-1 extra occurrences beyond its initial occurrence.",
+        "Start with the sum of all weights. Put each weight into an extra list degree-1 times, sort extras decreasingly, and add them one by one to obtain the n-1 answers."
+      ],
+      "number": 55
     },
     {
       "id": "cf-1547E",
@@ -1249,7 +1447,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "At position x, the answer is min(t[i]+abs(x-a[i])). Separate sources to its left and right.",
+        "A source's influence grows by one each time you move one position farther away.",
+        "Initialize source temperatures and use INF elsewhere. Relax left to right with arr[i]=min(arr[i],arr[i-1]+1), then right to left with the symmetric rule."
+      ],
+      "number": 67
     },
     {
       "id": "cf-1368B",
@@ -1286,7 +1490,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "If each character of codeforces is repeated a chosen number of times, how many subsequences are formed?",
+        "The product of the ten repetition counts must reach k. Balanced counts maximize the product for a fixed total length.",
+        "Start all ten counts at one. Repeatedly increase a smallest count until the product reaches k. Counts differ by at most one. Output each character repeated its count; use a 64-bit product."
+      ],
+      "number": 9
     },
     {
       "id": "cf-1444A",
@@ -1321,7 +1531,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/84248"
+      "editorialUrl": "https://codeforces.com/blog/entry/84248",
+      "hintsEn": [
+        "If p is not divisible by q, p itself is optimal.",
+        "Otherwise q must lose at least one required prime exponent. Try each distinct prime factor of q.",
+        "For each prime r dividing q, start with candidate=p and divide by r while candidate remains divisible by q. Maximize the resulting candidates. Here q>=2."
+      ],
+      "number": 52
     },
     {
       "id": "cf-1325C",
@@ -1357,7 +1573,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/74235"
+      "editorialUrl": "https://codeforces.com/blog/entry/74235",
+      "hintsEn": [
+        "A simple path uses at most two edges incident to a vertex.",
+        "What happens if three edges at a branching vertex receive labels 0,1,2?",
+        "Give three edges of a degree-at-least-three vertex labels 0,1,2 and assign the rest arbitrarily. No path contains all three. If the tree is a path, any labeling works."
+      ],
+      "number": 27
     },
     {
       "id": "cf-1490F",
@@ -1394,7 +1616,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Fix the common final frequency f. What happens to values occurring fewer or more than f times?",
+        "Delete every value with frequency below f; trim every other value to f copies.",
+        "Sort the frequency list. For each existing frequency f, keep f times the number of frequencies at least f. Minimize n-kept. An optimum occurs at an existing frequency."
+      ],
+      "number": 58
     },
     {
       "id": "cf-1492C",
@@ -1431,7 +1659,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Maximize the gap between two consecutive matched characters of t.",
+        "Match prefixes as early as possible and suffixes as late as possible in s.",
+        "Compute earliest positions Left[i] with a forward greedy scan and latest positions Right[i] backward. Maximize Right[i+1]-Left[i]. These prefix and suffix matches remain compatible."
+      ],
+      "number": 59
     },
     {
       "id": "cf-1426D",
@@ -1467,7 +1701,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/83120"
+      "editorialUrl": "https://codeforces.com/blog/entry/83120",
+      "hintsEn": [
+        "A zero-sum subarray corresponds to two equal prefix sums.",
+        "Keep the prefix sums of the current segment. What should happen before an element that creates a repeated sum?",
+        "Start with set={0},sum=0. If sum+a[i] is already present, count a boundary and restart the segment at a[i]. Otherwise extend it. Sufficiently large positive inserted values prevent cross-boundary zero sums."
+      ],
+      "number": 50
     },
     {
       "id": "cf-1515D",
@@ -1502,7 +1742,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Remove matching left/right socks of the same color first.",
+        "Suppose L>=R remain. You need (L-R)/2 side switches; same-color pairs on the larger side can also save repaints.",
+        "Let moves=(L-R)/2 and used=min(moves,sum floor(freq/2) on the larger side). The cost is moves+(L+R)/2-used. Each useful pair saves one repaint."
+      ],
+      "number": 62
     },
     {
       "id": "cf-1385D",
@@ -1539,7 +1785,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "A c-good string has one half entirely c and the other half (c+1)-good.",
+        "Try both choices of which half is made entirely c.",
+        "Recursively minimize mismatch(left,c)+solve(right,c+1) and mismatch(right,c)+solve(left,c+1). A length-one string costs zero iff its character equals c. The length is a power of two."
+      ],
+      "number": 43
     },
     {
       "id": "cf-1416A",
@@ -1575,7 +1827,13 @@
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
       },
-      "editorialUrl": "https://codeforces.com/blog/entry/83036"
+      "editorialUrl": "https://codeforces.com/blog/entry/83036",
+      "hintsEn": [
+        "For a value to occur in every length-k window, consider the gaps between its occurrences.",
+        "Add sentinel positions 0 and n+1. The largest consecutive gap is its minimum valid k.",
+        "For each value x, compute maximum gap g and minimize best[g] with x. Prefix minima give the smallest valid value for every k; output -1 when none exists."
+      ],
+      "number": 49
     },
     {
       "id": "cf-1513C",
@@ -1609,7 +1867,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Incrementing a digit below nine keeps one digit. What happens when nine is incremented?",
+        "Precompute how many digits descend from one starting digit after m operations.",
+        "For each digit d, use its digit-count dp; nine branches into zero and one, while smaller digits advance. Sum the counts for the original digits modulo 1e9+7. Precompute up to the maximum query m."
+      ],
+      "number": 61
     },
     {
       "id": "cf-1389B",
@@ -1644,7 +1908,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Every left move costs a step without extending the rightmost prefix. Fix the number l of left moves.",
+        "After k moves with l left moves, the final index is r=k-2*l. Repeatedly crossing one profitable adjacent pair can supply the extra score.",
+        "For each 0<=l<=z with 2*l<=k, evaluate prefix sum a[0..r]+l*max(a[i]+a[i+1]) over 0<=i<=r,i+1<n. Include pair (0,1) when r=0."
+      ],
+      "number": 15
     },
     {
       "id": "cf-1407C",
@@ -1680,7 +1950,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "For distinct a,b, what does max(a%b,b%a) reveal?",
+        "Two remainder queries identify the smaller value's index while retaining the larger value's index as a candidate.",
+        "Compare candidate and next index in both directions. The larger remainder equals the smaller value. Eliminate its index and keep the larger value's index. Use 2*(n-1) queries; the remaining value is n. Flush interactive output."
+      ],
+      "number": 48
     },
     {
       "id": "cf-1353D",
@@ -1715,7 +1991,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "How is the next unfilled interval chosen? Can you avoid scanning all positions each time?",
+        "Order maximal empty intervals by decreasing length, breaking ties by increasing left endpoint.",
+        "Use a priority queue. Pop [l,r], fill mid=floor((l+r)/2) with the next value, and push the nonempty left and right intervals. Even lengths use the left middle."
+      ],
+      "number": 32
     },
     {
       "id": "cf-1481C",
@@ -1750,7 +2032,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Where can the last painter's color appear in the final array?",
+        "Assign painters in reverse so that a known later paint can overwrite an unwanted earlier one.",
+        "Keep mismatched positions grouped by target color. In reverse, fix a needed position if available and update the anchor; otherwise use a known later-painted anchor. The last painter needs a matching target position, and all mismatches must be resolved."
+      ],
+      "number": 56
     },
     {
       "id": "cf-1398C",
@@ -1785,7 +2073,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Rewrite subarray digit sum = subarray length using prefixes.",
+        "Subtract each prefix's index from its digit sum.",
+        "Let P[i]=S[i]-i with P[0]=0. Count equal prefix-value pairs using a frequency map. Initialize frequency[0]=1; for each prefix, add its previous frequency before incrementing it."
+      ],
+      "number": 45
     },
     {
       "id": "cf-1622C",
@@ -1821,7 +2115,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Decrease the minimum and set some largest values equal to it.",
+        "If k largest values are replaced, decreasing the minimum by d reduces the sum by (k+1)*d.",
+        "Sort. If T is the sum of the k largest values, set Base=S-T+k*a[0]. Use d=max(0,ceil((Base-K)/(k+1))) and cost=k+d. Try k=0..n-1, using correct positive ceiling division."
+      ],
+      "number": 72
     },
     {
       "id": "cf-1748C",
@@ -1858,7 +2158,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Changing a zero shifts every subsequent prefix sum by the same offset.",
+        "Before the first zero, prefix sums cannot be shifted. Inside each zero-start block, make the most frequent prefix value zero.",
+        "Count actual zero prefixes before the first zero. For each block beginning at a zero and ending before the next, add the maximum frequency of its original prefix sums. Reset the frequency map at each new zero."
+      ],
+      "number": 76
     },
     {
       "id": "cf-1368D",
@@ -1893,7 +2199,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Do AND/OR operations change the total number of ones at each bit position?",
+        "With a fixed sum, making values less equal increases their squared sum.",
+        "Count each bit's ones. Repeatedly build a value containing every bit whose count is positive, decrementing those counts. Sum the squares of the n constructed values. Concentrating bits together is optimal."
+      ],
+      "number": 39
     },
     {
       "id": "cf-1538D",
@@ -1928,7 +2240,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "An operation may divide a number by any divisor greater than one. The number of operations must be exactly k.",
+        "The maximum is the total prime-factor multiplicity of a and b. Handle k=1 separately.",
+        "For k=1, require a!=b and one number dividing the other. For k>=2, require k<=Omega(a)+Omega(b). Count repeated prime factors with multiplicity."
+      ],
+      "number": 66
     },
     {
       "id": "cf-1343D",
@@ -1964,7 +2282,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "For a mirrored pair (a,b), determine the target sums requiring zero, one or two changes.",
+        "One change suffices on [1+min(a,b),k+max(a,b)]. Zero changes occur only at a+b.",
+        "Start every sum 2..2*k at cost 2*(n/2). Subtract one over each pair's one-change interval and another at its exact sum. Use a difference array and prefix sums in O(n+k)."
+      ],
+      "number": 31
     },
     {
       "id": "cf-1644D",
@@ -1999,7 +2323,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Later row/column paints overwrite earlier ones. Scan the queries in reverse.",
+        "An operation matters only if it adds a previously unseen row or column before a full dimension is covered.",
+        "Track seen rows and columns. Stop when all rows or all columns are covered. Before then, multiply the answer by k for each query adding a new row or column, then mark both. Use modulo 998244353."
+      ],
+      "number": 73
     },
     {
       "id": "cf-1537D",
@@ -2034,7 +2364,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Allowed divisors exclude both 1 and n. What states can an odd number reach?",
+        "A non-power-of-two even number has an odd proper divisor. Powers of two need a separate analysis.",
+        "Odd n is losing. Even n that is not a power of two is winning. For n=2^k with k>=1, even k wins and odd k loses. n=1 is losing."
+      ],
+      "number": 14
     },
     {
       "id": "cf-1392D",
@@ -2068,7 +2404,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Relate an illogical player to triples of consecutive L/R characters.",
+        "Remove all LLL and RRR triples, remembering that the string is circular.",
+        "If all characters are equal, use ceil(n/3). Otherwise cut at a boundary between different characters and sum floor(run_length/3) over the linear runs."
+      ],
+      "number": 44
     },
     {
       "id": "cf-1336B",
@@ -2105,7 +2447,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Sort the three chosen values as x<=y<=z. Fix the middle value y.",
+        "For a fixed color order, choose the largest available x<=y and smallest available z>=y.",
+        "Try all six color orders. For each middle-array y, find x,z with binary search and minimize the squared-difference sum. Skip missing candidates and use 64-bit arithmetic."
+      ],
+      "number": 29
     },
     {
       "id": "cf-1525D",
@@ -2141,7 +2489,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Build sorted lists of initially occupied positions and initially empty positions.",
+        "Uncrossing two assignments never increases total distance, so match in order.",
+        "Use dp[i][j] for assigning the first i people to the first j empty seats. Either skip seat j or match it to person i. Initialize dp[0][j]=0 and impossible states to INF."
+      ],
+      "number": 64
     },
     {
       "id": "cf-1552D",
@@ -2180,7 +2534,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Interpret each equation a[i]=b[j]-b[k] as a directed weighted edge between b-values.",
+        "With n edges and n vertices, a cycle gives a nonempty signed subset sum of zero.",
+        "Enumerate coefficients -1,0,1 for each a[i] and find a nonempty zero-sum combination. Such a combination forms a cycle; attach the remaining values as a chain to obtain n b-values."
+      ],
+      "number": 68
     },
     {
       "id": "cf-1572A",
@@ -2219,7 +2579,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Draw an edge from each prerequisite u to its chapter v. What if there is a cycle?",
+        "If u<v, v can be learned in the same read-through; if u>v, another read-through is needed.",
+        "Topologically process edges and update day[v]=max(day[v],day[u]+(u>v)), starting prerequisite-free chapters at day=1. A cycle means -1; otherwise output the maximum day."
+      ],
+      "number": 70
     },
     {
       "id": "cf-1398D",
@@ -2254,7 +2620,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Within one color, should you use smaller rectangles before larger ones?",
+        "Sort each color decreasingly and use the counts of used rectangles as a dp state.",
+        "From dp[i][j][k], pair the next unused values of any two distinct available colors and add their product. Maximize over reachable states; rectangles of one remaining color may stay unused."
+      ],
+      "number": 46
     },
     {
       "id": "cf-1560E",
@@ -2290,7 +2662,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "The last appearances of distinct characters reveal their deletion order.",
+        "Scan t backward for distinct characters, then reverse that order.",
+        "A character deleted at one-based step j appears j times its original frequency in t. Check divisibility, derive the original length L, and take s=t[0..L). Simulate all deletions and appends to verify that they reproduce exactly t."
+      ],
+      "number": 69
     },
     {
       "id": "cf-1450D",
@@ -2327,7 +2705,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "For k=1 the original array must be a permutation. For k=n only minimum=1 is needed.",
+        "For k>1, a single occurrence of 1 in the compressed array constrains where the original ones can lie.",
+        "Peel values 1,2,... from the ends. If v is present, k=n-v+1 is valid; continuing requires v to be unique and at a current end. Handle k=1 separately by checking the original permutation."
+      ],
+      "number": 53
     },
     {
       "id": "cf-1367D",
@@ -2363,7 +2747,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Consider all currently unassigned positions with b[i]=0.",
+        "They form one equal-character group. Choose the largest remaining character with enough copies for the group.",
+        "Assign that character to the group. For each remaining j, subtract sum abs(i-j) over the group from b[j]. The next round must use a strictly smaller character. Each group's chosen character needs enough copies."
+      ],
+      "number": 38
     },
     {
       "id": "cf-1508A",
@@ -2400,7 +2790,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Among three binary strings of length 2n, two share a majority character.",
+        "Align occurrences of that common character; both strings contain at least n copies of it.",
+        "Merge the chosen two strings with two pointers. If both point to the majority character, append it once and advance both; otherwise append a non-majority next character. Append leftovers. The result has length at most 3n."
+      ],
+      "number": 60
     },
     {
       "id": "cf-1354D",
@@ -2434,7 +2830,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Can you count the final elements at most x without storing the entire multiset?",
+        "Insertion v increases the count iff v<=x. Deleting the k-th smallest decreases it iff k<=count.",
+        "For each x, simulate all queries using just this count. Final count>0 is monotone, so binary search the smallest surviving value. If the final count at x=n is zero, output zero."
+      ],
+      "number": 34
     },
     {
       "id": "cf-1288D",
@@ -2469,7 +2871,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "To test answer>=x, keep only whether each row reaches x in each column.",
+        "There are at most eight columns, so each row becomes a bitmask.",
+        "Binary search x. Store one row index per mask and test pairs of masks whose OR is all ones. Save a feasible pair of indices. Choosing the same row twice is allowed."
+      ],
+      "number": 80
     },
     {
       "id": "cf-1360H",
@@ -2505,7 +2913,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Treat m-bit strings as integers 0..2^m-1 and think in terms of allowed ranks.",
+        "The number of allowed integers at most x is x+1 minus the number of removed integers at most x.",
+        "Sort removals. With K=2^m-n, the desired zero-based rank is (K-1)/2. Binary search the smallest x whose allowed count reaches rank+1. Output x as an m-bit string including leading zeros; use 64-bit integers."
+      ],
+      "number": 35
     },
     {
       "id": "cf-1486D",
@@ -2540,7 +2954,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Test whether some subarray of length at least k has median at least x.",
+        "Map values >=x to +1 and the others to -1. The even-length median here is the lower median.",
+        "A qualifying subarray needs strictly positive transformed sum. With prefixes P, test P[i]-min(P[0..i-k])>0 for each i>=k in O(n). Binary search x. A zero sum does not suffice."
+      ],
+      "number": 57
     },
     {
       "id": "cf-1406D",
@@ -2576,7 +2996,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "The objective is max(b[n],c[1]). How much increase in b is forced by positive adjacent differences of a?",
+        "Let D=sum max(0,a[i]-a[i-1]). Then b[n]>=b[1]+D and c[1]=a[1]-b[1].",
+        "The answer is ceil((a[1]+D)/2). A range add changes a[1] and only the difference-array boundaries l and r+1. Remove old positive contributions and add new ones. Handle signed ceiling division correctly."
+      ],
+      "number": 77
     },
     {
       "id": "cf-1494D",
@@ -2616,7 +3042,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "The root salary of a group must equal the largest pairwise LCA salary in its matrix.",
+        "If the root salary is M, leaves with a[i][j]<M belong to the same child group.",
+        "Partition by the relation a[i][j]<M and recurse; a singleton is an original leaf. Alternatively batch equal-weight DSU merges. Do not create a chain of supervisors with equal salary: a supervisor's salary must be strictly greater."
+      ],
+      "number": 78
     },
     {
       "id": "cf-1479C",
@@ -2650,7 +3082,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Encode intervals of path lengths with binary-power gadgets. Every edge weight must be positive and every target length unique.",
+        "Let E[k] generate lengths 1..2^k to the sink exactly once: add E[k] to sink with weight 1 and E[k] to E[j] with weight 2^j for j<k.",
+        "Add source to sink with weight L. Decompose R-L into binary blocks [s,s+2^k-1] and connect source to E[k] with weight s-1. Label core nodes by decreasing k. All edges go forward, lengths are disjoint, and at most 23 nodes suffice."
+      ],
+      "number": 79
     },
     {
       "id": "cses-1070",
@@ -2658,7 +3096,7 @@
       "title": "Permutations",
       "source": "CSES",
       "ref": "1070",
-      "level": "≈ CF баримжаа",
+      "level": "Practice",
       "url": "https://cses.fi/problemset/task/1070/",
       "hints": [
         "n=1,2,3 гэсэн жижиг cases-ийг эхлээд шалга.",
@@ -2676,7 +3114,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Check n=1,2,3 before designing a general construction.",
+        "Adjacent numbers of the same parity differ by at least two.",
+        "For n=1 output 1; for n=2,3 output NO SOLUTION. For n>=4 output increasing evens followed by increasing odds. Check the boundary between the two groups."
+      ],
+      "number": 18
     },
     {
       "id": "cses-1755",
@@ -2684,7 +3128,7 @@
       "title": "Palindrome Reorder",
       "source": "CSES",
       "ref": "1755",
-      "level": "≈ CF баримжаа",
+      "level": "Practice",
       "url": "https://cses.fi/problemset/task/1755/",
       "hints": [
         "Palindrome-ийн хоёр талын characters pair болно. Odd frequency-тай хэдэн character байж болох вэ?",
@@ -2703,7 +3147,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Characters on the two sides of a palindrome must occur in pairs.",
+        "At most one character may have odd frequency, for the center.",
+        "Reject if more than one frequency is odd. Build left using half of each frequency, add the one odd character if present, then append reverse(left)."
+      ],
+      "number": 21
     },
     {
       "id": "cses-2165",
@@ -2711,7 +3161,7 @@
       "title": "Tower of Hanoi",
       "source": "CSES",
       "ref": "2165",
-      "level": "≈ CF баримжаа",
+      "level": "Practice",
       "url": "https://cses.fi/problemset/task/2165/",
       "hints": [
         "Largest disk-ийг target peg рүү зөөхийн өмнө жижиг disks хаана байх хэрэгтэй вэ?",
@@ -2729,7 +3179,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Where must the smaller disks be before moving the largest disk to its destination?",
+        "Move n-1 disks to the helper peg, move the largest, then move the smaller disks to the destination.",
+        "Use recursive Move(n,from,to,helper), returning at n=0. Output 2^n-1 as the minimum move count and then the recursive moves."
+      ],
+      "number": 22
     },
     {
       "id": "cses-1092",
@@ -2737,7 +3193,7 @@
       "title": "Two Sets",
       "source": "CSES",
       "ref": "1092",
-      "level": "≈ CF баримжаа",
+      "level": "Practice",
       "url": "https://cses.fi/problemset/task/1092/",
       "hints": [
         "Total sum odd бол equal partition боломжтой юу?",
@@ -2756,33 +3212,47 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "If n*(n+1)/2 is odd, can two equal-sum groups exist?",
+        "For an even total, try filling a target of half the total with decreasing numbers.",
+        "Scan n..1. Take a number into the first set if it does not exceed the remaining target; put it in the second set otherwise. Consecutive integers guarantee the target can be completed exactly."
+      ],
+      "number": 19
     },
     {
       "id": "cses-1097",
       "pack": "cses",
-      "title": "Apple Division",
+      "title": "Removal Game",
       "source": "CSES",
       "ref": "1097",
-      "level": "≈ CF баримжаа",
+      "level": "Practice",
       "url": "https://cses.fi/problemset/task/1097/",
-      "rating": 1200,
+      "rating": 1600,
       "ratingKind": "estimated",
       "tags": [
-        "brute force",
-        "subset sums"
+        "dp",
+        "games",
+        "intervals",
+        "array"
       ],
       "hints": [
-        "Two groups-ийн sum difference-ийг нэг chosen subset-ийн sum-аар илэрхийл.",
-        "n<=20 тул бүх subsets-ийг enumerate хийх боломжтой.",
-        "Subset sum S бүрд abs(total-2*S)-г minimum болго. 64-bit sum хэрэглэ; desired grouping-ийг шууд enumerate хийж болно."
+        "End element сонгосны дараа opponent жижиг interval дээр тоглоно. Хоёр score-ийг тусад нь бус difference-аар илэрхийл.",
+        "dp[l][r]=current player-ийн score minus opponent score гэсэн maximum difference ав.",
+        "dp[l][r]=max(a[l]-dp[l+1][r],a[r]-dp[l][r-1]); base dp[i][i]=a[i]. First player score=(total+dp[0][n-1])/2. 64-bit arithmetic хэрэглэ; O(n^2) time, O(n) memory болгож болно."
       ],
-      "lesson": "Small n constraints нь exhaustive search-ийг зөв solution болгодог.",
+      "lesson": "Opponent-ийн optimal response-ийг хасах нь score difference dp-д яагаад зөв бэ?",
       "priority": false,
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "After choosing an end element, the other player faces a smaller interval. Think about score difference rather than each score separately.",
+        "Let dp[l][r] be the maximum current-player score minus opponent score for interval [l,r].",
+        "Use dp[l][r]=max(a[l]-dp[l+1][r],a[r]-dp[l][r-1]), with dp[i][i]=a[i]. The first player's score is (total+dp[0][n-1])/2. Use 64-bit arithmetic; O(n^2) time and O(n) memory are possible."
+      ],
+      "number": 81
     },
     {
       "id": "cses-1072",
@@ -2790,7 +3260,7 @@
       "title": "Two Knights",
       "source": "CSES",
       "ref": "1072",
-      "level": "≈ CF баримжаа",
+      "level": "Practice",
       "url": "https://cses.fi/problemset/task/1072/",
       "hints": [
         "Бүх хоёр cell-ийн choices-оос attacking pairs-ийг хас.",
@@ -2809,7 +3279,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Start with all ways to choose two cells, then subtract attacking pairs.",
+        "Every attacking knight pair fits in a 2x3 or 3x2 rectangle.",
+        "For a k-by-k board, use C(k*k,2)-4*(k-1)*(k-2). Each rectangle contains two attacking pairs and both orientations count. Use 64-bit multiplication."
+      ],
+      "number": 20
     },
     {
       "id": "cses-1624",
@@ -2817,7 +3293,7 @@
       "title": "Chessboard and Queens",
       "source": "CSES",
       "ref": "1624",
-      "level": "≈ CF баримжаа",
+      "level": "Practice",
       "url": "https://cses.fi/problemset/task/1624/",
       "rating": 1400,
       "ratingKind": "estimated",
@@ -2836,7 +3312,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Place exactly one queen in each row.",
+        "Track used columns and both diagonal types, row-col and row+col.",
+        "Backtrack row by row. Place a queen only on an allowed cell with all three tracks free; undo the marks on return. Reaching row eight counts one valid placement."
+      ],
+      "number": 82
     },
     {
       "id": "cses-1141",
@@ -2844,7 +3326,7 @@
       "title": "Playlist",
       "source": "CSES",
       "ref": "1141",
-      "level": "≈ CF баримжаа",
+      "level": "Practice",
       "url": "https://cses.fi/problemset/task/1141/",
       "hints": [
         "Window дээр шинэ song нэмэхэд зөвхөн тэр song-ийн duplicate зөрчил үүсгэнэ.",
@@ -2863,7 +3345,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Adding a new song can create a duplicate only of that song.",
+        "Store the last occurrence of each song and update the left boundary.",
+        "At right index r, set left=max(left,last[song]+1), then last[song]=r. Maximize r-left+1. Never move left backward."
+      ],
+      "number": 23
     },
     {
       "id": "cses-2431",
@@ -2871,7 +3359,7 @@
       "title": "Digit Queries",
       "source": "CSES",
       "ref": "2431",
-      "level": "≈ CF баримжаа",
+      "level": "Practice",
       "url": "https://cses.fi/problemset/task/2431/",
       "rating": 1600,
       "ratingKind": "estimated",
@@ -2890,7 +3378,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "Group the concatenation into one-digit, two-digit and larger number blocks.",
+        "The d-digit block contains 9*10^(d-1) numbers and d times as many characters.",
+        "Subtract whole blocks from one-based k. In the remaining block, number=10^(d-1)+(k-1)/d and digit index=(k-1)%d. Use 64-bit arithmetic and consistent indexing."
+      ],
+      "number": 83
     },
     {
       "id": "cses-2217",
@@ -2898,7 +3392,7 @@
       "title": "Collecting Numbers II",
       "source": "CSES",
       "ref": "2217",
-      "level": "≈ CF баримжаа",
+      "level": "Practice",
       "url": "https://cses.fi/problemset/task/2217/",
       "rating": 1700,
       "ratingKind": "estimated",
@@ -2917,7 +3411,13 @@
       "hintReview": {
         "method": "statement + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "For a permutation, rounds=1+count(pos[v]>pos[v+1]).",
+        "Swapping values x,y affects only adjacent-value pair indices x-1,x,y-1,y.",
+        "Deduplicate those valid indices in a set. Subtract old contributions, swap and update positions, then add new contributions. Avoid double counting adjacent values or a self-swap."
+      ],
+      "number": 84
     },
     {
       "id": "egoi-2023-inflation",
@@ -2925,7 +3425,7 @@
       "title": "Inflation",
       "source": "EGOI",
       "ref": "2023 · Day 1",
-      "level": "Full task ≈ CF 1800 · subtask-аас эхэл",
+      "level": "Practice",
       "url": "https://egoi23.se/assets/tasks/day1/inflation/statement_en.pdf",
       "hints": [
         "Эхлээд small constraints дээр array-ийн prices-ийг шууд update хий. Зөвхөн INFLATION queries-тэй subtask-д total sum яаж өөрчлөгдөх вэ?",
@@ -2945,7 +3445,45 @@
       "hintReview": {
         "method": "official statement + solution + reasoning review",
         "reviewedAt": "2026-10-05"
-      }
+      },
+      "hintsEn": [
+        "First simulate every price on small subtasks. With only INFLATION queries, how does the total change?",
+        "Keep a global price offset and group equal current prices by frequency.",
+        "Store frequencies by base price=current price-offset. INFLATION x adds x to offset and N*x to the total. SET x y moves the frequency at x-offset to y-offset and adds count*(y-x) to the total. If x=y, do nothing. Use 64-bit keys and sums."
+      ],
+      "number": 24
+    },
+    {
+      "id": "cses-1623",
+      "pack": "cses",
+      "title": "Apple Division",
+      "source": "CSES",
+      "ref": "1623",
+      "level": "Practice",
+      "url": "https://cses.fi/problemset/task/1623",
+      "rating": 1200,
+      "ratingKind": "estimated",
+      "tags": [
+        "brute force",
+        "subset sums"
+      ],
+      "hints": [
+        "Two groups-ийн sum difference-ийг нэг chosen subset-ийн sum-аар илэрхийл.",
+        "n<=20 тул бүх subsets-ийг enumerate хийх боломжтой.",
+        "Subset sum S бүрд abs(total-2*S)-г minimum болго. 64-bit sum хэрэглэ; desired grouping-ийг шууд enumerate хийж болно."
+      ],
+      "lesson": "Small n constraints нь exhaustive search-ийг зөв solution болгодог.",
+      "priority": false,
+      "hintReview": {
+        "method": "statement + reasoning review",
+        "reviewedAt": "2026-10-05"
+      },
+      "hintsEn": [
+        "Express the difference between the two groups using the sum of one chosen subset.",
+        "With n<=20, all subsets can be enumerated.",
+        "For every subset sum S, minimize abs(total-2*S). Use 64-bit sums. The complementary subset forms the second group automatically."
+      ],
+      "number": 85
     }
   ]
 }

@@ -9,7 +9,7 @@ export function filterProblems(problems, progress, filters) {
   const band=filters.ratingBand?filters.ratingBand.split('-').map(Number):null;
   const result=problems.filter(p=>{
     const e=progress[p.id]||{status:'new',hints:0};
-    const haystack=[p.title,p.ref,p.id,...p.tags].join(' ').toLowerCase();
+    const haystack=[p.title,p.ref,p.id,p.number,'#'+p.number,String(p.number).padStart(3,'0'),'#'+String(p.number).padStart(3,'0'),...p.tags].join(' ').toLowerCase();
     return (!filters.pack||p.pack===filters.pack)
       &&(!filters.source||p.source===filters.source)
       &&(!filters.tag||p.tags.includes(filters.tag))
@@ -19,6 +19,7 @@ export function filterProblems(problems, progress, filters) {
       &&words.every(word=>haystack.includes(word));
   });
   return result.sort((a,b)=>{
+    if(filters.sort==='number-asc')return a.number-b.number;
     if(filters.sort==='title')return a.title.localeCompare(b.title)||a.id.localeCompare(b.id);
     if(filters.sort==='priority'&&a.priority!==b.priority)return Number(b.priority)-Number(a.priority);
     return (filters.sort==='rating-desc'?b.rating-a.rating:a.rating-b.rating)||a.title.localeCompare(b.title)||a.id.localeCompare(b.id);
