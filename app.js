@@ -1,6 +1,6 @@
 import {EMPTY, cleanEntry, parseBackup} from './progress.js';
 import {getProfile, putProfile, getSolvers, profileError} from './community.js';
-import {filterProblems, getTags, ratingLabel} from './catalog.js';
+import {filterProblems, getTags, ratingLabel} from './catalog.js?v=4';
 const $ = id => document.getElementById(id);
 const STATUS = {new:'Эхлээгүй',trying:'Оролдож байгаа',solved:'Бодсон'};
 let data, selectedPack='', selectedProblem, state={}, dirty={}, user=null, client=null, loading=false, syncing=false, syncAgain=false, epoch=0;
@@ -132,7 +132,7 @@ async function authAction(signup) {
   } catch(error){$('auth-feedback').textContent=error.message;}finally{buttons.forEach(b=>b.disabled=false);}
 }
 async function init() {
-  const response=await fetch('./problems.json');if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();readLocal();render();updateAccount();
+  const response=await fetch('./problems.json?v=4', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();readLocal();render();updateAccount();
   for(const tag of getTags(data.problems)){const option=el('option','',tag);option.value=tag;$('tag-filter').append(option);}
   try {const prefs=JSON.parse(localStorage.getItem('think-cp:catalog-preferences')||'{}');$('show-tags').checked=prefs.showTags===true;if(['rating-asc','rating-desc','priority','title'].includes(prefs.sort))$('sort').value=prefs.sort;}catch{}
   const savePreferences=()=>{try{localStorage.setItem('think-cp:catalog-preferences',JSON.stringify({showTags:$('show-tags').checked,sort:$('sort').value}));}catch{}};
