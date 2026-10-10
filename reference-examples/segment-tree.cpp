@@ -71,3 +71,14 @@ struct SegTree {
         return query(1, 0, n - 1, l, r);
     }
 };
+
+int main() {
+    vector<long long> a = {2, 1, 3, 4};
+    SegTree st(a);
+
+    cout << st.query(1, 3) << '\n';
+    st.update(2, 8);
+    cout << st.query(1, 3) << '\n';
+
+    return 0;
+}

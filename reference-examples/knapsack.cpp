@@ -21,3 +21,10 @@ long long knapsack(int W, const vector<pair<int, long long>>& items) {
 
     return dp[n][W];
 }
+
+int main() {
+    vector<pair<int, long long>> items = {{2, 3}, {3, 4}, {4, 5}};
+    cout << knapsack(5, items) << '\n';
+
+    return 0;
+}

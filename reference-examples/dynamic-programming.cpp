@@ -16,3 +16,9 @@ long long stair_ways(int n) {
 
     return dp[n];
 }
+
+int main() {
+    cout << stair_ways(4) << '\n';
+
+    return 0;
+}

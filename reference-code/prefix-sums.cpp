@@ -12,27 +12,6 @@ vector<long long> prefix(const vector<long long>& a) {
     return pref;
 }
 
-struct Update {
-    int l;
-    int r;
-    long long x;
-};
-
-vector<long long> apply_updates(int n, const vector<Update>& updates) {
-    vector<long long> diff(n + 1, 0);
-    vector<long long> a(n, 0);
-
-    for (const Update& update : updates) {
-        diff[update.l] += update.x;
-        diff[update.r] -= update.x;
-    }
-
-    long long sum = 0;
-
-    for (int i = 0; i < n; i++) {
-        sum += diff[i];
-        a[i] = sum;
-    }
-
-    return a;
+long long range_sum(const vector<long long>& pref, int l, int r) {
+    return pref[r + 1] - pref[l];
 }

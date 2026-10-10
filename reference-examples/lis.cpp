@@ -18,3 +18,10 @@ int lis_length(const vector<long long>& a) {
 
     return ans;
 }
+
+int main() {
+    vector<long long> a = {3, 1, 2, 5, 4};
+    cout << lis_length(a) << '\n';
+
+    return 0;
+}

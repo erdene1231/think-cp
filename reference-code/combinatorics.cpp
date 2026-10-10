@@ -3,36 +3,19 @@ using namespace std;
 
 struct Combinations {
     static constexpr long long MOD = 1000000007;
-    vector<long long> fact;
-    vector<long long> invFact;
+    vector<vector<long long>> c;
 
-    static long long power(long long a, long long b) {
-        long long ans = 1;
+    Combinations(int N) {
+        c.assign(N + 1, vector<long long>(N + 1, 0));
+        c[0][0] = 1;
 
-        while (b > 0) {
-            if (b % 2 == 1) {
-                ans = ans * a % MOD;
+        for (int n = 1; n <= N; n++) {
+            c[n][0] = 1;
+            c[n][n] = 1;
+
+            for (int k = 1; k < n; k++) {
+                c[n][k] = (c[n - 1][k - 1] + c[n - 1][k]) % MOD;
             }
-
-            a = a * a % MOD;
-            b /= 2;
-        }
-
-        return ans;
-    }
-
-    Combinations(int n) {
-        fact.assign(n + 1, 1);
-        invFact.assign(n + 1, 1);
-
-        for (int i = 1; i <= n; i++) {
-            fact[i] = fact[i - 1] * i % MOD;
-        }
-
-        invFact[n] = power(fact[n], MOD - 2);
-
-        for (int i = n; i >= 1; i--) {
-            invFact[i - 1] = invFact[i] * i % MOD;
         }
     }
 
@@ -41,9 +24,6 @@ struct Combinations {
             return 0;
         }
 
-        long long ans = fact[n] * invFact[k] % MOD;
-        ans = ans * invFact[n - k] % MOD;
-
-        return ans;
+        return c[n][k];
     }
 };

@@ -1,12 +1,12 @@
-import {validateTutorial,view,levelNames,levels} from './tutorial-model.js?v=13';
-import {node,drawArticle,typeset} from './tutorials.js?v=13';
+import {validateTutorial,view,levelNames,levels} from './tutorial-model.js?v=14';
+import {node,drawArticle,typeset} from './tutorials.js?v=14';
 const $=id=>document.getElementById(id);
 export function setupTutorialEditor(ctx){
  let allowed=false,token=0,draft=null,revision=0,lang='mn',busy=false,accountId;
  $('tutorial-admin-form').hidden=true;
  const message=s=>$('tutorial-admin-message').textContent=s;
  function edit(id){const row=ctx.topics().find(t=>t.id===id)||ctx.topics()[0];if(!row)return;draft=structuredClone(row);delete draft.searchText;delete draft.revision;revision=row.revision;lang=$('tutorial-admin-language').value;$('tutorial-admin-choose').value=row.id;$('tutorial-admin-level').value=row.levelKey;$('tutorial-admin-order').value=row.order;$('tutorial-admin-category').value=row.category;paint();}
- function paint(){if(!draft)return;const v=view(draft,lang);$('tutorial-admin-title').value=v.title;$('tutorial-admin-summary').value=v.summary;$('tutorial-admin-prerequisites').value=v.prerequisites;$('tutorial-admin-sections').replaceChildren();
+ function paint(){if(!draft)return;const v=view(draft,lang);$('tutorial-admin-title').value=v.title;$('tutorial-admin-summary').value=v.summary;$('tutorial-admin-prerequisites').value=v.prerequisites;$('tutorial-admin-prerequisite-ids').value=(draft.prerequisiteIds||[]).join(', ');$('tutorial-admin-sections').replaceChildren();
   v.sections.forEach((s,i)=>{const detail=node('details',undefined,'tutorial-edit-section'),summary=node('summary',s.title),heading=node('input');heading.value=s.title;heading.maxLength=200;heading.required=true;heading.dataset.sectionTitle=i;const label=node('label','Хэсгийн гарчиг');label.append(heading);detail.append(summary,label);
    s.blocks.forEach((b,j)=>{const label=node('label'),input=node('textarea');input.dataset.section=i;input.dataset.block=j;input.rows=b.type==='code'?12:b.type==='p'?5:3;input.maxLength=b.type==='code'?40000:40000;input.required=true;input.spellcheck=false;
     if(b.type==='math'){label.append(node('span','Тусдаа мөрийн томъёо — $ тэмдэггүй TeX бичнэ'));input.value=b.tex;}
@@ -18,7 +18,7 @@ export function setupTutorialEditor(ctx){
    });$('tutorial-admin-sections').append(detail);
   });
  }
- function collect(){if(!draft)return;draft.levelKey=$('tutorial-admin-level').value;draft.level=levelNames.mn[levels.indexOf(draft.levelKey)];draft.order=Number($('tutorial-admin-order').value);draft.category=$('tutorial-admin-category').value.trim();const v=view(draft,lang);v.title=$('tutorial-admin-title').value.trim();v.summary=$('tutorial-admin-summary').value.trim();v.prerequisites=$('tutorial-admin-prerequisites').value.trim();
+ function collect(){if(!draft)return;draft.levelKey=$('tutorial-admin-level').value;draft.level=levelNames.mn[levels.indexOf(draft.levelKey)];draft.order=Number($('tutorial-admin-order').value);draft.category=$('tutorial-admin-category').value.trim();draft.prerequisiteIds=$('tutorial-admin-prerequisite-ids').value.split(',').map(x=>x.trim()).filter(Boolean);const v=view(draft,lang);v.title=$('tutorial-admin-title').value.trim();v.summary=$('tutorial-admin-summary').value.trim();v.prerequisites=$('tutorial-admin-prerequisites').value.trim();
   for(const input of $('tutorial-admin-sections').querySelectorAll('[data-section-title]'))v.sections[Number(input.dataset.sectionTitle)].title=input.value.trim();
   for(const input of $('tutorial-admin-sections').querySelectorAll('textarea')){const b=v.sections[Number(input.dataset.section)].blocks[Number(input.dataset.block)],text=input.value.trim();if(b.type==='math')b.tex=text;else if(['list','ordered'].includes(b.type))b.items=text.split('\n').map(s=>s.trim()).filter(Boolean);else if(b.type==='table'){const rows=text.split('\n').map(r=>r.split('\t'));b.headers=rows[0];b.rows=rows.slice(1);}else if(b.type==='links')b.items=text.split('\n').filter(Boolean).map(r=>{const pos=r.lastIndexOf('|');if(pos<0)throw new Error('Холбоосын нэр ба URL-ийг | тэмдэгтээр тусгаарлана уу.');return {label:r.slice(0,pos).trim(),url:r.slice(pos+1).trim()};});else b.text=text;}
   return validateTutorial(draft);

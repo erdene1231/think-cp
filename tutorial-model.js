@@ -7,6 +7,7 @@ export function validateTutorial(t){
  if(!/^[a-z0-9-]{1,80}$/.test(t.id))fail('Хичээлийн ID буруу.');
  if(!levels.includes(t.levelKey)||!Number.isInteger(t.order)||t.order<1||t.order>1000)fail('Түвшин эсвэл дараалал буруу.');
  str(t.category,80,'Бүлэг');str(t.aliases,2000,'Хайлтын үг');
+ if(t.prerequisiteIds!==undefined&&(!Array.isArray(t.prerequisiteIds)||t.prerequisiteIds.length>30||t.prerequisiteIds.some(x=>typeof x!=='string'||!/^[a-z0-9-]{1,80}$/.test(x))))fail('Урьдчилсан хичээлийн ID буруу.');
  if(!Array.isArray(t.related)||t.related.length>30||t.related.some(x=>typeof x!=='string'||!/^[a-z0-9-]{1,80}$/.test(x)))fail('Холбоотой сэдвийн ID буруу.');
  for(const lang of ['mn','en']){const v=lang==='mn'?t:t.translations?.en;if(!v)fail('Хоёр хэлний хувилбар шаардлагатай.');str(v.title,200,'Гарчиг');str(v.summary,4000,'Тайлбар');str(v.prerequisites,2000,'Урьдчилан мэдэх зүйл');
   if(!Array.isArray(v.sections)||!v.sections.length||v.sections.length>30)fail('1–30 хэсэг шаардлагатай.');

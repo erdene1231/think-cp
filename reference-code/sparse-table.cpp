@@ -28,9 +28,9 @@ struct SparseTable {
     }
 
     long long query(int l, int r) const {
-        int k = lg[r - l];
+        int k = lg[r - l + 1];
         int len = 1 << k;
 
-        return min(st[k][l], st[k][r - len]);
+        return min(st[k][l], st[k][r - len + 1]);
     }
 };

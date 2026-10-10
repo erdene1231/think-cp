@@ -35,3 +35,17 @@ struct Fenwick {
         return prefix(r + 1) - prefix(l);
     }
 };
+
+int main() {
+    vector<long long> a = {2, 1, 3, 4};
+    Fenwick f(a.size());
+
+    for (int i = 0; i < (int) a.size(); i++) {
+        f.add(i, a[i]);
+    }
+
+    f.add(2, 5);
+    cout << f.sum(1, 3) << '\n';
+
+    return 0;
+}

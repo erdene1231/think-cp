@@ -1,33 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+void dfs(int v, int id, const vector<vector<int>>& adj, vector<int>& comp) {
+    comp[v] = id;
+
+    for (int u : adj[v]) {
+        if (comp[u] == -1) {
+            dfs(u, id, adj, comp);
+        }
+    }
+}
+
 vector<int> components(const vector<vector<int>>& adj) {
     int n = adj.size();
-    int count = 0;
     vector<int> comp(n, -1);
+    int count = 0;
 
-    for (int s = 0; s < n; s++) {
-        if (comp[s] != -1) {
-            continue;
+    for (int v = 0; v < n; v++) {
+        if (comp[v] == -1) {
+            dfs(v, count, adj, comp);
+            count++;
         }
-
-        stack<int> st;
-        st.push(s);
-        comp[s] = count;
-
-        while (!st.empty()) {
-            int v = st.top();
-            st.pop();
-
-            for (int u : adj[v]) {
-                if (comp[u] == -1) {
-                    comp[u] = count;
-                    st.push(u);
-                }
-            }
-        }
-
-        count++;
     }
 
     return comp;
