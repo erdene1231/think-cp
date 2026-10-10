@@ -5,7 +5,7 @@
 ## Суулгах
 
 1. ZIP-ийг задлаад файлуудыг repository-ийн үндсэн хавтсанд ижил замаар оруулж, хуучин хувилбаруудыг солино. vendor болон supabase хавтсын бүтэц хэвээр байх ёстой. Өөрийн config.js-ийг ашиглана; энэ багц түүнийг агуулаагүй.
-2. Supabase → SQL Editor дээр supabase/008-tutorials.sql файлыг бүтнээр нь ажиллуулна. Өмнөх 007 migration суусан байх шаардлагатай. Энэ шинэчлэлт 24 хоёр хэлтэй хичээлийг анх үүсгэж, tutorial засварлах эрх болон хадгалалтыг тохируулна.
+2. Supabase → SQL Editor дээр supabase/008-tutorials.sql, дараа нь supabase/009-readable-reference-code.sql файлыг бүтнээр нь ажиллуулна. Өмнөх 007 migration суусан байх шаардлагатай. Энэ шинэчлэлт 24 хоёр хэлтэй хичээлийг анх үүсгэж, tutorial засварлах эрх болон хадгалалтыг тохируулна.
 3. GitHub дээр Commit changes хийгээд Pages deployment дууссаны дараа сайтаа дахин нээнэ.
 4. Tutorials → Монгол / English сонгоод хичээлээ уншина. Админ account-аар нэвтрээд Admin · Tutorials цэсийг нээнэ.
 
@@ -50,4 +50,6 @@ Chromium browser дээр хоёр хэлний нийт 48 хувилбарын
 
 Бодит editor-ийг RPC fixture ашиглан шалгасан: хоёр хэлний өөрчлөлт, preview, $ болон $$ томъёо, эх кодын өнгөчлөл, хадгалах payload, эрх хүчингүй болох урсгал. PGlite PostgreSQL дээр seed, өгөгдлийн validation, public read, RLS ба шууд бичих хориг, админ/админ биш эрх, revision conflict, audit болон migration дахин ажиллуулахад админ засвар хадгалагдахыг шалгасан. Live Supabase болон GitHub deployment дээр байршуулж шалгаагүй.
 
-24 C++ хэрэгжүүлэлт өмнөх шинэчлэлтийн compile болон reference/randomized шалгалтыг давсан код хэвээр. English тайлбарын two pointers болон monotonic stack-ийг тухайн кодын бодит үр дүнтэй тулгаж зассан. Number theory код GNU C++17-ийн __int128 extension ашигладаг.
+24 C++ хэрэгжүүлэлтийг beginner-friendly хэв маягаар дахин бичиж, compile болон reference/randomized шалгалтаар дахин тулгасан. Assert байхгүй; нэг мөрөнд нэг үйлдэл бичсэн. English тайлбарын two pointers болон monotonic stack-ийг тухайн кодын бодит үр дүнтэй тулгаж зассан. Number theory код GNU C++17-ийн __int128 extension ашигладаг.
+
+Бүх reference code-ийн шинэчлэлт болон өмнө суусан online хичээлүүдийг шинэчлэх зааврыг UPDATE-REFERENCE-CODE.md-ээс уншина.

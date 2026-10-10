@@ -1,5 +1,5 @@
-import {levels,levelNames,validateTutorial,view} from './tutorial-model.js?v=12';
-import {setupTutorialEditor} from './tutorial-editor.js?v=12';
+import {levels,levelNames,validateTutorial,view} from './tutorial-model.js?v=13';
+import {setupTutorialEditor} from './tutorial-editor.js?v=13';
 const $=id=>document.getElementById(id);
 export const node=(tag,text,cls)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(cls)el.className=cls;return el;};
 let mathPromise=null,mathQueue=Promise.resolve();
@@ -66,6 +66,6 @@ export function setupTutorials(ctx){
  $('tutorial-language').onchange=()=>{lang=$('tutorial-language').value;try{localStorage.setItem('erdene:tutorial-language',lang);}catch{}current=null;results();route();};$('tutorial-search').addEventListener('input',results);$('tutorial-category').onchange=results;$('tutorial-level').onchange=results;
  $('tutorial-copy-link').onclick=()=>void copy(location.href,$('tutorial-copy-link'),tr('Хуулагдлаа','Copied'));$('tutorial-math-retry').onclick=()=>{if(current)renderTopic(current);};window.addEventListener('hashchange',route);
  editor=setupTutorialEditor({...ctx,topics:()=>topics,ready:()=>onlineReady,reload:connected,saved(row){accept(topics.map(t=>t.id===row.body.id?row:{body:t,revision:t.revision}));}});
- void fetch('./tutorials.json?v=12').then(r=>{if(!r.ok)throw new Error();return r.json();}).then(data=>{if(!onlineReady)accept(data.tutorials);}).catch(()=>{$('tutorial-grid').textContent='Tutorials ачаалсангүй / Could not load tutorials.';});
+ void fetch('./tutorials.json?v=13').then(r=>{if(!r.ok)throw new Error();return r.json();}).then(data=>{if(!onlineReady)accept(data.tutorials);}).catch(()=>{$('tutorial-grid').textContent='Tutorials ачаалсангүй / Could not load tutorials.';});
  return {connected,accountChanged(){editor.accountChanged();}};
 }

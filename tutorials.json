@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "tutorials": [
     {
       "id": "complexity",
@@ -79,7 +79,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_pairs(int n) {\n    long long count = 0;\n    for (int i = 0; i < n; ++i)\n        for (int j = 0; j <= i; ++j) ++count;\n    return count;\n}\nint halvings(int n) {\n    int steps = 0;\n    while (n > 1) { n /= 2; ++steps; }\n    return steps;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_pairs(int n) {\n    long long ans = 0;\n\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j <= i; j++) {\n            ans++;\n        }\n    }\n\n    return ans;\n}\n\nint halvings(int n) {\n    int steps = 0;\n\n    while (n > 1) {\n        n /= 2;\n        steps++;\n    }\n\n    return steps;\n}\n"
             },
             {
               "type": "p",
@@ -239,7 +239,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_pairs(int n) {\n    long long count = 0;\n    for (int i = 0; i < n; ++i)\n        for (int j = 0; j <= i; ++j) ++count;\n    return count;\n}\nint halvings(int n) {\n    int steps = 0;\n    while (n > 1) { n /= 2; ++steps; }\n    return steps;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_pairs(int n) {\n    long long ans = 0;\n\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j <= i; j++) {\n            ans++;\n        }\n    }\n\n    return ans;\n}\n\nint halvings(int n) {\n    int steps = 0;\n\n    while (n > 1) {\n        n /= 2;\n        steps++;\n    }\n\n    return steps;\n}\n"
                 },
                 {
                   "type": "p",
@@ -371,7 +371,7 @@
             },
             {
               "type": "math",
-              "tex": "\\operatorname{sum}(l,r)=P[r]-P[l],\\qquad d[l]\\mathrel{+}=x,\\quad d[r]\\mathrel{-}=x"
+              "tex": "\\operatorname{sum}(l,r)=P[r]-P[l],\\qquad \\mathrm{diff}[l]\\mathrel{+}=x,\\quad \\mathrm{diff}[r]\\mathrel{-}=x"
             },
             {
               "type": "p",
@@ -387,7 +387,7 @@
               "items": [
                 "$a=[2,-1,3,4]$ байвал $P=[0,2,1,4,8]$.",
                 "$[1,4)$ range нь $-1+3+4=6$. $P[4]-P[1]=8-2=6$.",
-                "Zero array дээр $[1,4)$-д $5$ нэмбэл $d[1]+=5$, $d[4]$−=$5$.",
+                "Zero array дээр $[1,4)$-д $5$ нэмбэл $\\mathrm{diff}[1]+=5$, $\\mathrm{diff}[4]$−=$5$.",
                 "$d$-ийн running sum-ийг авбал $[0,5,5,5]$ гарна. Дараагийн update-ийг $d$ дээр нэмж тэмдэглээд нэг удаа сэргээж болно."
               ]
             }
@@ -408,11 +408,11 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<long long> prefix(const vector<long long>& a) {\n    vector<long long> p(a.size() + 1, 0);\n    for (int i = 0; i < (int)a.size(); ++i) p[i+1] = p[i] + a[i];\n    return p;\n}\nvector<long long> apply_updates(int n,\n        const vector<tuple<int,int,long long>>& updates) {\n    vector<long long> d(n+1, 0), a(n);\n    for (auto [l,r,x] : updates) {\n        assert(0 <= l && l <= r && r <= n);\n        d[l] += x; d[r] -= x;\n    }\n    long long current = 0;\n    for (int i = 0; i < n; ++i) { current += d[i]; a[i] = current; }\n    return a;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<long long> prefix(const vector<long long>& a) {\n    int n = a.size();\n    vector<long long> pref(n + 1, 0);\n\n    for (int i = 0; i < n; i++) {\n        pref[i + 1] = pref[i] + a[i];\n    }\n\n    return pref;\n}\n\nstruct Update {\n    int l;\n    int r;\n    long long x;\n};\n\nvector<long long> apply_updates(int n, const vector<Update>& updates) {\n    vector<long long> diff(n + 1, 0);\n    vector<long long> a(n, 0);\n\n    for (const Update& update : updates) {\n        diff[update.l] += update.x;\n        diff[update.r] -= update.x;\n    }\n\n    long long sum = 0;\n\n    for (int i = 0; i < n; i++) {\n        sum += diff[i];\n        a[i] = sum;\n    }\n\n    return a;\n}\n"
             },
             {
               "type": "p",
-              "text": "Prefix array-г нэг удаа байгуулсны дараа range sum-ийг $P[r]-P[l]$ гэж олно. Update бүрийг $(l,r,x)$ хэлбэрээр өгнө. apply_updates нь анх бүх утга нь $0$ байсан array-г сэргээнэ. Анхны array өгөгдсөн бол сэргээсэн нэмэгдлийг элемент тус бүрд нь нэмж тооцно."
+              "text": "Prefix array-г нэг удаа байгуулсны дараа range sum-ийг $P[r]-P[l]$ гэж олно. Update бүрийг $(l,r,x)$ хэлбэрээр өгнө. apply_updates нь анх бүх утга нь $0$ байсан array-г сэргээнэ. Анхны array өгөгдсөн бол сэргээсэн нэмэгдлийг элемент тус бүрд нь нэмж тооцно. Кодод prefix array-г $\\mathrm{pref}$, difference array-г $\\mathrm{diff}$ гэж нэрлэсэн. Update struct нь $l$, $r$, $x$ гэсэн гурван талбартай."
             }
           ]
         },
@@ -531,11 +531,11 @@
                 },
                 {
                   "type": "math",
-                  "tex": "\\operatorname{sum}(l,r)=P[r]-P[l],\\qquad d[l]\\mathrel{+}=x,\\quad d[r]\\mathrel{-}=x"
+                  "tex": "\\operatorname{sum}(l,r)=P[r]-P[l],\\qquad \\mathrm{diff}[l]\\mathrel{+}=x,\\quad \\mathrm{diff}[r]\\mathrel{-}=x"
                 },
                 {
                   "type": "p",
-                  "text": "For a range addition $x$, record the beginning at $d[l]$ and the end at $d[r]$. Allocate $n+1$ entries so that $r=n$ is valid. The sum may reach $n$ times the largest absolute element, so choose a sufficiently wide integer type."
+                  "text": "For a range addition $x$, record the beginning at $\\mathrm{diff}[l]$ and the end at $\\mathrm{diff}[r]$. Allocate $n+1$ entries so that $r=n$ is valid. The sum may reach $n$ times the largest absolute element, so choose a sufficiently wide integer type."
                 }
               ]
             },
@@ -547,7 +547,7 @@
                   "items": [
                     "For $a=[2,-1,3,4]$, the prefix array is $P=[0,2,1,4,8]$.",
                     "The sum of $[1,4)$ is $P[4]$-$P[1]=8$-$2=6$.",
-                    "Adding $5$ to $[1,4)$ in an initially zero array records $d[1]+=5$ and $d[4]-=5$.",
+                    "Adding $5$ to $[1,4)$ in an initially zero array records $\\mathrm{diff}[1]+=5$ and $\\mathrm{diff}[4]-=5$.",
                     "A running sum of $d$ produces $[0,5,5,5]$. Multiple updates can be recorded before this scan."
                   ]
                 }
@@ -568,11 +568,11 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<long long> prefix(const vector<long long>& a) {\n    vector<long long> p(a.size() + 1, 0);\n    for (int i = 0; i < (int)a.size(); ++i) p[i+1] = p[i] + a[i];\n    return p;\n}\nvector<long long> apply_updates(int n,\n        const vector<tuple<int,int,long long>>& updates) {\n    vector<long long> d(n+1, 0), a(n);\n    for (auto [l,r,x] : updates) {\n        assert(0 <= l && l <= r && r <= n);\n        d[l] += x; d[r] -= x;\n    }\n    long long current = 0;\n    for (int i = 0; i < n; ++i) { current += d[i]; a[i] = current; }\n    return a;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<long long> prefix(const vector<long long>& a) {\n    int n = a.size();\n    vector<long long> pref(n + 1, 0);\n\n    for (int i = 0; i < n; i++) {\n        pref[i + 1] = pref[i] + a[i];\n    }\n\n    return pref;\n}\n\nstruct Update {\n    int l;\n    int r;\n    long long x;\n};\n\nvector<long long> apply_updates(int n, const vector<Update>& updates) {\n    vector<long long> diff(n + 1, 0);\n    vector<long long> a(n, 0);\n\n    for (const Update& update : updates) {\n        diff[update.l] += update.x;\n        diff[update.r] -= update.x;\n    }\n\n    long long sum = 0;\n\n    for (int i = 0; i < n; i++) {\n        sum += diff[i];\n        a[i] = sum;\n    }\n\n    return a;\n}\n"
                 },
                 {
                   "type": "p",
-                  "text": "Build $\\mathrm{prefix}(a)$ once, then subtract its entries for each query. apply_updates starts with a zero array; for a nonzero initial array, add the reconstructed increments to the original elements."
+                  "text": "Build $\\mathrm{prefix}(a)$ once, then subtract its entries for each query. apply_updates starts with a zero array; for a nonzero initial array, add the reconstructed increments to the original elements. The code names the prefix array $\\mathrm{pref}$ and the difference array $\\mathrm{diff}$. The Update struct stores $l$, $r$ and $x$."
                 }
               ]
             },
@@ -737,7 +737,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\npair<vector<int>,vector<long long>> compress(const vector<long long>& a) {\n    vector<long long> vals = a;\n    sort(vals.begin(), vals.end());\n    vals.erase(unique(vals.begin(), vals.end()), vals.end());\n    vector<int> ranks;\n    for (long long x : a)\n        ranks.push_back(lower_bound(vals.begin(),vals.end(),x)-vals.begin());\n    return {ranks, vals};\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\npair<vector<int>, vector<long long>> compress(const vector<long long>& a) {\n    vector<long long> values = a;\n\n    sort(values.begin(), values.end());\n    values.erase(unique(values.begin(), values.end()), values.end());\n\n    vector<int> rank;\n\n    for (long long x : a) {\n        int pos = lower_bound(values.begin(), values.end(), x) - values.begin();\n        rank.push_back(pos);\n    }\n\n    return {rank, values};\n}\n"
             },
             {
               "type": "p",
@@ -897,7 +897,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\npair<vector<int>,vector<long long>> compress(const vector<long long>& a) {\n    vector<long long> vals = a;\n    sort(vals.begin(), vals.end());\n    vals.erase(unique(vals.begin(), vals.end()), vals.end());\n    vector<int> ranks;\n    for (long long x : a)\n        ranks.push_back(lower_bound(vals.begin(),vals.end(),x)-vals.begin());\n    return {ranks, vals};\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\npair<vector<int>, vector<long long>> compress(const vector<long long>& a) {\n    vector<long long> values = a;\n\n    sort(values.begin(), values.end());\n    values.erase(unique(values.begin(), values.end()), values.end());\n\n    vector<int> rank;\n\n    for (long long x : a) {\n        int pos = lower_bound(values.begin(), values.end(), x) - values.begin();\n        rank.push_back(pos);\n    }\n\n    return {rank, values};\n}\n"
                 },
                 {
                   "type": "p",
@@ -1066,11 +1066,11 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint first_at_least(const vector<long long>& a, long long x) {\n    int l = 0, r = (int)a.size();\n    while (l < r) {\n        int m = l + (r-l)/2;\n        if (a[m] >= x) r = m;\n        else l = m+1;\n    }\n    return l;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint first_at_least(const vector<long long>& a, long long x) {\n    int n = a.size();\n    int l = 0;\n    int r = n;\n\n    while (l < r) {\n        int mid = l + (r - l) / 2;\n\n        if (a[mid] >= x) {\n            r = mid;\n        } else {\n            l = mid + 1;\n        }\n    }\n\n    return l;\n}\n"
             },
             {
               "type": "p",
-              "text": "Array нь өсөх буюу тэнцүү утга зөвшөөрсөн эрэмбэтэй байх ёстой. Буцах индекс $n$ бол тохирох элемент байхгүй. Standard library-ийн lower_bound мөн ийм үр дүн өгдөг. Яг $x$ утга байгаа эсэхийг шалгахдаа эхлээд индекс $n$-ээс бага эсэхийг, дараа нь тухайн утга $x$-тэй тэнцүү эсэхийг шалгана."
+              "text": "Array нь өсөх буюу тэнцүү утга зөвшөөрсөн эрэмбэтэй байх ёстой. Буцах индекс $n$ бол тохирох элемент байхгүй. Standard library-ийн lower_bound мөн ийм үр дүн өгдөг. Яг $x$ утга байгаа эсэхийг шалгахдаа эхлээд индекс $n$-ээс бага эсэхийг, дараа нь тухайн утга $x$-тэй тэнцүү эсэхийг шалгана. Тайлбарын $m$ midpoint-ийг кодод $\\mathrm{mid}$ гэж нэрлэсэн."
             }
           ]
         },
@@ -1226,11 +1226,11 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint first_at_least(const vector<long long>& a, long long x) {\n    int l = 0, r = (int)a.size();\n    while (l < r) {\n        int m = l + (r-l)/2;\n        if (a[m] >= x) r = m;\n        else l = m+1;\n    }\n    return l;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint first_at_least(const vector<long long>& a, long long x) {\n    int n = a.size();\n    int l = 0;\n    int r = n;\n\n    while (l < r) {\n        int mid = l + (r - l) / 2;\n\n        if (a[mid] >= x) {\n            r = mid;\n        } else {\n            l = mid + 1;\n        }\n    }\n\n    return l;\n}\n"
                 },
                 {
                   "type": "p",
-                  "text": "Require nondecreasing input. An index equal to $a$.$\\mathrm{size}()$ means no match. To test exact equality, first check that the index is in bounds. The standard lower_bound implements the same operation."
+                  "text": "Require nondecreasing input. An index equal to $a$.$\\mathrm{size}()$ means no match. To test exact equality, first check that the index is in bounds. The standard lower_bound implements the same operation. The variable $\\mathrm{mid}$ corresponds to $m$ in the explanation."
                 }
               ]
             },
@@ -1395,7 +1395,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_subarrays(const vector<long long>& a, long long k) {\n    if (k < 0) return 0;\n    long long sum = 0, answer = 0;\n    int l = 0;\n    for (int r = 0; r < (int)a.size(); ++r) {\n        assert(a[r] >= 0);\n        sum += a[r];\n        while (sum > k) sum -= a[l++];\n        answer += r-l+1;\n    }\n    return answer;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_subarrays(const vector<long long>& a, long long k) {\n    if (k < 0) {\n        return 0;\n    }\n\n    int n = a.size();\n    int l = 0;\n    long long sum = 0;\n    long long ans = 0;\n\n    for (int r = 0; r < n; r++) {\n        sum += a[r];\n\n        while (sum > k) {\n            sum -= a[l];\n            l++;\n        }\n\n        ans += r - l + 1;\n    }\n\n    return ans;\n}\n"
             },
             {
               "type": "p",
@@ -1555,7 +1555,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_subarrays(const vector<long long>& a, long long k) {\n    if (k < 0) return 0;\n    long long sum = 0, answer = 0;\n    int l = 0;\n    for (int r = 0; r < (int)a.size(); ++r) {\n        assert(a[r] >= 0);\n        sum += a[r];\n        while (sum > k) sum -= a[l++];\n        answer += r-l+1;\n    }\n    return answer;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_subarrays(const vector<long long>& a, long long k) {\n    if (k < 0) {\n        return 0;\n    }\n\n    int n = a.size();\n    int l = 0;\n    long long sum = 0;\n    long long ans = 0;\n\n    for (int r = 0; r < n; r++) {\n        sum += a[r];\n\n        while (sum > k) {\n            sum -= a[l];\n            l++;\n        }\n\n        ans += r - l + 1;\n    }\n\n    return ans;\n}\n"
                 },
                 {
                   "type": "p",
@@ -1683,7 +1683,7 @@
             },
             {
               "type": "math",
-              "tex": "d[u]=d[v]+1\\quad\\text{on the first discovery of }u"
+              "tex": "\\mathrm{dist}[u]=\\mathrm{dist}[v]+1\\quad\\text{on the first discovery of }u"
             },
             {
               "type": "p",
@@ -1720,7 +1720,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\npair<vector<int>,vector<int>> bfs(const vector<vector<int>>& g, int s) {\n    int n = g.size();\n    assert(0 <= s && s < n);\n    vector<int> dist(n,-1), parent(n,-1);\n    queue<int> q; q.push(s); dist[s]=0;\n    while (!q.empty()) {\n        int v=q.front(); q.pop();\n        for (int u:g[v]) if (dist[u]==-1) {\n            dist[u]=dist[v]+1; parent[u]=v; q.push(u);\n        }\n    }\n    return {dist,parent};\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\npair<vector<int>, vector<int>> bfs(const vector<vector<int>>& adj, int s) {\n    int n = adj.size();\n    vector<int> dist(n, -1);\n    vector<int> parent(n, -1);\n    queue<int> q;\n\n    dist[s] = 0;\n    q.push(s);\n\n    while (!q.empty()) {\n        int v = q.front();\n        q.pop();\n\n        for (int u : adj[v]) {\n            if (dist[u] == -1) {\n                dist[u] = dist[v] + 1;\n                parent[u] = v;\n                q.push(u);\n            }\n        }\n    }\n\n    return {dist, parent};\n}\n"
             },
             {
               "type": "p",
@@ -1843,7 +1843,7 @@
                 },
                 {
                   "type": "math",
-                  "tex": "d[u]=d[v]+1\\quad\\text{on the first discovery of }u"
+                  "tex": "\\mathrm{dist}[u]=\\mathrm{dist}[v]+1\\quad\\text{on the first discovery of }u"
                 },
                 {
                   "type": "p",
@@ -1880,7 +1880,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\npair<vector<int>,vector<int>> bfs(const vector<vector<int>>& g, int s) {\n    int n = g.size();\n    assert(0 <= s && s < n);\n    vector<int> dist(n,-1), parent(n,-1);\n    queue<int> q; q.push(s); dist[s]=0;\n    while (!q.empty()) {\n        int v=q.front(); q.pop();\n        for (int u:g[v]) if (dist[u]==-1) {\n            dist[u]=dist[v]+1; parent[u]=v; q.push(u);\n        }\n    }\n    return {dist,parent};\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\npair<vector<int>, vector<int>> bfs(const vector<vector<int>>& adj, int s) {\n    int n = adj.size();\n    vector<int> dist(n, -1);\n    vector<int> parent(n, -1);\n    queue<int> q;\n\n    dist[s] = 0;\n    q.push(s);\n\n    while (!q.empty()) {\n        int v = q.front();\n        q.pop();\n\n        for (int u : adj[v]) {\n            if (dist[u] == -1) {\n                dist[u] = dist[v] + 1;\n                parent[u] = v;\n                q.push(u);\n            }\n        }\n    }\n\n    return {dist, parent};\n}\n"
                 },
                 {
                   "type": "p",
@@ -2045,7 +2045,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> components(const vector<vector<int>>& g) {\n    int n=g.size(), count=0;\n    vector<int> comp(n,-1);\n    for (int s=0;s<n;++s) if (comp[s]==-1) {\n        vector<int> st={s}; comp[s]=count;\n        while (!st.empty()) {\n            int v=st.back(); st.pop_back();\n            for (int u:g[v]) if (comp[u]==-1) {\n                comp[u]=count; st.push_back(u);\n            }\n        }\n        ++count;\n    }\n    return comp;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> components(const vector<vector<int>>& adj) {\n    int n = adj.size();\n    int count = 0;\n    vector<int> comp(n, -1);\n\n    for (int s = 0; s < n; s++) {\n        if (comp[s] != -1) {\n            continue;\n        }\n\n        stack<int> st;\n        st.push(s);\n        comp[s] = count;\n\n        while (!st.empty()) {\n            int v = st.top();\n            st.pop();\n\n            for (int u : adj[v]) {\n                if (comp[u] == -1) {\n                    comp[u] = count;\n                    st.push(u);\n                }\n            }\n        }\n\n        count++;\n    }\n\n    return comp;\n}\n"
             },
             {
               "type": "p",
@@ -2205,7 +2205,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> components(const vector<vector<int>>& g) {\n    int n=g.size(), count=0;\n    vector<int> comp(n,-1);\n    for (int s=0;s<n;++s) if (comp[s]==-1) {\n        vector<int> st={s}; comp[s]=count;\n        while (!st.empty()) {\n            int v=st.back(); st.pop_back();\n            for (int u:g[v]) if (comp[u]==-1) {\n                comp[u]=count; st.push_back(u);\n            }\n        }\n        ++count;\n    }\n    return comp;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> components(const vector<vector<int>>& adj) {\n    int n = adj.size();\n    int count = 0;\n    vector<int> comp(n, -1);\n\n    for (int s = 0; s < n; s++) {\n        if (comp[s] != -1) {\n            continue;\n        }\n\n        stack<int> st;\n        st.push(s);\n        comp[s] = count;\n\n        while (!st.empty()) {\n            int v = st.top();\n            st.pop();\n\n            for (int u : adj[v]) {\n                if (comp[u] == -1) {\n                    comp[u] = count;\n                    st.push(u);\n                }\n            }\n        }\n\n        count++;\n    }\n\n    return comp;\n}\n"
                 },
                 {
                   "type": "p",
@@ -2374,7 +2374,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint max_intervals(vector<pair<long long,long long>> intervals) {\n    sort(intervals.begin(), intervals.end(), [](auto a, auto b) {\n        if (a.second != b.second) return a.second < b.second;\n        return a.first < b.first;\n    });\n    long long last = LLONG_MIN;\n    int answer = 0;\n    for (auto [s,e] : intervals) {\n        assert(s < e);\n        if (s >= last) { ++answer; last = e; }\n    }\n    return answer;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool compare_intervals(const pair<long long, long long>& a,\n                       const pair<long long, long long>& b) {\n    if (a.second != b.second) {\n        return a.second < b.second;\n    }\n\n    return a.first < b.first;\n}\n\nint max_intervals(vector<pair<long long, long long>> intervals) {\n    sort(intervals.begin(), intervals.end(), compare_intervals);\n\n    long long last_end = LLONG_MIN;\n    int ans = 0;\n\n    for (const auto& interval : intervals) {\n        long long l = interval.first;\n        long long r = interval.second;\n\n        if (l >= last_end) {\n            ans++;\n            last_end = r;\n        }\n    }\n\n    return ans;\n}\n"
             },
             {
               "type": "p",
@@ -2534,7 +2534,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint max_intervals(vector<pair<long long,long long>> intervals) {\n    sort(intervals.begin(), intervals.end(), [](auto a, auto b) {\n        if (a.second != b.second) return a.second < b.second;\n        return a.first < b.first;\n    });\n    long long last = LLONG_MIN;\n    int answer = 0;\n    for (auto [s,e] : intervals) {\n        assert(s < e);\n        if (s >= last) { ++answer; last = e; }\n    }\n    return answer;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool compare_intervals(const pair<long long, long long>& a,\n                       const pair<long long, long long>& b) {\n    if (a.second != b.second) {\n        return a.second < b.second;\n    }\n\n    return a.first < b.first;\n}\n\nint max_intervals(vector<pair<long long, long long>> intervals) {\n    sort(intervals.begin(), intervals.end(), compare_intervals);\n\n    long long last_end = LLONG_MIN;\n    int ans = 0;\n\n    for (const auto& interval : intervals) {\n        long long l = interval.first;\n        long long r = interval.second;\n\n        if (l >= last_end) {\n            ans++;\n            last_end = r;\n        }\n    }\n\n    return ans;\n}\n"
                 },
                 {
                   "type": "p",
@@ -2682,7 +2682,7 @@
               "items": [
                 "$a=[2,1,3,3]$. $i=0$: stack=$[0]$.",
                 "$i=1$ дээр $1$ нь $2$-оос их биш: stack=$[0,1]$.",
-                "$i=2$ дээр $3>1$ тул $\\mathrm{answer}[1]=2$; мөн $3>2$ тул $\\mathrm{answer}[0]=2$. Stack=$[2]$.",
+                "$i=2$ дээр $3>1$ тул $\\mathrm{ans}[1]=2$; мөн $3>2$ тул $\\mathrm{ans}[0]=2$. Stack=$[2]$.",
                 "$i=3$ дээр $3>3$ биш: stack=$[2,3]$. Эдгээрт дараагийн strictly greater байхгүй тул $-1$. Хариу $[2,2,-1,-1]$."
               ]
             }
@@ -2703,11 +2703,11 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> next_greater(const vector<long long>& a) {\n    vector<int> answer(a.size(), -1), st;\n    for (int i = 0; i < (int)a.size(); ++i) {\n        while (!st.empty() && a[st.back()] < a[i]) {\n            answer[st.back()] = i;\n            st.pop_back();\n        }\n        st.push_back(i);\n    }\n    return answer;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> next_greater(const vector<long long>& a) {\n    int n = a.size();\n    vector<int> ans(n, -1);\n    stack<int> st;\n\n    for (int i = 0; i < n; i++) {\n        while (!st.empty() && a[st.top()] < a[i]) {\n            int j = st.top();\n            st.pop();\n\n            ans[j] = i;\n        }\n\n        st.push(i);\n    }\n\n    return ans;\n}\n"
             },
             {
               "type": "p",
-              "text": "Буцах array нь утга бус, индекс хадгална. $-1$ нь дараагийн strictly greater элемент байхгүй гэсэн үг. vector-ийн back, push_back, pop_back үйлдлүүдээр LIFO stack хэрэгжүүлсэн. Тэнцүү утгууд хариу болохгүй учраас харьцуулалт strictly greater хэвээр байна."
+              "text": "Буцах array нь утга бус, индекс хадгална. $-1$ нь дараагийн strictly greater элемент байхгүй гэсэн үг. stack-ийн top, push, pop үйлдлүүдээр хариу нь олдоогүй индексүүдийг хадгална. Тэнцүү утгууд хариу болохгүй учраас харьцуулалт strictly greater хэвээр байна."
             }
           ]
         },
@@ -2822,7 +2822,7 @@
               "blocks": [
                 {
                   "type": "p",
-                  "text": "Scan left to right. While $a[i]$ is greater than the value at the top index $j$, set $\\mathrm{answer}[j]=i$ and pop $j$. After resolving all smaller values, push $i$. Equal values remain on the stack because the target is strictly greater."
+                  "text": "Scan left to right. While $a[i]$ is greater than the value at the top index $j$, set $\\mathrm{ans}[j]=i$ and pop $j$. After resolving all smaller values, push $i$. Equal values remain on the stack because the target is strictly greater."
                 },
                 {
                   "type": "math",
@@ -2863,11 +2863,11 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> next_greater(const vector<long long>& a) {\n    vector<int> answer(a.size(), -1), st;\n    for (int i = 0; i < (int)a.size(); ++i) {\n        while (!st.empty() && a[st.back()] < a[i]) {\n            answer[st.back()] = i;\n            st.pop_back();\n        }\n        st.push_back(i);\n    }\n    return answer;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> next_greater(const vector<long long>& a) {\n    int n = a.size();\n    vector<int> ans(n, -1);\n    stack<int> st;\n\n    for (int i = 0; i < n; i++) {\n        while (!st.empty() && a[st.top()] < a[i]) {\n            int j = st.top();\n            st.pop();\n\n            ans[j] = i;\n        }\n\n        st.push(i);\n    }\n\n    return ans;\n}\n"
                 },
                 {
                   "type": "p",
-                  "text": "The implementation returns indices, not values. A return value of $-1$ means no qualifying element. It uses vector as a LIFO stack. Equality is deliberately excluded by the strict comparison."
+                  "text": "The implementation returns indices, not values. A return value of $-1$ means no qualifying element. It uses stack with top, push and pop. Equality is deliberately excluded by the strict comparison."
                 }
               ]
             },
@@ -3028,11 +3028,11 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct DSU {\n    vector<int> p,sz;\n    DSU(int n):p(n),sz(n,1){iota(p.begin(),p.end(),0);}\n    int find(int v){\n        while(v!=p[v]){p[v]=p[p[v]];v=p[v];}\n        return v;\n    }\n    bool unite(int a,int b){\n        a=find(a);b=find(b);\n        if(a==b)return false;\n        if(sz[a]<sz[b])swap(a,b);\n        p[b]=a;sz[a]+=sz[b];return true;\n    }\n    int size(int v){return sz[find(v)];}\n};"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct DSU {\n    vector<int> parent;\n    vector<int> sz;\n\n    DSU(int n) {\n        parent.resize(n);\n        sz.assign(n, 1);\n\n        for (int i = 0; i < n; i++) {\n            parent[i] = i;\n        }\n    }\n\n    int find(int v) {\n        if (parent[v] == v) {\n            return v;\n        }\n\n        parent[v] = find(parent[v]);\n        return parent[v];\n    }\n\n    bool unite(int a, int b) {\n        a = find(a);\n        b = find(b);\n\n        if (a == b) {\n            return false;\n        }\n\n        if (sz[a] < sz[b]) {\n            swap(a, b);\n        }\n\n        parent[b] = a;\n        sz[a] += sz[b];\n\n        return true;\n    }\n\n    int size(int v) {\n        int root = find(v);\n        return sz[root];\n    }\n};\n"
             },
             {
               "type": "p",
-              "text": "DSU-г $n$ элементтэй байгуулж, find-ээр төлөөлөгчийг, unite-аар нэгтгэлийг, size-аар бүлгийн хэмжээг олно. Индексүүд $[0,n)$ дотор байна. Энэ find нь iterative path halving ашигладаг. Rollback нэмэх бол parent-ийн өөрчлөлт бүрийг бүртгэж сэргээх, эсвэл compression ашиглахгүй өөр хувилбар сонгох шаардлагатай."
+              "text": "DSU-г $n$ элементтэй байгуулж, find-ээр төлөөлөгчийг, unite-аар нэгтгэлийг, size-аар бүлгийн хэмжээг олно. Индексүүд $[0,n)$ дотор байна. Энэ find нь recursive path compression ашигладаг: root-ийг олсны дараа замын оройнуудын parent-ийг root руу шууд холбоно. Union by size нь tree-ийг нам байлгана. Rollback хувилбарт parent-ийн өөрчлөлт бүрийг бүртгэх эсвэл compression ашиглахгүй байх шаардлагатай."
             }
           ]
         },
@@ -3147,7 +3147,7 @@
               "blocks": [
                 {
                   "type": "p",
-                  "text": "During find, shorten parent paths. When merging roots, attach the smaller component below the larger one. Keep component sizes only at roots. The sample uses iterative path halving."
+                  "text": "During find, recursively locate the root and connect the visited vertices directly to it. When merging roots, attach the smaller component below the larger one. Keep component sizes at roots. This is path compression combined with union by size."
                 },
                 {
                   "type": "math",
@@ -3188,7 +3188,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct DSU {\n    vector<int> p,sz;\n    DSU(int n):p(n),sz(n,1){iota(p.begin(),p.end(),0);}\n    int find(int v){\n        while(v!=p[v]){p[v]=p[p[v]];v=p[v];}\n        return v;\n    }\n    bool unite(int a,int b){\n        a=find(a);b=find(b);\n        if(a==b)return false;\n        if(sz[a]<sz[b])swap(a,b);\n        p[b]=a;sz[a]+=sz[b];return true;\n    }\n    int size(int v){return sz[find(v)];}\n};"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct DSU {\n    vector<int> parent;\n    vector<int> sz;\n\n    DSU(int n) {\n        parent.resize(n);\n        sz.assign(n, 1);\n\n        for (int i = 0; i < n; i++) {\n            parent[i] = i;\n        }\n    }\n\n    int find(int v) {\n        if (parent[v] == v) {\n            return v;\n        }\n\n        parent[v] = find(parent[v]);\n        return parent[v];\n    }\n\n    bool unite(int a, int b) {\n        a = find(a);\n        b = find(b);\n\n        if (a == b) {\n            return false;\n        }\n\n        if (sz[a] < sz[b]) {\n            swap(a, b);\n        }\n\n        parent[b] = a;\n        sz[a] += sz[b];\n\n        return true;\n    }\n\n    int size(int v) {\n        int root = find(v);\n        return sz[root];\n    }\n};\n"
                 },
                 {
                   "type": "p",
@@ -3357,7 +3357,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Fenwick {\n    int n; vector<long long> bit;\n    Fenwick(int n):n(n),bit(n+1,0){}\n    void add(int index,long long delta){\n        assert(0<=index && index<n);\n        for(int i=index+1;i<=n;i+=i&-i)bit[i]+=delta;\n    }\n    long long prefix(int r)const{\n        assert(0<=r && r<=n);\n        long long s=0;for(int i=r;i>0;i-=i&-i)s+=bit[i];return s;\n    }\n    long long sum(int l,int r)const{\n        assert(0<=l && l<=r && r<=n);return prefix(r)-prefix(l);\n    }\n};"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Fenwick {\n    int n;\n    vector<long long> bit;\n\n    Fenwick(int size) {\n        n = size;\n        bit.assign(n + 1, 0);\n    }\n\n    void add(int index, long long x) {\n        int i = index + 1;\n\n        while (i <= n) {\n            bit[i] += x;\n            i += i & (-i);\n        }\n    }\n\n    long long prefix(int r) const {\n        long long ans = 0;\n        int i = r;\n\n        while (i > 0) {\n            ans += bit[i];\n            i -= i & (-i);\n        }\n\n        return ans;\n    }\n\n    long long sum(int l, int r) const {\n        return prefix(r) - prefix(l);\n    }\n};\n"
             },
             {
               "type": "p",
@@ -3517,7 +3517,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Fenwick {\n    int n; vector<long long> bit;\n    Fenwick(int n):n(n),bit(n+1,0){}\n    void add(int index,long long delta){\n        assert(0<=index && index<n);\n        for(int i=index+1;i<=n;i+=i&-i)bit[i]+=delta;\n    }\n    long long prefix(int r)const{\n        assert(0<=r && r<=n);\n        long long s=0;for(int i=r;i>0;i-=i&-i)s+=bit[i];return s;\n    }\n    long long sum(int l,int r)const{\n        assert(0<=l && l<=r && r<=n);return prefix(r)-prefix(l);\n    }\n};"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Fenwick {\n    int n;\n    vector<long long> bit;\n\n    Fenwick(int size) {\n        n = size;\n        bit.assign(n + 1, 0);\n    }\n\n    void add(int index, long long x) {\n        int i = index + 1;\n\n        while (i <= n) {\n            bit[i] += x;\n            i += i & (-i);\n        }\n    }\n\n    long long prefix(int r) const {\n        long long ans = 0;\n        int i = r;\n\n        while (i > 0) {\n            ans += bit[i];\n            i -= i & (-i);\n        }\n\n        return ans;\n    }\n\n    long long sum(int l, int r) const {\n        return prefix(r) - prefix(l);\n    }\n};\n"
                 },
                 {
                   "type": "p",
@@ -3649,7 +3649,7 @@
             },
             {
               "type": "math",
-              "tex": "t[v]=t[2v]+t[2v+1],\\qquad \\operatorname{identity}_{\\mathrm{sum}}=0"
+              "tex": "\\mathrm{tree}[v]=\\mathrm{tree}[2v]+\\mathrm{tree}[2v+1],\\qquad \\operatorname{identity}_{\\mathrm{sum}}=0"
             },
             {
               "type": "p",
@@ -3686,7 +3686,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct SegTree {\n    int n,size=1;vector<long long> t;\n    SegTree(const vector<long long>& a):n(a.size()){\n        while(size<n)size*=2;t.assign(2*size,0);\n        for(int i=0;i<n;i++)t[size+i]=a[i];\n        for(int i=size-1;i>0;i--)t[i]=t[2*i]+t[2*i+1];\n    }\n    void assign(int i,long long x){\n        assert(0<=i&&i<n);i+=size;t[i]=x;\n        for(i/=2;i>0;i/=2)t[i]=t[2*i]+t[2*i+1];\n    }\n    long long sum(int l,int r)const{\n        assert(0<=l&&l<=r&&r<=n);long long answer=0;\n        for(l+=size,r+=size;l<r;l/=2,r/=2){\n            if(l&1)answer+=t[l++];if(r&1)answer+=t[--r];\n        }\n        return answer;\n    }\n};"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct SegTree {\n    int size;\n    vector<long long> tree;\n\n    SegTree(const vector<long long>& a) {\n        int n = a.size();\n        size = 1;\n\n        while (size < n) {\n            size *= 2;\n        }\n\n        tree.assign(2 * size, 0);\n\n        for (int i = 0; i < n; i++) {\n            tree[size + i] = a[i];\n        }\n\n        for (int v = size - 1; v >= 1; v--) {\n            tree[v] = tree[2 * v] + tree[2 * v + 1];\n        }\n    }\n\n    void assign(int i, long long x) {\n        int v = size + i;\n        tree[v] = x;\n\n        while (v > 1) {\n            v /= 2;\n            tree[v] = tree[2 * v] + tree[2 * v + 1];\n        }\n    }\n\n    long long sum(int l, int r) const {\n        l += size;\n        r += size;\n        long long ans = 0;\n\n        while (l < r) {\n            if (l % 2 == 1) {\n                ans += tree[l];\n                l++;\n            }\n\n            if (r % 2 == 1) {\n                r--;\n                ans += tree[r];\n            }\n\n            l /= 2;\n            r /= 2;\n        }\n\n        return ans;\n    }\n};\n"
             },
             {
               "type": "p",
@@ -3809,7 +3809,7 @@
                 },
                 {
                   "type": "math",
-                  "tex": "t[v]=t[2v]+t[2v+1],\\qquad \\operatorname{identity}_{\\mathrm{sum}}=0"
+                  "tex": "\\mathrm{tree}[v]=\\mathrm{tree}[2v]+\\mathrm{tree}[2v+1],\\qquad \\operatorname{identity}_{\\mathrm{sum}}=0"
                 },
                 {
                   "type": "p",
@@ -3846,7 +3846,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct SegTree {\n    int n,size=1;vector<long long> t;\n    SegTree(const vector<long long>& a):n(a.size()){\n        while(size<n)size*=2;t.assign(2*size,0);\n        for(int i=0;i<n;i++)t[size+i]=a[i];\n        for(int i=size-1;i>0;i--)t[i]=t[2*i]+t[2*i+1];\n    }\n    void assign(int i,long long x){\n        assert(0<=i&&i<n);i+=size;t[i]=x;\n        for(i/=2;i>0;i/=2)t[i]=t[2*i]+t[2*i+1];\n    }\n    long long sum(int l,int r)const{\n        assert(0<=l&&l<=r&&r<=n);long long answer=0;\n        for(l+=size,r+=size;l<r;l/=2,r/=2){\n            if(l&1)answer+=t[l++];if(r&1)answer+=t[--r];\n        }\n        return answer;\n    }\n};"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct SegTree {\n    int size;\n    vector<long long> tree;\n\n    SegTree(const vector<long long>& a) {\n        int n = a.size();\n        size = 1;\n\n        while (size < n) {\n            size *= 2;\n        }\n\n        tree.assign(2 * size, 0);\n\n        for (int i = 0; i < n; i++) {\n            tree[size + i] = a[i];\n        }\n\n        for (int v = size - 1; v >= 1; v--) {\n            tree[v] = tree[2 * v] + tree[2 * v + 1];\n        }\n    }\n\n    void assign(int i, long long x) {\n        int v = size + i;\n        tree[v] = x;\n\n        while (v > 1) {\n            v /= 2;\n            tree[v] = tree[2 * v] + tree[2 * v + 1];\n        }\n    }\n\n    long long sum(int l, int r) const {\n        l += size;\n        r += size;\n        long long ans = 0;\n\n        while (l < r) {\n            if (l % 2 == 1) {\n                ans += tree[l];\n                l++;\n            }\n\n            if (r % 2 == 1) {\n                r--;\n                ans += tree[r];\n            }\n\n            l /= 2;\n            r /= 2;\n        }\n\n        return ans;\n    }\n};\n"
                 },
                 {
                   "type": "p",
@@ -4015,7 +4015,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct SparseTable {\n    vector<vector<long long>> st;vector<int> lg;int n;\n    SparseTable(const vector<long long>& a):n(a.size()){\n        assert(n>0);lg.assign(n+1,0);\n        for(int i=2;i<=n;i++)lg[i]=lg[i/2]+1;\n        st.assign(lg[n]+1,vector<long long>(n));st[0]=a;\n        for(int k=1;k<(int)st.size();k++)\n            for(int i=0;i+(1<<k)<=n;i++)\n                st[k][i]=min(st[k-1][i],st[k-1][i+(1<<(k-1))]);\n    }\n    long long query(int l,int r)const{\n        assert(0<=l&&l<r&&r<=n);int k=lg[r-l];\n        return min(st[k][l],st[k][r-(1<<k)]);\n    }\n};"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct SparseTable {\n    vector<vector<long long>> st;\n    vector<int> lg;\n\n    SparseTable(const vector<long long>& a) {\n        int n = a.size();\n        lg.assign(n + 1, 0);\n\n        for (int i = 2; i <= n; i++) {\n            lg[i] = lg[i / 2] + 1;\n        }\n\n        int levels = lg[n] + 1;\n        st.assign(levels, vector<long long>(n));\n        st[0] = a;\n\n        for (int k = 1; k < levels; k++) {\n            int len = 1 << k;\n            int half = len / 2;\n\n            for (int i = 0; i + len <= n; i++) {\n                st[k][i] = min(st[k - 1][i], st[k - 1][i + half]);\n            }\n        }\n    }\n\n    long long query(int l, int r) const {\n        int k = lg[r - l];\n        int len = 1 << k;\n\n        return min(st[k][l], st[k][r - len]);\n    }\n};\n"
             },
             {
               "type": "p",
@@ -4175,7 +4175,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct SparseTable {\n    vector<vector<long long>> st;vector<int> lg;int n;\n    SparseTable(const vector<long long>& a):n(a.size()){\n        assert(n>0);lg.assign(n+1,0);\n        for(int i=2;i<=n;i++)lg[i]=lg[i/2]+1;\n        st.assign(lg[n]+1,vector<long long>(n));st[0]=a;\n        for(int k=1;k<(int)st.size();k++)\n            for(int i=0;i+(1<<k)<=n;i++)\n                st[k][i]=min(st[k-1][i],st[k-1][i+(1<<(k-1))]);\n    }\n    long long query(int l,int r)const{\n        assert(0<=l&&l<r&&r<=n);int k=lg[r-l];\n        return min(st[k][l],st[k][r-(1<<k)]);\n    }\n};"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct SparseTable {\n    vector<vector<long long>> st;\n    vector<int> lg;\n\n    SparseTable(const vector<long long>& a) {\n        int n = a.size();\n        lg.assign(n + 1, 0);\n\n        for (int i = 2; i <= n; i++) {\n            lg[i] = lg[i / 2] + 1;\n        }\n\n        int levels = lg[n] + 1;\n        st.assign(levels, vector<long long>(n));\n        st[0] = a;\n\n        for (int k = 1; k < levels; k++) {\n            int len = 1 << k;\n            int half = len / 2;\n\n            for (int i = 0; i + len <= n; i++) {\n                st[k][i] = min(st[k - 1][i], st[k - 1][i + half]);\n            }\n        }\n    }\n\n    long long query(int l, int r) const {\n        int k = lg[r - l];\n        int len = 1 << k;\n\n        return min(st[k][l], st[k][r - len]);\n    }\n};\n"
                 },
                 {
                   "type": "p",
@@ -4344,11 +4344,11 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\noptional<vector<int>> topological(const vector<vector<int>>& g){\n    int n=g.size();vector<int>deg(n),order;queue<int>q;\n    for(auto&edges:g)for(int u:edges)++deg[u];\n    for(int v=0;v<n;v++)if(!deg[v])q.push(v);\n    while(!q.empty()){\n        int v=q.front();q.pop();order.push_back(v);\n        for(int u:g[v])if(--deg[u]==0)q.push(u);\n    }\n    if((int)order.size()!=n)return nullopt;\n    return order;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool topological(const vector<vector<int>>& adj, vector<int>& order) {\n    int n = adj.size();\n    vector<int> indegree(n, 0);\n    queue<int> q;\n    order.clear();\n\n    for (int v = 0; v < n; v++) {\n        for (int u : adj[v]) {\n            indegree[u]++;\n        }\n    }\n\n    for (int v = 0; v < n; v++) {\n        if (indegree[v] == 0) {\n            q.push(v);\n        }\n    }\n\n    while (!q.empty()) {\n        int v = q.front();\n        q.pop();\n        order.push_back(v);\n\n        for (int u : adj[v]) {\n            indegree[u]--;\n\n            if (indegree[u] == 0) {\n                q.push(u);\n            }\n        }\n    }\n\n    if ((int) order.size() != n) {\n        order.clear();\n        return false;\n    }\n\n    return true;\n}\n"
             },
             {
               "type": "p",
-              "text": "Хоосон optional нь cycle илэрсэн гэсэн үг. Харин хоосон vector агуулсан optional нь хоосон graph-ийн зөв дараалал юм. Parallel edge бүрийг indegree-д тусад нь тоолж, боловсруулахдаа тус бүр нэгээр бууруулна. Хамгийн бага label-тай дараалал хэрэгтэй бол queue-ийн оронд min-heap ашиглана."
+              "text": "$\\mathrm{order}$ гэсэн vector үүсгээд topological функцэд өгнө. Функц true буцаавал $\\mathrm{order}$ нь зөв topological дараалал байна. False буцаавал cycle илэрсэн бөгөөд $\\mathrm{order}$ хоосон болно. Хоосон graph-д true болон хоосон $\\mathrm{order}$ буцна. Parallel edge бүрийг indegree-д тусад нь тоолж, боловсруулахдаа нэгээр бууруулна. Хамгийн бага label-тай дараалал хэрэгтэй бол queue-ийн оронд min-heap ашиглана."
             }
           ]
         },
@@ -4504,11 +4504,11 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\noptional<vector<int>> topological(const vector<vector<int>>& g){\n    int n=g.size();vector<int>deg(n),order;queue<int>q;\n    for(auto&edges:g)for(int u:edges)++deg[u];\n    for(int v=0;v<n;v++)if(!deg[v])q.push(v);\n    while(!q.empty()){\n        int v=q.front();q.pop();order.push_back(v);\n        for(int u:g[v])if(--deg[u]==0)q.push(u);\n    }\n    if((int)order.size()!=n)return nullopt;\n    return order;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool topological(const vector<vector<int>>& adj, vector<int>& order) {\n    int n = adj.size();\n    vector<int> indegree(n, 0);\n    queue<int> q;\n    order.clear();\n\n    for (int v = 0; v < n; v++) {\n        for (int u : adj[v]) {\n            indegree[u]++;\n        }\n    }\n\n    for (int v = 0; v < n; v++) {\n        if (indegree[v] == 0) {\n            q.push(v);\n        }\n    }\n\n    while (!q.empty()) {\n        int v = q.front();\n        q.pop();\n        order.push_back(v);\n\n        for (int u : adj[v]) {\n            indegree[u]--;\n\n            if (indegree[u] == 0) {\n                q.push(u);\n            }\n        }\n    }\n\n    if ((int) order.size() != n) {\n        order.clear();\n        return false;\n    }\n\n    return true;\n}\n"
                 },
                 {
                   "type": "p",
-                  "text": "The function returns an optional order. An empty optional means a cycle, whereas an optional containing an empty vector is a valid empty DAG. Edge-transition DP can follow the resulting order."
+                  "text": "Create a vector named $\\mathrm{order}$ and pass it to topological. The function returns true when $\\mathrm{order}$ contains a valid topological $\\mathrm{order}$. It returns false and clears $\\mathrm{order}$ if there is a cycle. An empty graph returns true with an empty $\\mathrm{order}$. Parallel edges are counted and removed individually. Edge-transition DP can follow the resulting $\\mathrm{order}$."
                 }
               ]
             },
@@ -4545,7 +4545,7 @@
                   "type": "list",
                   "items": [
                     "Treating undirected edges as DAG dependencies.",
-                    "Confusing an empty valid order with failure.",
+                    "Treating an empty order as failure without checking the boolean return value.",
                     "Ignoring parallel edges in indegrees.",
                     "Assuming every vertex label must appear in numeric order."
                   ]
@@ -4673,7 +4673,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long stair_ways(int n){\n    assert(n>=0);const long long MOD=1'000'000'007;\n    if(n==0)return 1;\n    long long previous=1,current=1;\n    for(int i=2;i<=n;i++){\n        long long next=(previous+current)%MOD;\n        previous=current;current=next;\n    }\n    return current;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long stair_ways(int n) {\n    const long long MOD = 1000000007;\n\n    if (n == 0) {\n        return 1;\n    }\n\n    long long prev = 1;\n    long long curr = 1;\n\n    for (int i = 2; i <= n; i++) {\n        long long next = (prev + curr) % MOD;\n        prev = curr;\n        curr = next;\n    }\n\n    return curr;\n}\n"
             },
             {
               "type": "p",
@@ -4833,7 +4833,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long stair_ways(int n){\n    assert(n>=0);const long long MOD=1'000'000'007;\n    if(n==0)return 1;\n    long long previous=1,current=1;\n    for(int i=2;i<=n;i++){\n        long long next=(previous+current)%MOD;\n        previous=current;current=next;\n    }\n    return current;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long stair_ways(int n) {\n    const long long MOD = 1000000007;\n\n    if (n == 0) {\n        return 1;\n    }\n\n    long long prev = 1;\n    long long curr = 1;\n\n    for (int i = 2; i <= n; i++) {\n        long long next = (prev + curr) % MOD;\n        prev = curr;\n        curr = next;\n    }\n\n    return curr;\n}\n"
                 },
                 {
                   "type": "p",
@@ -5002,7 +5002,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long knapsack(int W,const vector<pair<int,long long>>& items){\n    assert(W>=0);vector<long long>dp(W+1,0);\n    for(auto [w,v]:items){\n        assert(w>0);\n        for(int c=W;c>=w;c--)dp[c]=max(dp[c],dp[c-w]+v);\n    }\n    return dp[W];\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long knapsack(int W, const vector<pair<int, long long>>& items) {\n    vector<long long> dp(W + 1, 0);\n\n    for (const auto& item : items) {\n        int w = item.first;\n        long long value = item.second;\n\n        for (int c = W; c >= w; c--) {\n            dp[c] = max(dp[c], dp[c - w] + value);\n        }\n    }\n\n    return dp[W];\n}\n"
             },
             {
               "type": "p",
@@ -5162,7 +5162,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long knapsack(int W,const vector<pair<int,long long>>& items){\n    assert(W>=0);vector<long long>dp(W+1,0);\n    for(auto [w,v]:items){\n        assert(w>0);\n        for(int c=W;c>=w;c--)dp[c]=max(dp[c],dp[c-w]+v);\n    }\n    return dp[W];\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long knapsack(int W, const vector<pair<int, long long>>& items) {\n    vector<long long> dp(W + 1, 0);\n\n    for (const auto& item : items) {\n        int w = item.first;\n        long long value = item.second;\n\n        for (int c = W; c >= w; c--) {\n            dp[c] = max(dp[c], dp[c - w] + value);\n        }\n    }\n\n    return dp[W];\n}\n"
                 },
                 {
                   "type": "p",
@@ -5331,7 +5331,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint lis_length(const vector<long long>& a){\n    vector<long long>tails;\n    for(long long x:a){\n        auto it=lower_bound(tails.begin(),tails.end(),x);\n        if(it==tails.end())tails.push_back(x);\n        else *it=x;\n    }\n    return tails.size();\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint lis_length(const vector<long long>& a) {\n    vector<long long> tails;\n\n    for (long long x : a) {\n        int pos = lower_bound(tails.begin(), tails.end(), x) - tails.begin();\n\n        if (pos == (int) tails.size()) {\n            tails.push_back(x);\n        } else {\n            tails[pos] = x;\n        }\n    }\n\n    return tails.size();\n}\n"
             },
             {
               "type": "p",
@@ -5491,7 +5491,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint lis_length(const vector<long long>& a){\n    vector<long long>tails;\n    for(long long x:a){\n        auto it=lower_bound(tails.begin(),tails.end(),x);\n        if(it==tails.end())tails.push_back(x);\n        else *it=x;\n    }\n    return tails.size();\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint lis_length(const vector<long long>& a) {\n    vector<long long> tails;\n\n    for (long long x : a) {\n        int pos = lower_bound(tails.begin(), tails.end(), x) - tails.begin();\n\n        if (pos == (int) tails.size()) {\n            tails.push_back(x);\n        } else {\n            tails[pos] = x;\n        }\n    }\n\n    return tails.size();\n}\n"
                 },
                 {
                   "type": "p",
@@ -5623,7 +5623,7 @@
             },
             {
               "type": "math",
-              "tex": "\\text{if }d[v]+w(v,u)<d[u],\\quad d[u]\\leftarrow d[v]+w(v,u)"
+              "tex": "\\text{if }\\mathrm{dist}[v]+w(v,u)<\\mathrm{dist}[u],\\quad \\mathrm{dist}[u]\\leftarrow \\mathrm{dist}[v]+w(v,u)"
             },
             {
               "type": "p",
@@ -5660,7 +5660,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nconst long long INF=4'000'000'000'000'000'000LL;\nvector<long long> dijkstra(const vector<vector<pair<int,long long>>>& g,int s){\n    int n=g.size();assert(0<=s&&s<n);\n    vector<long long>d(n,INF);d[s]=0;\n    priority_queue<pair<long long,int>,vector<pair<long long,int>>,\n                   greater<pair<long long,int>>>q;q.push({0,s});\n    while(!q.empty()){\n        auto [dv,v]=q.top();q.pop();if(dv!=d[v])continue;\n        for(auto [u,w]:g[v]){\n            assert(w>=0 && w<INF);\n            if(dv<=INF-w && dv+w<d[u]){\n                d[u]=dv+w;q.push({d[u],u});\n            }\n        }\n    }\n    return d;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nconst long long INF = 4'000'000'000'000'000'000LL;\n\nvector<long long> dijkstra(const vector<vector<pair<int, long long>>>& adj, int s) {\n    int n = adj.size();\n    vector<long long> dist(n, INF);\n\n    // Each state stores (distance, vertex).\n    using State = pair<long long, int>;\n    priority_queue<State, vector<State>, greater<State>> pq;\n\n    dist[s] = 0;\n    pq.push({0, s});\n\n    while (!pq.empty()) {\n        long long d = pq.top().first;\n        int v = pq.top().second;\n        pq.pop();\n\n        if (d != dist[v]) {\n            continue;\n        }\n\n        for (const auto& edge : adj[v]) {\n            int u = edge.first;\n            long long w = edge.second;\n\n            if (d > INF - w) {\n                continue;\n            }\n\n            long long new_dist = d + w;\n\n            if (new_dist < dist[u]) {\n                dist[u] = new_dist;\n                pq.push({dist[u], u});\n            }\n        }\n    }\n\n    return dist;\n}\n"
             },
             {
               "type": "p",
@@ -5783,7 +5783,7 @@
                 },
                 {
                   "type": "math",
-                  "tex": "\\text{if }d[v]+w(v,u)<d[u],\\quad d[u]\\leftarrow d[v]+w(v,u)"
+                  "tex": "\\text{if }\\mathrm{dist}[v]+w(v,u)<\\mathrm{dist}[u],\\quad \\mathrm{dist}[u]\\leftarrow \\mathrm{dist}[v]+w(v,u)"
                 },
                 {
                   "type": "p",
@@ -5820,7 +5820,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nconst long long INF=4'000'000'000'000'000'000LL;\nvector<long long> dijkstra(const vector<vector<pair<int,long long>>>& g,int s){\n    int n=g.size();assert(0<=s&&s<n);\n    vector<long long>d(n,INF);d[s]=0;\n    priority_queue<pair<long long,int>,vector<pair<long long,int>>,\n                   greater<pair<long long,int>>>q;q.push({0,s});\n    while(!q.empty()){\n        auto [dv,v]=q.top();q.pop();if(dv!=d[v])continue;\n        for(auto [u,w]:g[v]){\n            assert(w>=0 && w<INF);\n            if(dv<=INF-w && dv+w<d[u]){\n                d[u]=dv+w;q.push({d[u],u});\n            }\n        }\n    }\n    return d;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nconst long long INF = 4'000'000'000'000'000'000LL;\n\nvector<long long> dijkstra(const vector<vector<pair<int, long long>>>& adj, int s) {\n    int n = adj.size();\n    vector<long long> dist(n, INF);\n\n    // Each state stores (distance, vertex).\n    using State = pair<long long, int>;\n    priority_queue<State, vector<State>, greater<State>> pq;\n\n    dist[s] = 0;\n    pq.push({0, s});\n\n    while (!pq.empty()) {\n        long long d = pq.top().first;\n        int v = pq.top().second;\n        pq.pop();\n\n        if (d != dist[v]) {\n            continue;\n        }\n\n        for (const auto& edge : adj[v]) {\n            int u = edge.first;\n            long long w = edge.second;\n\n            if (d > INF - w) {\n                continue;\n            }\n\n            long long new_dist = d + w;\n\n            if (new_dist < dist[u]) {\n                dist[u] = new_dist;\n                pq.push({dist[u], u});\n            }\n        }\n    }\n\n    return dist;\n}\n"
                 },
                 {
                   "type": "p",
@@ -5989,7 +5989,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct LCA {\n    int n,LOG=1;vector<int>depth;vector<vector<int>>up;\n    LCA(const vector<vector<int>>&g,int root):n(g.size()),depth(n,-1){\n        assert(n>0&&0<=root&&root<n);\n        while((1LL<<LOG)<=n)++LOG;up.assign(LOG,vector<int>(n,root));\n        queue<int>q;depth[root]=0;q.push(root);\n        while(!q.empty()){\n            int v=q.front();q.pop();\n            for(int u:g[v])if(depth[u]==-1){\n                depth[u]=depth[v]+1;up[0][u]=v;q.push(u);\n            }\n        }\n        for(int d:depth)assert(d!=-1);\n        for(int k=1;k<LOG;k++)for(int v=0;v<n;v++)\n            up[k][v]=up[k-1][up[k-1][v]];\n    }\n    int query(int a,int b)const{\n        if(depth[a]<depth[b])swap(a,b);\n        int diff=depth[a]-depth[b];\n        for(int k=0;k<LOG;k++)if(diff>>k&1)a=up[k][a];\n        if(a==b)return a;\n        for(int k=LOG-1;k>=0;k--)if(up[k][a]!=up[k][b]){\n            a=up[k][a];b=up[k][b];\n        }\n        return up[0][a];\n    }\n    int distance(int a,int b)const{return depth[a]+depth[b]-2*depth[query(a,b)];}\n};"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct LCA {\n    int n;\n    int LOG;\n    vector<int> depth;\n    vector<vector<int>> up;\n\n    LCA(const vector<vector<int>>& adj, int root) {\n        n = adj.size();\n        LOG = 1;\n\n        while ((1LL << LOG) <= n) {\n            LOG++;\n        }\n\n        depth.assign(n, -1);\n        up.assign(LOG, vector<int>(n, root));\n        queue<int> q;\n\n        depth[root] = 0;\n        q.push(root);\n\n        while (!q.empty()) {\n            int v = q.front();\n            q.pop();\n\n            for (int u : adj[v]) {\n                if (depth[u] == -1) {\n                    depth[u] = depth[v] + 1;\n                    up[0][u] = v;\n                    q.push(u);\n                }\n            }\n        }\n\n        for (int k = 1; k < LOG; k++) {\n            for (int v = 0; v < n; v++) {\n                int parent = up[k - 1][v];\n                up[k][v] = up[k - 1][parent];\n            }\n        }\n    }\n\n    int query(int u, int v) const {\n        if (depth[u] < depth[v]) {\n            swap(u, v);\n        }\n\n        int diff = depth[u] - depth[v];\n\n        for (int k = 0; k < LOG; k++) {\n            if ((diff & (1 << k)) != 0) {\n                u = up[k][u];\n            }\n        }\n\n        if (u == v) {\n            return u;\n        }\n\n        for (int k = LOG - 1; k >= 0; k--) {\n            if (up[k][u] != up[k][v]) {\n                u = up[k][u];\n                v = up[k][v];\n            }\n        }\n\n        return up[0][u];\n    }\n\n    int distance(int u, int v) const {\n        int ancestor = query(u, v);\n        return depth[u] + depth[v] - 2 * depth[ancestor];\n    }\n};\n"
             },
             {
               "type": "p",
@@ -6149,7 +6149,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct LCA {\n    int n,LOG=1;vector<int>depth;vector<vector<int>>up;\n    LCA(const vector<vector<int>>&g,int root):n(g.size()),depth(n,-1){\n        assert(n>0&&0<=root&&root<n);\n        while((1LL<<LOG)<=n)++LOG;up.assign(LOG,vector<int>(n,root));\n        queue<int>q;depth[root]=0;q.push(root);\n        while(!q.empty()){\n            int v=q.front();q.pop();\n            for(int u:g[v])if(depth[u]==-1){\n                depth[u]=depth[v]+1;up[0][u]=v;q.push(u);\n            }\n        }\n        for(int d:depth)assert(d!=-1);\n        for(int k=1;k<LOG;k++)for(int v=0;v<n;v++)\n            up[k][v]=up[k-1][up[k-1][v]];\n    }\n    int query(int a,int b)const{\n        if(depth[a]<depth[b])swap(a,b);\n        int diff=depth[a]-depth[b];\n        for(int k=0;k<LOG;k++)if(diff>>k&1)a=up[k][a];\n        if(a==b)return a;\n        for(int k=LOG-1;k>=0;k--)if(up[k][a]!=up[k][b]){\n            a=up[k][a];b=up[k][b];\n        }\n        return up[0][a];\n    }\n    int distance(int a,int b)const{return depth[a]+depth[b]-2*depth[query(a,b)];}\n};"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct LCA {\n    int n;\n    int LOG;\n    vector<int> depth;\n    vector<vector<int>> up;\n\n    LCA(const vector<vector<int>>& adj, int root) {\n        n = adj.size();\n        LOG = 1;\n\n        while ((1LL << LOG) <= n) {\n            LOG++;\n        }\n\n        depth.assign(n, -1);\n        up.assign(LOG, vector<int>(n, root));\n        queue<int> q;\n\n        depth[root] = 0;\n        q.push(root);\n\n        while (!q.empty()) {\n            int v = q.front();\n            q.pop();\n\n            for (int u : adj[v]) {\n                if (depth[u] == -1) {\n                    depth[u] = depth[v] + 1;\n                    up[0][u] = v;\n                    q.push(u);\n                }\n            }\n        }\n\n        for (int k = 1; k < LOG; k++) {\n            for (int v = 0; v < n; v++) {\n                int parent = up[k - 1][v];\n                up[k][v] = up[k - 1][parent];\n            }\n        }\n    }\n\n    int query(int u, int v) const {\n        if (depth[u] < depth[v]) {\n            swap(u, v);\n        }\n\n        int diff = depth[u] - depth[v];\n\n        for (int k = 0; k < LOG; k++) {\n            if ((diff & (1 << k)) != 0) {\n                u = up[k][u];\n            }\n        }\n\n        if (u == v) {\n            return u;\n        }\n\n        for (int k = LOG - 1; k >= 0; k--) {\n            if (up[k][u] != up[k][v]) {\n                u = up[k][u];\n                v = up[k][v];\n            }\n        }\n\n        return up[0][u];\n    }\n\n    int distance(int u, int v) const {\n        int ancestor = query(u, v);\n        return depth[u] + depth[v] - 2 * depth[ancestor];\n    }\n};\n"
                 },
                 {
                   "type": "p",
@@ -6318,7 +6318,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> prefix_function(const string& p){\n    vector<int>pi(p.size());\n    for(int i=1;i<(int)p.size();i++){\n        int j=pi[i-1];\n        while(j>0&&p[i]!=p[j])j=pi[j-1];\n        if(p[i]==p[j])++j;pi[i]=j;\n    }\n    return pi;\n}\nvector<int> kmp(const string& text,const string& pattern){\n    int n=text.size(),m=pattern.size();vector<int>answer;\n    if(m==0){answer.resize(n+1);iota(answer.begin(),answer.end(),0);return answer;}\n    auto pi=prefix_function(pattern);int j=0;\n    for(int i=0;i<n;i++){\n        while(j>0&&text[i]!=pattern[j])j=pi[j-1];\n        if(text[i]==pattern[j])++j;\n        if(j==m){answer.push_back(i-m+1);j=pi[j-1];}\n    }\n    return answer;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> prefix_function(const string& p) {\n    int m = p.size();\n    vector<int> pi(m, 0);\n\n    for (int i = 1; i < m; i++) {\n        int j = pi[i - 1];\n\n        while (j > 0 && p[i] != p[j]) {\n            j = pi[j - 1];\n        }\n\n        if (p[i] == p[j]) {\n            j++;\n        }\n\n        pi[i] = j;\n    }\n\n    return pi;\n}\n\nvector<int> kmp(const string& s, const string& p) {\n    int n = s.size();\n    int m = p.size();\n    vector<int> ans;\n\n    if (m == 0) {\n        for (int i = 0; i <= n; i++) {\n            ans.push_back(i);\n        }\n\n        return ans;\n    }\n\n    vector<int> pi = prefix_function(p);\n    int j = 0;\n\n    for (int i = 0; i < n; i++) {\n        while (j > 0 && s[i] != p[j]) {\n            j = pi[j - 1];\n        }\n\n        if (s[i] == p[j]) {\n            j++;\n        }\n\n        if (j == m) {\n            ans.push_back(i - m + 1);\n            j = pi[j - 1];\n        }\n    }\n\n    return ans;\n}\n"
             },
             {
               "type": "p",
@@ -6478,7 +6478,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> prefix_function(const string& p){\n    vector<int>pi(p.size());\n    for(int i=1;i<(int)p.size();i++){\n        int j=pi[i-1];\n        while(j>0&&p[i]!=p[j])j=pi[j-1];\n        if(p[i]==p[j])++j;pi[i]=j;\n    }\n    return pi;\n}\nvector<int> kmp(const string& text,const string& pattern){\n    int n=text.size(),m=pattern.size();vector<int>answer;\n    if(m==0){answer.resize(n+1);iota(answer.begin(),answer.end(),0);return answer;}\n    auto pi=prefix_function(pattern);int j=0;\n    for(int i=0;i<n;i++){\n        while(j>0&&text[i]!=pattern[j])j=pi[j-1];\n        if(text[i]==pattern[j])++j;\n        if(j==m){answer.push_back(i-m+1);j=pi[j-1];}\n    }\n    return answer;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> prefix_function(const string& p) {\n    int m = p.size();\n    vector<int> pi(m, 0);\n\n    for (int i = 1; i < m; i++) {\n        int j = pi[i - 1];\n\n        while (j > 0 && p[i] != p[j]) {\n            j = pi[j - 1];\n        }\n\n        if (p[i] == p[j]) {\n            j++;\n        }\n\n        pi[i] = j;\n    }\n\n    return pi;\n}\n\nvector<int> kmp(const string& s, const string& p) {\n    int n = s.size();\n    int m = p.size();\n    vector<int> ans;\n\n    if (m == 0) {\n        for (int i = 0; i <= n; i++) {\n            ans.push_back(i);\n        }\n\n        return ans;\n    }\n\n    vector<int> pi = prefix_function(p);\n    int j = 0;\n\n    for (int i = 0; i < n; i++) {\n        while (j > 0 && s[i] != p[j]) {\n            j = pi[j - 1];\n        }\n\n        if (s[i] == p[j]) {\n            j++;\n        }\n\n        if (j == m) {\n            ans.push_back(i - m + 1);\n            j = pi[j - 1];\n        }\n    }\n\n    return ans;\n}\n"
                 },
                 {
                   "type": "p",
@@ -6647,7 +6647,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<bool> sieve(int n){\n    assert(n>=0);vector<bool>prime(n+1,true);\n    prime[0]=false;if(n>=1)prime[1]=false;\n    for(int p=2;1LL*p*p<=n;p++)if(prime[p])\n        for(long long x=1LL*p*p;x<=n;x+=p)prime[x]=false;\n    return prime;\n}\nlong long modpow(long long a,long long e,long long m){\n    assert(e>=0&&m>0);a%=m;if(a<0)a+=m;long long r=1%m;\n    while(e){\n        if(e&1)r=(__int128)r*a%m;\n        a=(__int128)a*a%m;e/=2;\n    }\n    return r;\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<bool> sieve(int n) {\n    vector<bool> is_prime(n + 1, true);\n    is_prime[0] = false;\n\n    if (n >= 1) {\n        is_prime[1] = false;\n    }\n\n    for (int p = 2; 1LL * p * p <= n; p++) {\n        if (!is_prime[p]) {\n            continue;\n        }\n\n        for (long long x = 1LL * p * p; x <= n; x += p) {\n            is_prime[x] = false;\n        }\n    }\n\n    return is_prime;\n}\n\nlong long modpow(long long a, long long b, long long mod) {\n    a %= mod;\n\n    if (a < 0) {\n        a += mod;\n    }\n\n    long long ans = 1 % mod;\n\n    while (b > 0) {\n        if (b % 2 == 1) {\n            ans = (__int128) ans * a % mod;\n        }\n\n        a = (__int128) a * a % mod;\n        b /= 2;\n    }\n\n    return ans;\n}\n"
             },
             {
               "type": "p",
@@ -6807,7 +6807,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<bool> sieve(int n){\n    assert(n>=0);vector<bool>prime(n+1,true);\n    prime[0]=false;if(n>=1)prime[1]=false;\n    for(int p=2;1LL*p*p<=n;p++)if(prime[p])\n        for(long long x=1LL*p*p;x<=n;x+=p)prime[x]=false;\n    return prime;\n}\nlong long modpow(long long a,long long e,long long m){\n    assert(e>=0&&m>0);a%=m;if(a<0)a+=m;long long r=1%m;\n    while(e){\n        if(e&1)r=(__int128)r*a%m;\n        a=(__int128)a*a%m;e/=2;\n    }\n    return r;\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<bool> sieve(int n) {\n    vector<bool> is_prime(n + 1, true);\n    is_prime[0] = false;\n\n    if (n >= 1) {\n        is_prime[1] = false;\n    }\n\n    for (int p = 2; 1LL * p * p <= n; p++) {\n        if (!is_prime[p]) {\n            continue;\n        }\n\n        for (long long x = 1LL * p * p; x <= n; x += p) {\n            is_prime[x] = false;\n        }\n    }\n\n    return is_prime;\n}\n\nlong long modpow(long long a, long long b, long long mod) {\n    a %= mod;\n\n    if (a < 0) {\n        a += mod;\n    }\n\n    long long ans = 1 % mod;\n\n    while (b > 0) {\n        if (b % 2 == 1) {\n            ans = (__int128) ans * a % mod;\n        }\n\n        a = (__int128) a * a % mod;\n        b /= 2;\n    }\n\n    return ans;\n}\n"
                 },
                 {
                   "type": "p",
@@ -6976,7 +6976,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Combinations{\n    static constexpr long long MOD=1'000'000'007;\n    vector<long long>f,invf;\n    static long long power(long long a,long long e){\n        long long r=1;while(e){if(e&1)r=r*a%MOD;a=a*a%MOD;e/=2;}return r;\n    }\n    Combinations(int n):f(n+1,1),invf(n+1,1){\n        assert(0<=n&&n<MOD);\n        for(int i=1;i<=n;i++)f[i]=f[i-1]*i%MOD;\n        invf[n]=power(f[n],MOD-2);\n        for(int i=n;i>0;i--)invf[i-1]=invf[i]*i%MOD;\n    }\n    long long choose(int n,int k)const{\n        assert(0<=n&&n<(int)f.size());\n        if(k<0||k>n)return 0;\n        return f[n]*invf[k]%MOD*invf[n-k]%MOD;\n    }\n};"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Combinations {\n    static constexpr long long MOD = 1000000007;\n    vector<long long> fact;\n    vector<long long> invFact;\n\n    static long long power(long long a, long long b) {\n        long long ans = 1;\n\n        while (b > 0) {\n            if (b % 2 == 1) {\n                ans = ans * a % MOD;\n            }\n\n            a = a * a % MOD;\n            b /= 2;\n        }\n\n        return ans;\n    }\n\n    Combinations(int n) {\n        fact.assign(n + 1, 1);\n        invFact.assign(n + 1, 1);\n\n        for (int i = 1; i <= n; i++) {\n            fact[i] = fact[i - 1] * i % MOD;\n        }\n\n        invFact[n] = power(fact[n], MOD - 2);\n\n        for (int i = n; i >= 1; i--) {\n            invFact[i - 1] = invFact[i] * i % MOD;\n        }\n    }\n\n    long long choose(int n, int k) const {\n        if (k < 0 || k > n) {\n            return 0;\n        }\n\n        long long ans = fact[n] * invFact[k] % MOD;\n        ans = ans * invFact[n - k] % MOD;\n\n        return ans;\n    }\n};\n"
             },
             {
               "type": "p",
@@ -7136,7 +7136,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Combinations{\n    static constexpr long long MOD=1'000'000'007;\n    vector<long long>f,invf;\n    static long long power(long long a,long long e){\n        long long r=1;while(e){if(e&1)r=r*a%MOD;a=a*a%MOD;e/=2;}return r;\n    }\n    Combinations(int n):f(n+1,1),invf(n+1,1){\n        assert(0<=n&&n<MOD);\n        for(int i=1;i<=n;i++)f[i]=f[i-1]*i%MOD;\n        invf[n]=power(f[n],MOD-2);\n        for(int i=n;i>0;i--)invf[i-1]=invf[i]*i%MOD;\n    }\n    long long choose(int n,int k)const{\n        assert(0<=n&&n<(int)f.size());\n        if(k<0||k>n)return 0;\n        return f[n]*invf[k]%MOD*invf[n-k]%MOD;\n    }\n};"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Combinations {\n    static constexpr long long MOD = 1000000007;\n    vector<long long> fact;\n    vector<long long> invFact;\n\n    static long long power(long long a, long long b) {\n        long long ans = 1;\n\n        while (b > 0) {\n            if (b % 2 == 1) {\n                ans = ans * a % MOD;\n            }\n\n            a = a * a % MOD;\n            b /= 2;\n        }\n\n        return ans;\n    }\n\n    Combinations(int n) {\n        fact.assign(n + 1, 1);\n        invFact.assign(n + 1, 1);\n\n        for (int i = 1; i <= n; i++) {\n            fact[i] = fact[i - 1] * i % MOD;\n        }\n\n        invFact[n] = power(fact[n], MOD - 2);\n\n        for (int i = n; i >= 1; i--) {\n            invFact[i - 1] = invFact[i] * i % MOD;\n        }\n    }\n\n    long long choose(int n, int k) const {\n        if (k < 0 || k > n) {\n            return 0;\n        }\n\n        long long ans = fact[n] * invFact[k] % MOD;\n        ans = ans * invFact[n - k] % MOD;\n\n        return ans;\n    }\n};\n"
                 },
                 {
                   "type": "p",
@@ -7264,7 +7264,7 @@
           "blocks": [
             {
               "type": "p",
-              "text": "State-д аль worker дараа сонгох нь $\\mathrm{popcount}(\\mathrm{mask})$-аар тодорхой тул worker index-ийг тусад нь хадгалах шаардлагагүй. Сонгоогүй job $j$ бүрийг дараагийн worker $i$-д өгч $\\mathrm{newMask}=\\mathrm{mask}\\mathbin{|}(1\\ll j)$ рүү transition хийнэ. Нэмэгдсэн bit нь integer $\\mathrm{mask}$-ийг өсгөдөг тул increasing $\\mathrm{mask}$ order зөв."
+              "text": "State-д аль worker дараа сонгох нь $\\mathrm{popcount}(\\mathrm{mask})$-аар тодорхой тул worker index-ийг тусад нь хадгалах шаардлагагүй. Сонгоогүй job $j$ бүрийг дараагийн worker $i$-д өгч $\\mathrm{next\\_mask}=\\mathrm{mask}\\mathbin{|}(1\\ll j)$ рүү transition хийнэ. Нэмэгдсэн bit нь integer $\\mathrm{mask}$-ийг өсгөдөг тул increasing $\\mathrm{mask}$ order зөв."
             },
             {
               "type": "math",
@@ -7305,7 +7305,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long assignment(const vector<vector<long long>>& cost){\n    int n=cost.size();assert(n<=20);\n    for(auto&r:cost)assert((int)r.size()==n);\n    const long long INF=4'000'000'000'000'000'000LL;\n    int states=1<<n;vector<long long>dp(states,INF);dp[0]=0;\n    for(int mask=0;mask<states;mask++){\n        int i=__builtin_popcount((unsigned)mask);if(i==n)continue;\n        for(int j=0;j<n;j++)if(!(mask>>j&1)){\n            assert(cost[i][j]>=0&&cost[i][j]<INF/20);\n            int next=mask|(1<<j);\n            dp[next]=min(dp[next],dp[mask]+cost[i][j]);\n        }\n    }\n    return dp.back();\n}"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long assignment(const vector<vector<long long>>& cost) {\n    int n = cost.size();\n    int states = 1 << n;\n    const long long INF = 4'000'000'000'000'000'000LL;\n\n    vector<long long> dp(states, INF);\n    dp[0] = 0;\n\n    for (int mask = 0; mask < states; mask++) {\n        int i = __builtin_popcount(mask);\n\n        if (i == n) {\n            continue;\n        }\n\n        for (int j = 0; j < n; j++) {\n            if ((mask & (1 << j)) != 0) {\n                continue;\n            }\n\n            int next_mask = mask | (1 << j);\n            long long new_cost = dp[mask] + cost[i][j];\n            dp[next_mask] = min(dp[next_mask], new_cost);\n        }\n    }\n\n    return dp[states - 1];\n}\n"
             },
             {
               "type": "p",
@@ -7465,7 +7465,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long assignment(const vector<vector<long long>>& cost){\n    int n=cost.size();assert(n<=20);\n    for(auto&r:cost)assert((int)r.size()==n);\n    const long long INF=4'000'000'000'000'000'000LL;\n    int states=1<<n;vector<long long>dp(states,INF);dp[0]=0;\n    for(int mask=0;mask<states;mask++){\n        int i=__builtin_popcount((unsigned)mask);if(i==n)continue;\n        for(int j=0;j<n;j++)if(!(mask>>j&1)){\n            assert(cost[i][j]>=0&&cost[i][j]<INF/20);\n            int next=mask|(1<<j);\n            dp[next]=min(dp[next],dp[mask]+cost[i][j]);\n        }\n    }\n    return dp.back();\n}"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long assignment(const vector<vector<long long>>& cost) {\n    int n = cost.size();\n    int states = 1 << n;\n    const long long INF = 4'000'000'000'000'000'000LL;\n\n    vector<long long> dp(states, INF);\n    dp[0] = 0;\n\n    for (int mask = 0; mask < states; mask++) {\n        int i = __builtin_popcount(mask);\n\n        if (i == n) {\n            continue;\n        }\n\n        for (int j = 0; j < n; j++) {\n            if ((mask & (1 << j)) != 0) {\n                continue;\n            }\n\n            int next_mask = mask | (1 << j);\n            long long new_cost = dp[mask] + cost[i][j];\n            dp[next_mask] = min(dp[next_mask], new_cost);\n        }\n    }\n\n    return dp[states - 1];\n}\n"
                 },
                 {
                   "type": "p",
@@ -7593,11 +7593,11 @@
           "blocks": [
             {
               "type": "p",
-              "text": "Node $v$ нь $[l,r)$ segment. apply($v$,$\\mathrm{delta}$) нь $\\mathrm{sum}[v]+=\\mathrm{delta}*(r-l)$, $\\mathrm{lazy}[v]+=\\mathrm{delta}$. Query/update segment-ийг бүтнээр хамарвал apply хийж зогсоно. Хэсэгчлэн хамарвал өмнөх $\\mathrm{lazy}$-г children-д push хийж, children дээр ажиллаад parent sum-ийг дахин merge хийнэ."
+              "text": "Node $v$ нь $[l,r)$ segment. apply($v$,$\\mathrm{delta}$) нь $\\mathrm{tree}[v]+=\\mathrm{delta}*(r-l)$, $\\mathrm{lazy}[v]+=\\mathrm{delta}$. Query/update segment-ийг бүтнээр хамарвал apply хийж зогсоно. Хэсэгчлэн хамарвал өмнөх $\\mathrm{lazy}$-г children-д push хийж, children дээр ажиллаад parent sum-ийг дахин merge хийнэ."
             },
             {
               "type": "math",
-              "tex": "sum[v]\\leftarrow sum[v]+\\Delta(r-l),\\qquad lazy[v]\\leftarrow lazy[v]+\\Delta"
+              "tex": "\\mathrm{tree}[v]\\leftarrow \\mathrm{tree}[v]+\\Delta(r-l),\\qquad lazy[v]\\leftarrow lazy[v]+\\Delta"
             },
             {
               "type": "p",
@@ -7624,7 +7624,7 @@
           "blocks": [
             {
               "type": "p",
-              "text": "Invariant: $\\mathrm{sum}[v]$ нь segment-ийн бодит нийлбэр, $\\mathrm{lazy}[v]$ нь children-д дамжуулаагүй update. Full-cover add бүх элемент-д $\\mathrm{delta}$ нэмэх тул aggregate өөрчлөлт $\\mathrm{delta}$×length зөв. Push хоёр хүүхдэд тэдний length-ээр update хийдэг учир children-ийн sum-ийн нийлбэр parent sum-тай нийцнэ. Partial recursion дараах merge invariant-ийг сэргээдэг тул query/update induction-аар зөв."
+              "text": "Invariant: $\\mathrm{tree}[v]$ нь segment-ийн бодит нийлбэр, $\\mathrm{lazy}[v]$ нь children-д дамжуулаагүй update. Full-cover add бүх элемент-д $\\mathrm{delta}$ нэмэх тул aggregate өөрчлөлт $\\mathrm{delta}$×length зөв. Push хоёр хүүхдэд тэдний length-ээр update хийдэг учир children-ийн sum-ийн нийлбэр parent sum-тай нийцнэ. Partial recursion дараах merge invariant-ийг сэргээдэг тул query/update induction-аар зөв."
             }
           ]
         },
@@ -7634,7 +7634,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct LazySeg{\n    int n;vector<long long>sum,lazy;\n    LazySeg(const vector<long long>&a):n(a.size()),sum(4*n),lazy(4*n){\n        assert(n>0);build(1,0,n,a);\n    }\n    void build(int v,int l,int r,const vector<long long>&a){\n        if(r-l==1){sum[v]=a[l];return;}int m=(l+r)/2;\n        build(v*2,l,m,a);build(v*2+1,m,r,a);sum[v]=sum[v*2]+sum[v*2+1];\n    }\n    void apply(int v,int l,int r,long long x){sum[v]+=x*(r-l);lazy[v]+=x;}\n    void push(int v,int l,int r){\n        if(r-l==1||lazy[v]==0)return;int m=(l+r)/2;\n        apply(v*2,l,m,lazy[v]);apply(v*2+1,m,r,lazy[v]);lazy[v]=0;\n    }\n    void add(int ql,int qr,long long x,int v,int l,int r){\n        if(qr<=l||r<=ql)return;\n        if(ql<=l&&r<=qr){apply(v,l,r,x);return;}\n        push(v,l,r);int m=(l+r)/2;\n        add(ql,qr,x,v*2,l,m);add(ql,qr,x,v*2+1,m,r);\n        sum[v]=sum[v*2]+sum[v*2+1];\n    }\n    long long query(int ql,int qr,int v,int l,int r){\n        if(qr<=l||r<=ql)return 0;if(ql<=l&&r<=qr)return sum[v];\n        push(v,l,r);int m=(l+r)/2;\n        return query(ql,qr,v*2,l,m)+query(ql,qr,v*2+1,m,r);\n    }\n    void add(int l,int r,long long x){assert(0<=l&&l<=r&&r<=n);add(l,r,x,1,0,n);}\n    long long query(int l,int r){assert(0<=l&&l<=r&&r<=n);return query(l,r,1,0,n);}\n};"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct LazySeg {\n    int n;\n    vector<long long> tree;\n    vector<long long> lazy;\n\n    LazySeg(const vector<long long>& a) {\n        n = a.size();\n        tree.assign(4 * n, 0);\n        lazy.assign(4 * n, 0);\n        build(1, 0, n, a);\n    }\n\n    void build(int v, int l, int r, const vector<long long>& a) {\n        if (r - l == 1) {\n            tree[v] = a[l];\n            return;\n        }\n\n        int mid = l + (r - l) / 2;\n        build(2 * v, l, mid, a);\n        build(2 * v + 1, mid, r, a);\n\n        tree[v] = tree[2 * v] + tree[2 * v + 1];\n    }\n\n    void apply(int v, int l, int r, long long x) {\n        tree[v] += x * (r - l);\n        lazy[v] += x;\n    }\n\n    void push(int v, int l, int r) {\n        if (r - l == 1 || lazy[v] == 0) {\n            return;\n        }\n\n        int mid = l + (r - l) / 2;\n        apply(2 * v, l, mid, lazy[v]);\n        apply(2 * v + 1, mid, r, lazy[v]);\n        lazy[v] = 0;\n    }\n\n    void add(int ql, int qr, long long x, int v, int l, int r) {\n        if (qr <= l || r <= ql) {\n            return;\n        }\n\n        if (ql <= l && r <= qr) {\n            apply(v, l, r, x);\n            return;\n        }\n\n        push(v, l, r);\n        int mid = l + (r - l) / 2;\n\n        add(ql, qr, x, 2 * v, l, mid);\n        add(ql, qr, x, 2 * v + 1, mid, r);\n\n        tree[v] = tree[2 * v] + tree[2 * v + 1];\n    }\n\n    long long query(int ql, int qr, int v, int l, int r) {\n        if (qr <= l || r <= ql) {\n            return 0;\n        }\n\n        if (ql <= l && r <= qr) {\n            return tree[v];\n        }\n\n        push(v, l, r);\n        int mid = l + (r - l) / 2;\n\n        long long left_sum = query(ql, qr, 2 * v, l, mid);\n        long long right_sum = query(ql, qr, 2 * v + 1, mid, r);\n\n        return left_sum + right_sum;\n    }\n\n    void add(int l, int r, long long x) {\n        add(l, r, x, 1, 0, n);\n    }\n\n    long long query(int l, int r) {\n        return query(l, r, 1, 0, n);\n    }\n};\n"
             },
             {
               "type": "p",
@@ -7661,7 +7661,7 @@
                   "$O(\\log  n)$"
                 ],
                 [
-                  "sum ба $\\mathrm{lazy}$ arrays",
+                  "tree ба lazy arrays",
                   "$O(n)$ зай"
                 ]
               ]
@@ -7757,7 +7757,7 @@
                 },
                 {
                   "type": "math",
-                  "tex": "sum[v]\\leftarrow sum[v]+\\Delta(r-l),\\qquad lazy[v]\\leftarrow lazy[v]+\\Delta"
+                  "tex": "\\mathrm{tree}[v]\\leftarrow \\mathrm{tree}[v]+\\Delta(r-l),\\qquad lazy[v]\\leftarrow lazy[v]+\\Delta"
                 },
                 {
                   "type": "p",
@@ -7794,7 +7794,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct LazySeg{\n    int n;vector<long long>sum,lazy;\n    LazySeg(const vector<long long>&a):n(a.size()),sum(4*n),lazy(4*n){\n        assert(n>0);build(1,0,n,a);\n    }\n    void build(int v,int l,int r,const vector<long long>&a){\n        if(r-l==1){sum[v]=a[l];return;}int m=(l+r)/2;\n        build(v*2,l,m,a);build(v*2+1,m,r,a);sum[v]=sum[v*2]+sum[v*2+1];\n    }\n    void apply(int v,int l,int r,long long x){sum[v]+=x*(r-l);lazy[v]+=x;}\n    void push(int v,int l,int r){\n        if(r-l==1||lazy[v]==0)return;int m=(l+r)/2;\n        apply(v*2,l,m,lazy[v]);apply(v*2+1,m,r,lazy[v]);lazy[v]=0;\n    }\n    void add(int ql,int qr,long long x,int v,int l,int r){\n        if(qr<=l||r<=ql)return;\n        if(ql<=l&&r<=qr){apply(v,l,r,x);return;}\n        push(v,l,r);int m=(l+r)/2;\n        add(ql,qr,x,v*2,l,m);add(ql,qr,x,v*2+1,m,r);\n        sum[v]=sum[v*2]+sum[v*2+1];\n    }\n    long long query(int ql,int qr,int v,int l,int r){\n        if(qr<=l||r<=ql)return 0;if(ql<=l&&r<=qr)return sum[v];\n        push(v,l,r);int m=(l+r)/2;\n        return query(ql,qr,v*2,l,m)+query(ql,qr,v*2+1,m,r);\n    }\n    void add(int l,int r,long long x){assert(0<=l&&l<=r&&r<=n);add(l,r,x,1,0,n);}\n    long long query(int l,int r){assert(0<=l&&l<=r&&r<=n);return query(l,r,1,0,n);}\n};"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct LazySeg {\n    int n;\n    vector<long long> tree;\n    vector<long long> lazy;\n\n    LazySeg(const vector<long long>& a) {\n        n = a.size();\n        tree.assign(4 * n, 0);\n        lazy.assign(4 * n, 0);\n        build(1, 0, n, a);\n    }\n\n    void build(int v, int l, int r, const vector<long long>& a) {\n        if (r - l == 1) {\n            tree[v] = a[l];\n            return;\n        }\n\n        int mid = l + (r - l) / 2;\n        build(2 * v, l, mid, a);\n        build(2 * v + 1, mid, r, a);\n\n        tree[v] = tree[2 * v] + tree[2 * v + 1];\n    }\n\n    void apply(int v, int l, int r, long long x) {\n        tree[v] += x * (r - l);\n        lazy[v] += x;\n    }\n\n    void push(int v, int l, int r) {\n        if (r - l == 1 || lazy[v] == 0) {\n            return;\n        }\n\n        int mid = l + (r - l) / 2;\n        apply(2 * v, l, mid, lazy[v]);\n        apply(2 * v + 1, mid, r, lazy[v]);\n        lazy[v] = 0;\n    }\n\n    void add(int ql, int qr, long long x, int v, int l, int r) {\n        if (qr <= l || r <= ql) {\n            return;\n        }\n\n        if (ql <= l && r <= qr) {\n            apply(v, l, r, x);\n            return;\n        }\n\n        push(v, l, r);\n        int mid = l + (r - l) / 2;\n\n        add(ql, qr, x, 2 * v, l, mid);\n        add(ql, qr, x, 2 * v + 1, mid, r);\n\n        tree[v] = tree[2 * v] + tree[2 * v + 1];\n    }\n\n    long long query(int ql, int qr, int v, int l, int r) {\n        if (qr <= l || r <= ql) {\n            return 0;\n        }\n\n        if (ql <= l && r <= qr) {\n            return tree[v];\n        }\n\n        push(v, l, r);\n        int mid = l + (r - l) / 2;\n\n        long long left_sum = query(ql, qr, 2 * v, l, mid);\n        long long right_sum = query(ql, qr, 2 * v + 1, mid, r);\n\n        return left_sum + right_sum;\n    }\n\n    void add(int l, int r, long long x) {\n        add(l, r, x, 1, 0, n);\n    }\n\n    long long query(int l, int r) {\n        return query(l, r, 1, 0, n);\n    }\n};\n"
                 },
                 {
                   "type": "p",
@@ -7821,7 +7821,7 @@
                       "$O(\\log  n)$ time"
                     ],
                     [
-                      "Sum and $\\mathrm{lazy}$ arrays",
+                      "Tree and lazy arrays",
                       "$O(n)$ space"
                     ]
                   ]
