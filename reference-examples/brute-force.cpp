@@ -1,22 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int lis_length(const vector<long long>& a) {
+bool has_pair(const vector<long long>& a, long long target) {
     int n = a.size();
-    vector<int> dp(n, 1);
-    int ans = 0;
 
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            if (a[j] < a[i]) {
-                dp[i] = max(dp[i], dp[j] + 1);
+        for (int j = i + 1; j < n; j++) {
+            if (a[i] + a[j] == target) {
+                return true;
             }
         }
-
-        ans = max(ans, dp[i]);
     }
 
-    return ans;
+    return false;
 }
 
 int main() {
@@ -29,7 +25,9 @@ int main() {
     for (int i = 0; i < n; i++) {
         cin >> a[i];
     }
-    cout << lis_length(a) << '\n';
+    long long target;
+    cin >> target;
+    cout << (has_pair(a, target) ? "YES" : "NO") << '\n';
 
     return 0;
 }

@@ -39,7 +39,15 @@ long long grid_paths(const vector<string>& grid) {
 }
 
 int main() {
-    vector<string> grid = {"...", "...", "..."};
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, m;
+    cin >> n >> m;
+    vector<string> grid(n);
+    for (int r = 0; r < n; r++) {
+        cin >> grid[r];
+    }
     cout << grid_paths(grid) << '\n';
 
     return 0;

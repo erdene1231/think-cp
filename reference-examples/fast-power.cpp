@@ -22,7 +22,12 @@ long long power_mod(long long a, long long b, long long mod) {
 }
 
 int main() {
-    cout << power_mod(3, 13, 100) << '\n';
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    long long a, b, mod;
+    cin >> a >> b >> mod;
+    cout << power_mod(a, b, mod) << '\n';
 
     return 0;
 }

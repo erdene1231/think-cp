@@ -27,11 +27,29 @@ pair<vector<int>, vector<int>> bfs(const vector<vector<int>>& adj, int s) {
 }
 
 int main() {
-    vector<vector<int>> adj = {{1, 2}, {0, 3}, {0, 3}, {1, 2, 4}, {3}};
-    auto result = bfs(adj, 0);
-    vector<int> dist = result.first;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    cout << dist[4] << '\n';
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> adj(n);
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    int s;
+    cin >> s;
+    auto result = bfs(adj, s);
+    vector<int> ans = result.first;
+    for (int i = 0; i < (int)ans.size(); i++) {
+        if (i > 0) {
+            cout << ' ';
+        }
+        cout << ans[i];
+    }
+    cout << '\n';
 
     return 0;
 }

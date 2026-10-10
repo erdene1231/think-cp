@@ -37,15 +37,31 @@ struct Fenwick {
 };
 
 int main() {
-    vector<long long> a = {2, 1, 3, 4};
-    Fenwick f(a.size());
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    for (int i = 0; i < (int) a.size(); i++) {
-        f.add(i, a[i]);
+    int n, q;
+    cin >> n >> q;
+    Fenwick bit(n);
+    for (int i = 0; i < n; i++) {
+        long long x;
+        cin >> x;
+        bit.add(i, x);
     }
-
-    f.add(2, 5);
-    cout << f.sum(1, 3) << '\n';
+    for (int i = 0; i < q; i++) {
+        string type;
+        cin >> type;
+        if (type == "add") {
+            int pos;
+            long long x;
+            cin >> pos >> x;
+            bit.add(pos, x);
+        } else if (type == "sum") {
+            int l, r;
+            cin >> l >> r;
+            cout << bit.sum(l, r) << '\n';
+        }
+    }
 
     return 0;
 }

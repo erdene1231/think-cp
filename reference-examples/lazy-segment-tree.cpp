@@ -1,0 +1,126 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct LazySeg {
+    int n;
+    vector<long long> tree;
+    vector<long long> lazy;
+
+    LazySeg(const vector<long long>& a) {
+        n = a.size();
+        tree.assign(4 * max(1, n), 0);
+        lazy.assign(4 * max(1, n), 0);
+        if (n > 0) {
+            build(1, 0, n - 1, a);
+        }
+    }
+
+    void build(int v, int l, int r, const vector<long long>& a) {
+        if (l == r) {
+            tree[v] = a[l];
+            return;
+        }
+
+        int mid = l + (r - l) / 2;
+        build(2 * v, l, mid, a);
+        build(2 * v + 1, mid + 1, r, a);
+
+        tree[v] = tree[2 * v] + tree[2 * v + 1];
+    }
+
+    void apply(int v, int l, int r, long long x) {
+        tree[v] += x * (r - l + 1);
+        lazy[v] += x;
+    }
+
+    void push(int v, int l, int r) {
+        if (l == r || lazy[v] == 0) {
+            return;
+        }
+
+        int mid = l + (r - l) / 2;
+        apply(2 * v, l, mid, lazy[v]);
+        apply(2 * v + 1, mid + 1, r, lazy[v]);
+        lazy[v] = 0;
+    }
+
+    void add(int ql, int qr, long long x, int v, int l, int r) {
+        if (qr < l || r < ql) {
+            return;
+        }
+
+        if (ql <= l && r <= qr) {
+            apply(v, l, r, x);
+            return;
+        }
+
+        push(v, l, r);
+        int mid = l + (r - l) / 2;
+
+        add(ql, qr, x, 2 * v, l, mid);
+        add(ql, qr, x, 2 * v + 1, mid + 1, r);
+
+        tree[v] = tree[2 * v] + tree[2 * v + 1];
+    }
+
+    long long query(int ql, int qr, int v, int l, int r) {
+        if (qr < l || r < ql) {
+            return 0;
+        }
+
+        if (ql <= l && r <= qr) {
+            return tree[v];
+        }
+
+        push(v, l, r);
+        int mid = l + (r - l) / 2;
+
+        long long left_sum = query(ql, qr, 2 * v, l, mid);
+        long long right_sum = query(ql, qr, 2 * v + 1, mid + 1, r);
+
+        return left_sum + right_sum;
+    }
+
+    void add(int l, int r, long long x) {
+        if (n == 0 || l > r) {
+            return;
+        }
+
+        add(l, r, x, 1, 0, n - 1);
+    }
+
+    long long query(int l, int r) {
+        if (n == 0 || l > r) {
+            return 0;
+        }
+
+        return query(l, r, 1, 0, n - 1);
+    }
+};
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, q;
+    cin >> n >> q;
+    vector<long long> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    LazySeg st(a);
+    for (int i = 0; i < q; i++) {
+        string type;
+        int l, r;
+        cin >> type >> l >> r;
+        if (type == "add") {
+            long long x;
+            cin >> x;
+            st.add(l, r, x);
+        } else if (type == "sum") {
+            cout << st.query(l, r) << '\n';
+        }
+    }
+
+    return 0;
+}

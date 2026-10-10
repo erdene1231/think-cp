@@ -18,7 +18,12 @@ long long stair_ways(int n) {
 }
 
 int main() {
-    cout << stair_ways(4) << '\n';
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    cout << stair_ways(n) << '\n';
 
     return 0;
 }

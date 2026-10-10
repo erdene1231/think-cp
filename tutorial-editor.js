@@ -1,5 +1,5 @@
-import {validateTutorial,view,levelNames,levels} from './tutorial-model.js?v=15';
-import {node,drawArticle,typeset} from './tutorials.js?v=15';
+import {validateTutorial,view,levelNames,levels} from './tutorial-model.js?v=16';
+import {node,drawArticle,typeset} from './tutorials.js?v=16';
 const $=id=>document.getElementById(id);
 export function setupTutorialEditor(ctx){
  let allowed=false,token=0,draft=null,revision=0,lang='mn',busy=false,accountId;
@@ -13,7 +13,7 @@ export function setupTutorialEditor(ctx){
     else if(b.type==='list'||b.type==='ordered'){label.append(node('span','Жагсаалт — мөр бүр нэг зүйл'));input.value=b.items.join('\n');}
     else if(b.type==='table'){label.append(node('span','Хүснэгт — нүдийг Tab-аар, мөрийг Enter-ээр тусгаарлана. Эхний мөр нь гарчиг.'));input.value=[b.headers,...b.rows].map(r=>r.join('\t')).join('\n');}
     else if(b.type==='links'){label.append(node('span','Эх сурвалж — мөр бүр: нэр | https://холбоос'));input.value=b.items.map(x=>x.label+' | '+x.url).join('\n');}
-    else{label.append(node('span',b.type==='code'?'C++17 код':b.type==='note'?'Санамж':'Тайлбар — $…$ / $$…$$ томъёо'));input.value=b.text;}
+    else{label.append(node('span',b.type==='code'?(b.language==='Input'?'Жишээ input':b.language==='Output'?'Жишээ output':'C++17 код'):b.type==='note'?(b.collapsible?'Нээж унших hint / хариу':'Санамж'):'Тайлбар — $…$ / $$…$$ томъёо'));input.value=b.text;}
     input.addEventListener('keydown',e=>{if(e.key==='Tab'&&(b.type==='code'||b.type==='table')){e.preventDefault();input.setRangeText('\t',input.selectionStart,input.selectionEnd,'end');}});label.append(input);detail.append(label);
    });$('tutorial-admin-sections').append(detail);
   });

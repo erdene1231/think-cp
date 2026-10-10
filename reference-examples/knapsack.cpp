@@ -23,8 +23,16 @@ long long knapsack(int W, const vector<pair<int, long long>>& items) {
 }
 
 int main() {
-    vector<pair<int, long long>> items = {{2, 3}, {3, 4}, {4, 5}};
-    cout << knapsack(5, items) << '\n';
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, W;
+    cin >> n >> W;
+    vector<pair<int, long long>> items(n);
+    for (int i = 0; i < n; i++) {
+        cin >> items[i].first >> items[i].second;
+    }
+    cout << knapsack(W, items) << '\n';
 
     return 0;
 }

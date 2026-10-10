@@ -12,7 +12,12 @@ long long gcd_value(long long a, long long b) {
 }
 
 int main() {
-    cout << gcd_value(24, 18) << '\n';
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    long long a, b;
+    cin >> a >> b;
+    cout << gcd_value(a, b) << '\n';
 
     return 0;
 }

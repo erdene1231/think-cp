@@ -12,7 +12,7 @@ export function validateTutorial(t){
  for(const lang of ['mn','en']){const v=lang==='mn'?t:t.translations?.en;if(!v)fail('Хоёр хэлний хувилбар шаардлагатай.');str(v.title,200,'Гарчиг');str(v.summary,4000,'Тайлбар');str(v.prerequisites,2000,'Урьдчилан мэдэх зүйл');
   if(!Array.isArray(v.sections)||!v.sections.length||v.sections.length>30)fail('1–30 хэсэг шаардлагатай.');
   for(const s of v.sections){str(s.title,200,'Хэсгийн гарчиг');if(!Array.isArray(s.blocks)||!s.blocks.length||s.blocks.length>40)fail('Хэсгийн агуулга буруу.');for(const b of s.blocks){
-   if(['p','note','code'].includes(b.type))str(b.text,40000,'Агуулга');
+   if(['p','note','code'].includes(b.type)){str(b.text,40000,'Агуулга');if(b.type==='note'){if(b.collapsible!==undefined&&typeof b.collapsible!=='boolean')fail('Нээж унших тохиргоо буруу.');if(b.label!==undefined)str(b.label,200,'Нээх товчны нэр');}if(b.type==='code'&&b.language!==undefined)str(b.language,80,'Кодын төрөл');}
    else if(b.type==='math')str(b.tex,8000,'Томъёо');
    else if(['list','ordered'].includes(b.type)){if(!Array.isArray(b.items)||!b.items.length||b.items.length>100)fail('Жагсаалт буруу.');for(const x of b.items)str(x,8000,'Жагсаалтын мөр');}
    else if(b.type==='table'){if(!Array.isArray(b.headers)||!b.headers.length||b.headers.length>8||!Array.isArray(b.rows)||!b.rows.length||b.rows.length>100)fail('Хүснэгт буруу.');for(const h of b.headers)str(h,200,'Багана');for(const row of b.rows){if(!Array.isArray(row)||row.length!==b.headers.length)fail('Хүснэгтийн баганын тоо зөрсөн.');for(const c of row)str(c,8000,'Нүд');}}
