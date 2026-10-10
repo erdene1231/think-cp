@@ -1,4 +1,4 @@
-import {setAdminRoute} from './navigation.js?v=14';
+import {setAdminRoute} from './navigation.js?v=15';
 import {rpc,accountError} from './accounts.js?v=6';
 import {validateProblem,parseProblemImport,validateSource,getSources} from './problem-store.js?v=10';
 export function setupAdmin(ctx) {

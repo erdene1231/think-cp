@@ -1,13 +1,13 @@
-import {setupTutorials} from './tutorials.js?v=14';
+import {setupTutorials} from './tutorials.js?v=15';
 let tutorialUI;
 import {EMPTY, cleanEntry, parseBackup} from './progress.js';
 import {getSolvers} from './community.js?v=6';
-import {setupAdmin} from './admin.js?v=14';
-import {parseCatalog,hintTexts,getSources} from './problem-store.js?v=14';
+import {setupAdmin} from './admin.js?v=15';
+import {parseCatalog,hintTexts,getSources} from './problem-store.js?v=15';
 import {rpc} from './accounts.js?v=6';
 import {ownProfile,saveOwnProfile,avatarUrl,accountError} from './accounts.js?v=6';
-import {setupSocial} from './social.js?v=14';
-import {filterProblems, getTags, ratingLabel} from './catalog.js?v=14';
+import {setupSocial} from './social.js?v=15';
+import {filterProblems, getTags, ratingLabel} from './catalog.js?v=15';
 const $ = id => document.getElementById(id);
 const STATUS = {new:'Эхлээгүй',trying:'Оролдож байгаа',solved:'Бодсон'};
 let data, selectedPack='', selectedProblem, state={}, dirty={}, user=null, client=null, loading=false, syncing=false, syncAgain=false, epoch=0;
@@ -170,7 +170,7 @@ async function refreshCatalog(){if(!client){catalogLoading=false;render();notice
  finally{catalogLoading=false;render();}
 }
 async function init() {
-  const response=await fetch('./problems.json?v=14', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();catalogIds=new Set(data.problems.map(p=>p.id));catalogLoading=configured;
+  const response=await fetch('./problems.json?v=15', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();catalogIds=new Set(data.problems.map(p=>p.id));catalogLoading=configured;
   try{const cached=parseCatalog(JSON.parse(localStorage.getItem('think-cp:online-catalog')||'null'));data.problems=cached.problems;data.sources=cached.sources||[];for(const id of cached.knownIds)catalogIds.add(id);}catch{}
   readLocal();render();updateAccount();
   populateTags();populateSources();

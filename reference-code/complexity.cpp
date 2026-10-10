@@ -5,7 +5,7 @@ long long count_pairs(int n) {
     long long ans = 0;
 
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j <= i; j++) {
+        for (int j = i + 1; j < n; j++) {
             ans++;
         }
     }

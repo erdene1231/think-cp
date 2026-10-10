@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "languages": [
     "mn",
     "en"
@@ -104,7 +104,7 @@
             {
               "type": "code",
               "language": "C++17",
-              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_pairs(int n) {\n    long long ans = 0;\n\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j <= i; j++) {\n            ans++;\n        }\n    }\n\n    return ans;\n}\n\nint halvings(int n) {\n    int steps = 0;\n\n    while (n > 1) {\n        n /= 2;\n        steps++;\n    }\n\n    return steps;\n}\n"
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_pairs(int n) {\n    long long ans = 0;\n\n    for (int i = 0; i < n; i++) {\n        for (int j = i + 1; j < n; j++) {\n            ans++;\n        }\n    }\n\n    return ans;\n}\n\nint halvings(int n) {\n    int steps = 0;\n\n    while (n > 1) {\n        n /= 2;\n        steps++;\n    }\n\n    return steps;\n}\n"
             },
             {
               "type": "p",
@@ -173,6 +173,28 @@
                   "url": "https://cses.fi/book/book.pdf"
                 }
               ]
+            }
+          ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Хугацааг олохдоо кодонд хэдэн loop байгааг биш, доторх үндсэн үйлдэл нийт хэдэн удаа хийгдэхийг тоолно. Хос тоолох кодод эхний $i$-д $n-1$ сонголт, дараагийнхад $n-2$ сонголт байна. Нийт $(n-1)+(n-2)+\\cdots+1=n(n-1)/2$, тиймээс $O(n^2)$."
+            },
+            {
+              "type": "p",
+              "text": "Хоёрт хуваадаг loop өөр: нэг алхмын дараа үлдсэн хэмжээ хоёр дахин багасна. $k$ алхмын дараа хэмжээ ойролцоогоор $n/2^k$. Нэг хүртэл багасгахын тулд $2^k\\approx n$, өөрөөр хэлбэл $k\\approx\\log_2 n$ алхам хэрэгтэй."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=1024$ үед хосын код $523776$ удаа нэмнэ; хуваах loop ердөө $10$ удаа эргэнэ. Хоёр код ижил input хэмжээтэй ч хийж буй ажлын тоо эрс ялгаатай."
+            },
+            {
+              "type": "note",
+              "text": "Энэ бол секундийн хэмжилт биш. Цаашдын тооллогод тогтмол хэмжээтэй integer-ийн нэмэх, харьцуулах, унших зэрэг үйлдлийг $O(1)$ гэж үзнэ. Хосын жишээ нь хурдан алгоритм гэхээсээ $O(n^2)$ өсөлтийг харуулах жишээ."
             }
           ]
         }
@@ -267,7 +289,7 @@
                 {
                   "type": "code",
                   "language": "C++17",
-                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_pairs(int n) {\n    long long ans = 0;\n\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j <= i; j++) {\n            ans++;\n        }\n    }\n\n    return ans;\n}\n\nint halvings(int n) {\n    int steps = 0;\n\n    while (n > 1) {\n        n /= 2;\n        steps++;\n    }\n\n    return steps;\n}\n"
+                  "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_pairs(int n) {\n    long long ans = 0;\n\n    for (int i = 0; i < n; i++) {\n        for (int j = i + 1; j < n; j++) {\n            ans++;\n        }\n    }\n\n    return ans;\n}\n\nint halvings(int n) {\n    int steps = 0;\n\n    while (n > 1) {\n        n /= 2;\n        steps++;\n    }\n\n    return steps;\n}\n"
                 },
                 {
                   "type": "p",
@@ -336,6 +358,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Count the total executions of the inner operation, rather than the number of loops in the source. Pair counting performs $(n-1)+(n-2)+\\cdots+1=n(n-1)/2$ increments, giving $O(n^2)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Halving is different: after $k$ reductions the remaining size is about $n/2^k$. Reaching one requires $2^k\\approx n$, or $k\\approx\\log_2 n$ reductions."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: for $n=1024$, pair counting performs $523776$ increments, while the halving loop performs only $10$ reductions. Equal input sizes do not imply equal amounts of work."
+                },
+                {
+                  "type": "note",
+                  "text": "These are operation counts, not measured seconds. Subsequent analyses treat arithmetic, comparisons and accesses on fixed-width integers as $O(1)$. The pair example demonstrates quadratic growth; it is not a fast algorithm."
                 }
               ]
             }
@@ -511,6 +555,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Brute force шинэ мэдээлэл хадгалж ажил хэмнэдэггүй: боломжит хос бүрийг шууд шалгана. $i$-г сонгосны дараа зөвхөн $j>i$-г шалгаснаар нэг хосыг урвуу дарааллаар дахин шалгахгүй, өөртэй нь хослуулахгүй."
+            },
+            {
+              "type": "p",
+              "text": "Шийдэл олдоогүй input дээр бүх $n(n-1)/2$ хосыг шалгана. Хосын нийлбэр ба харьцуулалт тогтмол ажил тул нийт $O(n^2)$. Олмогц буцах нь зарим input дээр ажил хэмнэнэ; worst case-ийг өөрчлөхгүй."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=1000$ үед $499500$ хос, $n=2000$ үед $1999000$ хос. Хэмжээг хоёр дахин нэмэхэд ажлын тоо ойролцоогоор дөрөв дахин өснө."
+            },
+            {
+              "type": "note",
+              "text": "Энэ аргыг жижиг хязгаарт эсвэл хурдан шийдлээ шалгах reference болгон ашиглана. Том input-д бүх хосыг шалгах шаардлагыг арилгах шинэ санаа хэрэгтэй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -667,6 +733,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Brute force checks the possibilities directly. Restricting the second index to $j>i$ avoids reversed duplicates and self-pairs, but still examines every possible distinct pair."
+                },
+                {
+                  "type": "p",
+                  "text": "On an input with no solution, it checks all $n(n-1)/2$ pairs. Each sum and comparison is constant work, giving $O(n^2)$. Returning early helps some inputs, but does not improve the worst case."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $1000$ elements give $499500$ pairs; $2000$ give $1999000$. Doubling the input roughly quadruples the work."
+                },
+                {
+                  "type": "note",
+                  "text": "Use it for small constraints or as a reference to verify a faster solution. Large inputs require an idea that avoids examining every pair."
                 }
               ]
             }
@@ -842,6 +930,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Эрэмбэлэхэд элемент бүрийг бусад бүх элементтэй заавал харьцуулах шаардлагагүй. $O(n\\log n)$ sorting-ийн санааг merge sort-оор төсөөлж болно: array-г таллан хувааж, эрэмбэлсэн хоёр хэсгийг нэгтгэхдээ хамгийн урд элементүүдийг харьцуулан нэг pointer-ийг урагшлуулна."
+            },
+            {
+              "type": "p",
+              "text": "Нэгтгэх нэг түвшинд бүх хэсгийн уртын нийлбэр $n$ тул $O(n)$ ажил хийнэ. Хэсгүүдийг нэг элемент хүртэл таллахад $O(\\log n)$ түвшин байна. Иймээс $O(n)\\times O(\\log n)=O(n\\log n)$. Кодын std::sort ч $O(n\\log n)$ харьцуулалтын баталгаатай; яг merge sort гэж үзэхгүй."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=8$ үед merge sort-ийн $3$ нэгтгэх түвшин тус бүр нийт $8$ элементийг боловсруулна. Энэ нь яг харьцуулалтын тоо биш, түвшин бүрийн ажлыг тоолох загвар юм."
+            },
+            {
+              "type": "note",
+              "text": "Эрэмбэлсний дараах хөрш шалгах нэг scan $O(n)$; өмнөх sort-ийн зардлыг арилгахгүй. Reference function array-г хуулж авдаг тул copy-д мөн $O(n)$ хугацаа, зай орно."
+            }
+          ]
         }
       ],
       "translations": {
@@ -998,6 +1108,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Sorting need not compare every pair. Merge sort illustrates the $O(n\\log n)$ idea: split into halves, then merge sorted parts by comparing their front elements and advancing a pointer."
+                },
+                {
+                  "type": "p",
+                  "text": "Across one merge level, the combined lengths total $n$, so the work is $O(n)$. Repeated halving creates $O(\\log n)$ levels, giving $O(n\\log n)$ overall. The code uses std::sort, which guarantees $O(n\\log n)$ comparisons; it need not use merge sort internally."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: for $n=8$, there are $3$ merge levels, each processing $8$ elements in total. This counts work by level, not the exact number of comparisons."
+                },
+                {
+                  "type": "note",
+                  "text": "A subsequent scan of adjacent values takes $O(n)$, but does not remove the sorting cost. The reference function copies its input, adding $O(n)$ time and space."
                 }
               ]
             }
@@ -1186,6 +1318,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Recursion өөрөө алгоритмыг хурдан болгодоггүй. Энэ factorial код $n$-ээс $n-1$ рүү ганц call хийж, буцаж ирэхэд нэг үржүүлэлт хийнэ. Call-ууд салаалдаггүй тул нийт $n+1$ call, $n$ үржүүлэлт: $O(n)$."
+            },
+            {
+              "type": "p",
+              "text": "Харин нэг call дотроос ижил жижиг бодлогыг олон дахин дуудвал ажил давтагдана. Fibonacci-г хадгалалтгүй хоёр recursive call-аар бодоход call tree салаалж, ажлын тоо exponential өснө. Хурдыг recursion гэсэн нэрээр биш, call бүрийн тоо ба ажлаар тогтооно."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: factorial($5$) нь $5\\to4\\to3\\to2\\to1\\to0$ гэсэн $6$ call. Тэд нэгэн зэрэг дуусаагүй байдаг тул stack-д $O(n)$ зай хэрэгтэй."
+            },
+            {
+              "type": "note",
+              "text": "Энэ тооцоо тогтмол хэмжээтэй integer-д хамаарна. Long long-д factorial маш хурдан багтахаа больдог; дурын урттай integer хэрэглэвэл үржүүлэлтийг тогтмол ажил гэж үзэж болохгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -1355,6 +1509,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Recursion does not make an algorithm fast by itself. This factorial code makes one call on $n-1$ and one multiplication on return. The calls form a chain: $n+1$ calls and $n$ multiplications, hence $O(n)$."
+                },
+                {
+                  "type": "p",
+                  "text": "If a call repeatedly branches into the same smaller problems, work is repeated. A naive recursive Fibonacci implementation has an exponentially growing call tree. Count calls and work per call, rather than judging speed from the use of recursion."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: factorial($5$) makes the $6$ calls $5\\to4\\to3\\to2\\to1\\to0$. They remain pending on the call stack, which uses $O(n)$ space."
+                },
+                {
+                  "type": "note",
+                  "text": "This count assumes fixed-width integers. Factorials soon exceed long long; with arbitrary-precision integers, multiplication is no longer constant work."
                 }
               ]
             }
@@ -1530,6 +1706,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Хаалт шалгахдаа хаах хаалт бүрт өмнөх бүх тэмдэгт рүү буцаж хайхгүй. Stack нь хараахан хаагдаагүй нээх хаалтуудыг хадгалж, хамгийн сүүлийнхийг top дээр шууд өгнө."
+            },
+            {
+              "type": "p",
+              "text": "Тэмдэгт бүрийг нэг удаа уншина. Нээх хаалт нэг удаа push хийгдэж, тохирсон хаах хаалт ирвэл нэг удаа pop хийгдэнэ. Нэг тэмдэгт дахин дахин stack-д орохгүй тул бүх push/pop-ийн тоо $O(n)$. Queue ч front дээрх элементийг шууд авдаг; дундаас нь хайж олдоггүй."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $((()))$ дээр $6$ тэмдэгт уншиж, $3$ push ба $3$ pop хийнэ. Хаалт бүрт эхнээс нь дахин хайх ажил байхгүй."
+            },
+            {
+              "type": "note",
+              "text": "Stack/queue хурдан байна гэдэг нь бүх алгоритм заавал $O(n)$ гэсэн үг биш. Алгоритм нэг элементийг олон удаа оруулдаг бол нийт оруулалтын тоог тусад нь тоолно."
+            }
+          ]
         }
       ],
       "translations": {
@@ -1686,6 +1884,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Bracket matching does not search backwards through the string for each closing bracket. The stack remembers unmatched opening brackets and gives the latest one directly at its top."
+                },
+                {
+                  "type": "p",
+                  "text": "Each character is read once. An opening bracket is pushed once and popped at most once. Total stack operations are therefore $O(n)$. Similarly, a queue gives its front element directly, rather than searching for it."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $((()))$ needs $6$ character reads, $3$ pushes and $3$ pops. No closing bracket triggers a fresh scan from the beginning."
+                },
+                {
+                  "type": "note",
+                  "text": "Fast stack or queue operations do not automatically make an entire algorithm linear. If elements can be inserted repeatedly, count all insertions separately."
                 }
               ]
             }
@@ -1861,6 +2081,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Map-д шинэ утгын давтамжийг нэмэхдээ өмнөх бүх утга дундаас ижил key хайж scan хийхгүй. Ordered set/map нь key-үүдийг balanced search tree-д хадгалдаг: харьцуулалт бүрт хайлтаа нэг child subtree-д үргэлжлүүлнэ."
+            },
+            {
+              "type": "p",
+              "text": "Balanced tree-ийн өндөр $O(\\log n)$ тул key олох, нэмэх, хасахад $O(\\log n)$ ажил орно. Код input-ийн $n$ элемент тус бүрт ийм ажиллагаа хийдэг тул нийт $O(n\\log n)$. Node бүрийн бүх child руу хайдаггүй нь гол хэмнэлт."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: balanced tree-ийн хэмжээ $1024$ орчим байхад хайлтын зам хэдхэн арван алхмын хэмжээтэй. Энэ нь яг $10$ харьцуулалт гэсэн баталгаа биш; өндөр нь $\\log_2 n$-тэй пропорционал гэсэн санаа."
+            },
+            {
+              "type": "note",
+              "text": "Unordered map-ийн average $O(1)$-ийг ordered map-ийн $O(\\log n)$-тэй андуурахгүй. Hash collision-оос болж unordered хувилбарын worst case удаан байж болно."
+            }
+          ]
         }
       ],
       "translations": {
@@ -2017,6 +2259,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Updating a frequency in a map does not scan all earlier values for a matching key. Ordered sets and maps use a balanced search tree: a comparison selects one child subtree to continue in."
+                },
+                {
+                  "type": "p",
+                  "text": "The tree has height $O(\\log n)$, so lookup, insertion and removal take $O(\\log n)$. Performing such operations for $n$ input values gives $O(n\\log n)$. The search follows one branch, not every node."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: a balanced tree with about $1024$ keys has search paths on the scale of a few tens of steps, not a scan of all keys. This is not a promise of exactly $10$ comparisons; height grows proportionally to $\\log_2 n$."
+                },
+                {
+                  "type": "note",
+                  "text": "Do not confuse an unordered map’s average $O(1)$ with an ordered map’s $O(\\log n)$. Hash collisions can make the unordered version slow in the worst case."
                 }
               ]
             }
@@ -2205,6 +2469,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Query бүрт $a[l..r]$-ийг дахин нэмэх нь ижил элементүүдийг олон удаа боловсруулна. Prefix sum тэр ажлыг нэг удаа урьдчилан хийж хадгална: дараагийн prefix нь өмнөх prefix дээр ганц элемент нэмсэн утга."
+            },
+            {
+              "type": "p",
+              "text": "Бэлтгэлд $n$ элемент нэг нэг удаа орно. Дараа нь ямар ч урттай range-д $p[r+1]-p[l]$ гэсэн хоёр уншилт, нэг хасалт хийнэ. Query-ийн ажил range-ийн уртаас хамаарахгүй тул $O(1)$; $q$ query-тай нийт $O(n+q)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=100000$, бүтэн array-ийн $q=100000$ query-д энгийн loop $10^{10}$ элемент нэмнэ. Prefix хувилбар $100000$ бэлтгэлийн алхам, $100000$ богино query хийнэ."
+            },
+            {
+              "type": "note",
+              "text": "Хэмнэж буй ажил нь давтан sum; array өөрчлөгдөхөд prefix өөрөө шинэчлэгдэхгүй. Бэлтгэх $O(n)$ зардлыг нийт хугацаанд заавал оруулна."
+            }
+          ]
         }
       ],
       "translations": {
@@ -2374,6 +2660,28 @@
                       "url": "https://usaco.guide/silver/prefix-sums"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Summing $a[l..r]$ separately for each query repeatedly processes the same elements. Prefix sums do that work once: each new prefix extends the previous sum by one element."
+                },
+                {
+                  "type": "p",
+                  "text": "Preparation processes $n$ elements once. A query reads $p[r+1]$ and $p[l]$ and subtracts, regardless of range length. Each query costs $O(1)$; $q$ queries cost $O(n+q)$ including preparation."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $100000$ full-array queries on $100000$ values require $10^{10}$ element visits with direct summation. Prefix sums need $100000$ preparation steps and $100000$ constant-size queries."
+                },
+                {
+                  "type": "note",
+                  "text": "The saved work is repeated summation. Prefix sums do not update themselves when the array changes, and the $O(n)$ preparation cost must be included."
                 }
               ]
             }
@@ -2549,6 +2857,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Range доторх элемент бүрийг update бүрт өөрчлөхийн оронд өөрчлөлт хаана эхэлж, хаана дуусахыг л тэмдэглэнэ. $d[l]$-д $x$ нэмэх нь prefix сэргээх үед нэмэлтийг эхлүүлж, $d[r+1]$-ээс $x$ хасах нь түүнийг зогсооно."
+            },
+            {
+              "type": "p",
+              "text": "Нэг update хоёр байрлалд л хүрдэг тул $O(1)$. Бүх update дуусмагц нэг удаа зүүнээс баруун тийш prefix хийж $n$ утгыг сэргээнэ. Ижил range-ийг update бүрт scan хийхгүй учраас нийт $O(n+q)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $8$ элементийг бүтнээр нь $100$ удаа нэмэхэд шууд арга $800$ элемент update хийнэ. Difference array $200$ заагийн өөрчлөлт, эцэст нь $8$ сэргээх алхам хийнэ."
+            },
+            {
+              "type": "note",
+              "text": "Энэ хурд нь update-уудыг бөөнөөр хийж, төгсгөлд сэргээх үед гарна. Update бүрийн дараа бүх array-г сэргээвэл буцаад $O(nq)$ ажил болж болно."
+            }
+          ]
         }
       ],
       "translations": {
@@ -2705,6 +3035,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Instead of changing every element of a range for every update, record where the change begins and ends. Adding $x$ at $d[l]$ starts the contribution during reconstruction; subtracting it at $d[r+1]$ stops it."
+                },
+                {
+                  "type": "p",
+                  "text": "Each update touches only two positions, so it costs $O(1)$. After all updates, one prefix scan reconstructs the $n$ values. Avoiding a range scan per update gives $O(n+q)$ overall."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: adding to all $8$ elements $100$ times performs $800$ direct element updates. A difference array makes $200$ boundary changes followed by $8$ reconstruction steps."
+                },
+                {
+                  "type": "note",
+                  "text": "This saving relies on batching updates and reconstructing at the end. Rebuilding the whole array after every update can bring the cost back to $O(nq)$."
                 }
               ]
             }
@@ -2880,6 +3232,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Тэгш өнцөгтийн нүд бүрийг query бүрт нэмж бодохгүй. Grid-ийн prefix хүснэгтэд эхнээс тухайн нүд хүртэлх тэгш өнцөгтийн sum-ийг нэг удаа хадгална. Нэг prefix нүдийг хөрш гурван prefix ба одоогийн нүдээр тогтмол ажилд бодно."
+            },
+            {
+              "type": "p",
+              "text": "Нийт $nm$ нүд тул бэлтгэл $O(nm)$. Query-д дөрвөн prefix утгыг нийлүүлж/хасна; тэгш өнцөгтийн талбайгаас хамаарах loop байхгүй. $q$ query-тай нийт $O(nm+q)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $100\\times100$ grid-ийн бүтэн sum-ийг $1000$ удаа асуувал шууд арга $10^7$ нүд уншина. Prefix арга $10000$ нүд бэлтгэж, query бүрт дөрвөн хүснэгтийн утга уншина."
+            },
+            {
+              "type": "note",
+              "text": "Дөрвөн булан ашиглаж байгаа нь $O(1)$ query-ийн шалтгаан. Хүснэгтийн $O(nm)$ хугацаа, зай болон grid өөрчлөгдөхгүй байх нөхцөлийг орхиж болохгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -3036,6 +3410,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Do not sum every cell of the rectangle again for each query. Precompute the sum of each rectangle from the grid origin to a cell. Each prefix entry uses three neighbouring prefixes and the current cell, requiring constant work."
+                },
+                {
+                  "type": "p",
+                  "text": "There are $nm$ entries, so preparation costs $O(nm)$. A query combines four entries with no loop over its area. Total time for $q$ queries is $O(nm+q)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $1000$ full-grid queries on a $100\\times100$ grid visit $10^7$ cells directly. Prefix sums prepare $10000$ cells once and read four table entries per query."
+                },
+                {
+                  "type": "note",
+                  "text": "The four-corner formula explains the constant-time query. Account for $O(nm)$ preparation and storage, and the requirement that the grid stays unchanged."
                 }
               ]
             }
@@ -3211,6 +3607,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Эрэмбэлсэн array-д mid-ийг шалгахад зөв хариу байж болохгүй нэг хагасыг бүхэлд нь хаяж болно. Тэр хагасын элемент бүрийг тусад нь шалгах шаардлагагүй нь гол хэмнэлт."
+            },
+            {
+              "type": "p",
+              "text": "Хайлтын хүрээний урт эхлээд $n$, дараа нь ойролцоогоор $n/2,n/4,n/8$ болно. $k$ алхмын дараа $n/2^k$ орчим элемент үлдэнэ. Хүрээг дуусгахад $O(\\log n)$ алхам, алхам бүр нэг mid ба тогтмол харьцуулалт."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $1024$ байрлалтай lower-bound хайлт хэмжээг ойролцоогоор $1024\\to512\\to256\\to\\cdots\\to1$ болгон багасгана. Кодын заагийн нөхцөлөөс шалтгаалан ойролцоогоор $10$–$11$ iteration орно."
+            },
+            {
+              "type": "note",
+              "text": "Mid дээрх шалгалт $O(1)$ үед хайлт $O(\\log n)$. Checker өөрөө удаан бол түүний зардлыг үржүүлнэ. Array-г эхлээд sort хийх шаардлагатай бол тэр зардал тусдаа."
+            }
+          ]
         }
       ],
       "translations": {
@@ -3367,6 +3785,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "In a sorted array, checking the middle lets us discard an entire half that cannot contain the required answer. We never check its elements individually."
+                },
+                {
+                  "type": "p",
+                  "text": "The search interval shrinks from $n$ to about $n/2,n/4,n/8$. After $k$ steps about $n/2^k$ candidates remain. It therefore takes $O(\\log n)$ steps, each with a constant amount of work."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: lower bound on $1024$ positions shrinks the range roughly as $1024\\to512\\to256\\to\\cdots\\to1$. Depending on the boundary case, the code takes about $10$–$11$ iterations."
+                },
+                {
+                  "type": "note",
+                  "text": "The search costs $O(\\log n)$ when its middle check is $O(1)$. Multiply by the checker cost otherwise, and include sorting if the input is not already sorted."
                 }
               ]
             }
@@ -3544,6 +3984,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Гаднах for-ийн дотор while байгаа ч $l$-ийг шинэ $r$ бүрт эхлэл рүү буцаадаггүй. Хоёр pointer зөвхөн урагшилна. Array-ийн сөрөг биш утгуудын ачаар хассан эхлэлийг дахин авч үзэх шаардлагагүй."
+            },
+            {
+              "type": "p",
+              "text": "$r$ нийт $n$ удаа хөдөлнө; $l$ ч нийт хамгийн ихдээ $n$ удаа хөдөлнө. Тэгэхээр дотор while-ийн бүх iteration-ийг нийлүүлэхэд $n$-ээс ихгүй. Мөн хүчинтэй $r-l+1$ subarray-г нэг нэгээр нь үүсгэлгүй, тоог нь шууд нэмнэ. Иймээс нийт $O(n)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $a=[2,1,3,1]$, $k=3$ үед $r$ дөрвөн удаа, $l$ нийт гурван удаа хөдөлнө. $l$-ийн хөдөлгөөнийг $r$ бүрт дөрөв гэж үржүүлж тоолохгүй."
+            },
+            {
+              "type": "note",
+              "text": "Сөрөг утга байвал энэ monotonic хөдөлгөөн зөв биш байж болно. “Хоёр pointer” гэсэн нэр дангаараа $O(n)$ баталгаа биш; ухардаггүй гэдгийг нотлох хэрэгтэй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -3700,6 +4162,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "The inner while loop does not reset $l$ for each new $r$. Both pointers only move forwards. Nonnegative values make previously discarded starts unnecessary to reconsider."
+                },
+                {
+                  "type": "p",
+                  "text": "The right pointer moves $n$ times; the left pointer moves at most $n$ times in total. Thus all inner-loop iterations combined are at most $n$. The code also counts the $r-l+1$ valid subarrays at once, instead of constructing each one. Total time is $O(n)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: with $a=[2,1,3,1]$ and $k=3$, $r$ advances four times and $l$ advances three times overall. Do not charge four left-pointer movements separately for every right-pointer position."
+                },
+                {
+                  "type": "note",
+                  "text": "Negative values can invalidate this monotone movement. The name “two pointers” alone does not prove linear time; justify that pointers never need to move backwards."
                 }
               ]
             }
@@ -3876,6 +4360,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Тогтмол хэмжээтэй integer-ийн нэг bit-ийг mask ба AND-аар шууд шалгана. Тоог binary string болгож бүх тэмдэгтийг дахин scan хийх шаардлагагүй."
+            },
+            {
+              "type": "p",
+              "text": "Гэхдээ reference function эхний $n$ bit бүрийг шалгаж index-үүдийг буцаадаг тул нийт $n$ шалгалт хийдэг: $O(n)$. Нэг bit operation $O(1)$ байх нь бүх bit-ийг унших function мөн $O(1)$ гэсэн үг биш."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: эхний $8$ bit дотор тавигдсан bit ганц байсан ч код $8$ байрлал шалгана. Нэг bit шалгах ба бүх bit жагсаахын зардлыг ялга."
+            },
+            {
+              "type": "note",
+              "text": "Нэг машин integer-д багтах mask-ийн тухай ярьж байна. $n$ bit-ийн бүх mask-ийг жагсаавал $2^n$ боломжтой; bit operation тэр exponential тоог арилгахгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -4033,6 +4539,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "A mask and AND test one bit of a fixed-width integer directly. There is no need to convert the number to a binary string and search it."
+                },
+                {
+                  "type": "p",
+                  "text": "The reference function still checks each of the first $n$ bit positions to return their indices: $n$ checks give $O(n)$. A constant-time bit operation does not make a function that scans all bits constant-time."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: scanning the first $8$ bits performs $8$ tests even if only one is set. Distinguish testing one bit from listing all set bits."
+                },
+                {
+                  "type": "note",
+                  "text": "This assumes a mask fits in a machine integer. Enumerating all masks of $n$ bits still has $2^n$ possibilities; bit operations do not eliminate that exponential count."
                 }
               ]
             }
@@ -4221,6 +4749,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Бүх боломжит хуваагчийг нэг нэгээр нь шалгахын оронд $(a,b)$-г $(b,a\\bmod b)$ болгон жижигрүүлнэ. Нэг modulo нь олон хасалтыг нэг дор хийж байгаа мэт ажил хэмнэнэ."
+            },
+            {
+              "type": "p",
+              "text": "Үлдэгдэл $r<b$. Хэрэв $r\\le b/2$ бол бага тоо шууд дор хаяж хоёр дахин багассан. Харин $r>b/2$ бол дараагийн үлдэгдэл $b\\bmod r=b-r<b/2$. Иймээс хамгийн ихдээ хоёр алхам тутам бага тоо хоёр дахин багасч, нийт алхам logarithmic болно."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $(48,18)\\to(18,12)\\to(12,6)\\to(6,0)$. Зөвхөн $3$ modulo хийсэн; $1$-ээс $18$ хүртэлх бүх хуваагчийг шалгаагүй."
+            },
+            {
+              "type": "note",
+              "text": "Тогтмол хэмжээтэй integer-ийн modulo-г $O(1)$ гэж үзвэл хугацаа $O(\\log(\\max(a,b)+1))$. Дурын урттай integer-д modulo-ийн өөрийн зардал нэмэгдэнэ."
+            }
+          ]
         }
       ],
       "translations": {
@@ -4390,6 +4940,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Instead of trying every possible divisor, replace $(a,b)$ by $(b,a\\bmod b)$. A remainder skips the work of many repeated subtractions."
+                },
+                {
+                  "type": "p",
+                  "text": "The remainder satisfies $r<b$. If $r\\le b/2$, the smaller value has already at least halved. Otherwise $b\\bmod r=b-r<b/2$ on the next step. Thus it at least halves every two steps, explaining the logarithmic iteration count."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $(48,18)\\to(18,12)\\to(12,6)\\to(6,0)$ uses only $3$ remainder operations, rather than testing every divisor up to $18$."
+                },
+                {
+                  "type": "note",
+                  "text": "With fixed-width remainder operations treated as $O(1)$, time is $O(\\log(\\max(a,b)+1))$. Arbitrary-precision remainder operations have an additional cost."
                 }
               ]
             }
@@ -4582,6 +5154,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "$a^b$-г бодохын тулд $a$-г $b$ удаа үржүүлэх шаардлагагүй. $a^2,a^4,a^8,\\ldots$ утгуудыг өмнөхийг нь квадратлаад гаргана. $b$-ийн binary бичлэгт хэрэгтэй болсон зэргүүдийг л ans-д үржүүлнэ."
+            },
+            {
+              "type": "p",
+              "text": "Loop бүрт $b$-г хоёрт хуваадаг тул $b$-ийн bit-ийн тоотой тэнцүү iteration орно: $b>0$ үед $\\lfloor\\log_2 b\\rfloor+1$. Iteration бүр нэг квадрат, хамгийн ихдээ нэг ans үржүүлэлт тул нийт $O(\\log(b+1))$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $13=8+4+1$, тиймээс $a^{13}=a^8a^4a$. Loop $13\\to6\\to3\\to1\\to0$ гэсэн $4$ iteration, ans-д $3$ үржүүлэлт хийнэ."
+            },
+            {
+              "type": "note",
+              "text": "Modular arithmetic-д мөн адил санаа хэрэглэнэ. Тогтмол хэмжээтэй тооны үржүүлэлтийг $O(1)$ гэж тоолсон; кодын overflow-ийн нөхцөлийг заавал хангана."
+            }
+          ]
         }
       ],
       "translations": {
@@ -4757,6 +5351,28 @@
                   ]
                 }
               ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Computing $a^b$ does not require multiplying by $a$ exactly $b$ times. Repeated squaring produces $a^2,a^4,a^8,\\ldots$; multiply only the powers selected by the binary digits of $b$ into the answer."
+                },
+                {
+                  "type": "p",
+                  "text": "The loop halves $b$ each time. For $b>0$, it runs $\\lfloor\\log_2 b\\rfloor+1$ times, once per bit. Each iteration has one squaring and at most one answer multiplication, giving $O(\\log(b+1))$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $13=8+4+1$, so $a^{13}=a^8a^4a$. The loop follows $13\\to6\\to3\\to1\\to0$: $4$ iterations and $3$ answer multiplications."
+                },
+                {
+                  "type": "note",
+                  "text": "The same idea applies to modular powers. This count treats fixed-width multiplication as $O(1)$; the code’s overflow requirements still apply."
+                }
+              ]
             }
           ]
         }
@@ -4930,6 +5546,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Тоо бүрийг тус тусад нь prime эсэхийг шалгахын оронд нэг prime $p$-г олмогц түүний multiple-уудыг бөөнөөр тэмдэглэнэ. $p^2$-оос эхэлдэг: түүнээс жижиг multiple нь өмнөх жижиг prime-аар аль хэдийн тэмдэглэгдсэн."
+            },
+            {
+              "type": "p",
+              "text": "Нэг prime $p$-ийн дотор loop хамгийн ихдээ $n/p$ удаа эргэнэ. Иймээс нийт тэмдэглэгээний дээд хязгаар $n(1/2+1/3+1/5+1/7+\\cdots)$, энд зөвхөн prime хуваарийн reciprocal орсон. Энэ нийлбэр $O(\\log\\log n)$ өсдөг гэсэн тооны онолын үр дүнгээс $O(n\\log\\log n)$ гарна. Prime биш $p$ дээр дотор loop ажиллахгүй."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=30$ үед $p=2$ нь $4,6,\\ldots,30$ гэсэн $14$ тэмдэглэгээ; $p=3$ нь $9,12,\\ldots,30$ гэсэн $8$; $p=5$ нь $25,30$ гэсэн $2$. Нийт $24$ тэмдэглэгээ, зарим тоо давхар тэмдэглэгдэнэ."
+            },
+            {
+              "type": "note",
+              "text": "Нүд бүр яг нэг удаа тэмдэглэгддэг гэж нотолж болохгүй — энэ нь linear sieve биш. Reciprocal-prime нийлбэрийн нарийн баталгаа ахисан сэдэв; энд loop-ийн ажлыг юугаар нийлүүлж байгааг ойлгох нь эхний зорилго."
+            }
+          ]
         }
       ],
       "translations": {
@@ -5086,6 +5724,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Rather than testing primality separately for every number, mark multiples together when a prime $p$ is found. Start at $p^2$: smaller multiples have already been marked using a smaller prime."
+                },
+                {
+                  "type": "p",
+                  "text": "The loop for prime $p$ has at most $n/p$ iterations. Total markings are bounded by $n(1/2+1/3+1/5+1/7+\\cdots)$ over primes. A number-theory result bounds this reciprocal-prime sum by $O(\\log\\log n)$, giving $O(n\\log\\log n)$. Composite $p$ values do not run the inner loop."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: for $n=30$, prime $2$ makes $14$ markings from $4$ through $30$; prime $3$ makes $8$ from $9$; prime $5$ makes $2$ from $25$. There are $24$ markings, including repeated markings of some numbers."
+                },
+                {
+                  "type": "note",
+                  "text": "Do not claim that every cell is marked once: this is not the linear sieve. The reciprocal-prime bound needs a deeper proof; the first goal here is to understand which loop costs are being summed."
                 }
               ]
             }
@@ -5262,6 +5922,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Adjacency list нь node бүрт бүх $n$ node дундаас хөрш хайлгахгүй. Тухайн node-ийн жинхэнэ хөршүүдийг л жагсаана. Edge бүрийг input-ээс уншаад хоёр төгсгөлийн жагсаалтад нэмнэ."
+            },
+            {
+              "type": "p",
+              "text": "$n$ хоосон жагсаалт бэлтгэх $O(n)$, $m$ undirected edge оруулахад $2m$ нэмэлт: нийт $O(n+m)$. Бүх adjacency list-ийн уртын нийлбэр $2m$ болох нь BFS, DFS яагаад edge-үүдийг linear хугацаанд үздэг үндэс."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=1000$, $m=999$ tree-д adjacency list $1998$ хөршийн бичлэгтэй. Adjacency matrix-аар хөрш хайхдаа node бүрийн $1000$ баганыг шалгавал нийт $10^6$ нүд үзнэ."
+            },
+            {
+              "type": "note",
+              "text": "Vector-ийн push_back-ийн зардлыг amortized $O(1)$ гэж тоолно. Dense graph-д $m$ нь $O(n^2)$ байж болно; $O(n+m)$ гэдэг нь тэр үед node-ийн тоогоор linear гэсэн үг биш."
+            }
+          ]
         }
       ],
       "translations": {
@@ -5419,6 +6101,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "An adjacency list stores only real neighbours, so algorithms do not search all $n$ vertices for the neighbours of each vertex. Each input edge is appended to its two endpoint lists."
+                },
+                {
+                  "type": "p",
+                  "text": "Preparing $n$ lists costs $O(n)$; inserting $m$ undirected edges makes $2m$ appends. Total construction is $O(n+m)$. The combined list lengths equal $2m$, which underlies the linear edge scans in BFS and DFS."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: a tree with $1000$ vertices and $999$ edges has $1998$ neighbour entries. Scanning every row of an adjacency matrix would examine $10^6$ cells."
+                },
+                {
+                  "type": "note",
+                  "text": "Vector appends are counted as amortized $O(1)$. A dense graph can have $m=O(n^2)$, so $O(n+m)$ is not necessarily linear in the vertex count alone."
                 }
               ]
             }
@@ -5626,6 +6330,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "BFS хүрч болох бүх замыг жагсаахгүй: node-д анх хүрэхэд distance-ийг нь хадгалж, дараа нь тэр node-ийг дахин queue-д хийхгүй. Distance-ийг queue-д оруулахаас өмнө тэмдэглэх нь давхар оруулалтыг зогсооно."
+            },
+            {
+              "type": "p",
+              "text": "Node бүр хамгийн ихдээ нэг enqueue, нэг dequeue хийнэ. Node-ийг авахдаа adjacency list-ийг нь нэг удаа scan хийнэ. Бүх жагсаалтын нийт урт directed graph-д $m$, undirected graph-д $2m$ тул нийт $O(n+m)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=5$, $m=6$ connected undirected graph-д $5$ dequeue, нийт $12$ хөршийн бичлэг үзнэ. Нэг node руу олон зам байсан ч тэр node queue-д дахин орохгүй."
+            },
+            {
+              "type": "note",
+              "text": "Энэ тооцоо adjacency list ба анх олмогц тэмдэглэх кодод хамаарна. Matrix-ийн бүх мөрийг scan хийдэг хувилбарын хугацаа $O(n^2)$ болж болно."
+            }
+          ]
         }
       ],
       "translations": {
@@ -5814,6 +6540,28 @@
                   ]
                 }
               ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "BFS does not enumerate every possible path. It records a vertex’s distance on first discovery and never enqueues that vertex again. Marking it before enqueueing prevents duplicate queue entries."
+                },
+                {
+                  "type": "p",
+                  "text": "Each vertex is enqueued and dequeued at most once. Its adjacency list is scanned once when it is removed. All lists together contain $m$ directed or $2m$ undirected entries, giving $O(n+m)$ total work."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: a connected undirected graph with $5$ vertices and $6$ edges needs $5$ dequeues and $12$ neighbour-entry checks. Multiple paths to a vertex do not cause repeated enqueues."
+                },
+                {
+                  "type": "note",
+                  "text": "This count assumes adjacency lists and marking on discovery. A version that scans full adjacency-matrix rows can take $O(n^2)$."
+                }
+              ]
             }
           ]
         }
@@ -5990,6 +6738,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "DFS олон замаар хүрч болох node-ийг зам бүрээр дахин боловсруулдаггүй. Ормогц component/visited тэмдэг тавьдаг тул cycle болон өөр замаар дахин таарсан node дээр шинэ recursive call хийхгүй."
+            },
+            {
+              "type": "p",
+              "text": "Node бүрт нэг recursive call орж, өөрийн adjacency list-ийг нэг удаа scan хийнэ. Бүх edge-ийн бичлэг directed graph-д нэг, undirected graph-д хоёр удаа үзэгдэнэ. Гаднах loop өөр component руу эхэлсэн ч өмнөх node-уудыг дахин traverse хийхгүй. Нийт $O(n+m)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $3$ node-ийн triangle graph-д олон тойрог зам байгаа ч $3$ call, $6$ хөршийн шалгалт л хийнэ."
+            },
+            {
+              "type": "note",
+              "text": "Хурдан хугацаа нь stack overflow болохгүй гэсэн баталгаа биш. Урт chain-д call stack-ийн гүн $n$ болж болно; том хязгаарт explicit stack сонгоно."
+            }
+          ]
         }
       ],
       "translations": {
@@ -6147,6 +6917,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "DFS does not process a vertex again for every path reaching it. It marks the vertex on entry, preventing new recursive calls through cycles or alternative paths to visited vertices."
+                },
+                {
+                  "type": "p",
+                  "text": "Each vertex gets one recursive call and one scan of its adjacency list. Each directed edge entry is checked once, each undirected edge twice. Starting another component does not traverse previous components again. Total time is $O(n+m)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: a triangle has cyclic paths, but DFS makes only $3$ vertex calls and $6$ neighbour checks."
+                },
+                {
+                  "type": "note",
+                  "text": "Linear running time does not prevent stack overflow. A long chain can need recursion depth $n$; use an explicit stack for large depths."
                 }
               ]
             }
@@ -6337,6 +7129,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Гаднах grid scan дотор BFS байгаа ч нүд бүрт бүтэн grid-ийн BFS хийдэггүй. Өрөөг анх олоход түүний бүх нүдийг visited болгосон тул тэр өрөөнөөс дахин BFS эхлэхгүй."
+            },
+            {
+              "type": "p",
+              "text": "Гаднах scan $nm$ нүд үзнэ. Бүх BFS-ийг нийлүүлэхэд нээлттэй нүд бүр queue-д нэг удаа орж, дөрвөн чиглэлээ нэг удаа шалгана. Иймээс BFS-ийн нийт ажил хамгийн ихдээ $4nm$ хөршийн шалгалтын хэмжээтэй: нийт $O(nm)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $10\\times10$ бүх нүд нь нээлттэй grid-д $100$ гаднах шалгалт, нэг BFS-ийн $100$ dequeue, $400$ чиглэл шалгалт байна. $100$ тусдаа бүтэн BFS байхгүй."
+            },
+            {
+              "type": "note",
+              "text": "Visited-г queue-д хийхдээ тавих хэрэгтэй. Grid-ийн утгыг ашиглан visited болгож байгаа эсэх, grid-г хуулж байгаа эсэх нь memory-г өөрчилж болох ч энэ хугацааны тооллогыг өөрчлөхгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -6506,6 +7320,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "The outer grid scan does not launch a full-grid BFS from every cell. The first BFS in a room marks every cell in that room, so later cells do not start another search for it."
+                },
+                {
+                  "type": "p",
+                  "text": "The outer scan visits $nm$ cells. Across all BFS runs, each open cell is enqueued once and checks four directions once. At most $4nm$ neighbour checks are needed, so total time remains $O(nm)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: an entirely open $10\\times10$ grid needs $100$ outer checks and one BFS with $100$ dequeues and $400$ direction checks, not $100$ full BFS runs."
+                },
+                {
+                  "type": "note",
+                  "text": "Mark cells when enqueueing. Whether visited is stored separately or by modifying a copy of the grid changes storage details, but not this time count."
                 }
               ]
             }
@@ -6683,6 +7519,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Бүх киноны subset эсвэл үзэх бүх дарааллыг шалгахын оронд хамгийн эрт дуусах дарааллаар нь нэг scan хийнэ. Exchange argument нь нэг зөв сонголт хийгээд бусад сонголтын мөчрүүдийг үргэлжлүүлэн шалгах хэрэггүйг батална."
+            },
+            {
+              "type": "p",
+              "text": "Sort $O(n\\log n)$; дараа кино бүрийг нэг удаа шалгаж, сонговол last_end-ийг нэг удаа шинэчилнэ: $O(n)$. Нийт хугацаанд sort давамгайлж $O(n\\log n)$ болно. Sorting-ийн дараах шийдвэр бүрт эхнээс дахин хайлт хийдэггүй."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $20$ кинонд $2^{20}=1048576$ боломжит subset байна. Greedy код эрэмбэлсний дараа ердөө $20$ кино шалгана; боломжит subset бүрийг үүсгэхгүй."
+            },
+            {
+              "type": "note",
+              "text": "Хурдан шийдвэр гаргаж чаддаг нь зөв гэсэн нотолгоо биш. Exchange argument тохирохгүй бодлогод ижил greedy дүрэм хурдан боловч буруу байж болно."
+            }
+          ]
         }
       ],
       "translations": {
@@ -6839,6 +7697,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Instead of examining every subset or viewing order, scan films by increasing finish time. The exchange argument justifies one choice without exploring all alternative branches."
+                },
+                {
+                  "type": "p",
+                  "text": "Sorting costs $O(n\\log n)$. The scan examines each film once and updates last_end only when selecting it, costing $O(n)$. Sorting dominates the total $O(n\\log n)$ time; decisions do not restart a search from the beginning."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $20$ films have $2^{20}=1048576$ possible subsets. After sorting, the greedy scan checks just $20$ films without generating those subsets."
+                },
+                {
+                  "type": "note",
+                  "text": "Fast decisions do not prove correctness. Without a valid exchange argument, the same greedy rule can be fast and wrong."
                 }
               ]
             }
@@ -7016,6 +7896,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Боломжит limit бүрээр array-г дахин шалгахгүй. Feasible эсэх нь monotonic тул нэг limit-ийг шалгаад боломжит хариунуудын талыг хаяна. Гэхдээ нэг шалгалт array-г бүтнээр нь scan хийдэг гэдгийг тооцоонд оруулна."
+            },
+            {
+              "type": "p",
+              "text": "Нэг checker элемент бүрийг нэг удаа боловсруулдаг: $O(n)$. Хайлтын limit нь max element-ээс нийт sum $S$ хүртэлх integer хүрээнд байгаа тул хамгийн ихдээ $O(\\log(S+1))$ шалгалт орно. Нийт $O(n\\log(S+1))$; энэ нь дан binary search-ийн $O(\\log S)$ биш."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: боломжит хариу $0$–$1023$ хооронд байвал бүх $1024$ утгад checker ажиллуулахын оронд ойролцоогоор $10$ шалгалт хийнэ. Checker $1000$ элемент үздэг бол ажлын хэмжээ $10^6$ биш, $10^4$ орчим болно."
+            },
+            {
+              "type": "note",
+              "text": "Checker-ийн нөхцөл ба monotonic чанарыг эхэлж нотолно. Энэ хичээлийн greedy checker нь сөрөг биш array-д зориулсан."
+            }
+          ]
         }
       ],
       "translations": {
@@ -7172,6 +8074,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Do not test every possible limit separately. Monotonic feasibility lets one check discard half the remaining limits. However, each check scans the array, so its cost must be included."
+                },
+                {
+                  "type": "p",
+                  "text": "The checker processes every element once: $O(n)$. Searching the integer interval from the maximum element to total sum $S$ needs $O(\\log(S+1))$ checks. Total time is $O(n\\log(S+1))$, not merely $O(\\log S)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: an answer interval from $0$ to $1023$ needs about $10$ feasibility checks instead of $1024$. If each check scans $1000$ elements, the scale is $10^4$ visits instead of $10^6$."
+                },
+                {
+                  "type": "note",
+                  "text": "Prove both the checker and monotonicity first. This lesson’s greedy checker assumes nonnegative array values."
                 }
               ]
             }
@@ -7351,6 +8275,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Coordinate compression код утга бүрийг sorted list дундаас эхнээс нь scan хийж хайдаггүй. Давхардалгүй sorted утгууд бэлтгээд lower_bound-аар rank-ийг нь binary search хийж олно."
+            },
+            {
+              "type": "p",
+              "text": "Copy $O(n)$, sort $O(n\\log n)$, давхардлыг арилгах scan $O(n)$. Дараа нь $n$ утга тус бүрт $O(\\log n)$ хайлт: нийт мөн $O(n\\log n)$. Тоонууд өөрсдөө маш том байлаа ч хайх байрлалын тоо хамгийн ихдээ $n$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $[10^9,7,10^9,100]$-ийн sorted distinct жагсаалт $[7,100,10^9]$. $10^9$ ширхэг байрлал бэлтгэхгүй; гуравхан rank ашиглана."
+            },
+            {
+              "type": "note",
+              "text": "Compression нь тоон хүрээний хэмжээнээс хамаарсан memory-г хэмнэнэ. Өөрөө sort хийдэг тул $O(n)$ арга гэж хэлж болохгүй; энэ reference нь hash table ашигладаггүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -7507,6 +8453,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "The coordinate-compression code does not scan the sorted list from the beginning for every value. It prepares sorted distinct values, then uses lower_bound to find each rank by binary search."
+                },
+                {
+                  "type": "p",
+                  "text": "Copying costs $O(n)$, sorting $O(n\\log n)$ and deduplication $O(n)$. Then $n$ binary searches each cost $O(\\log n)$, giving $O(n\\log n)$ overall. Even huge numeric values produce at most $n$ distinct ranks."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $[10^9,7,10^9,100]$ has the distinct sorted list $[7,100,10^9]$. It needs three ranks, not an array of $10^9$ positions."
+                },
+                {
+                  "type": "note",
+                  "text": "Compression saves storage that would depend on the numeric range. It still sorts, so it is not a linear-time method; this reference does not use a hash table."
                 }
               ]
             }
@@ -7683,6 +8651,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Node бүрийн subtree size-ийг тус тусад нь шинэ DFS-ээр бодвол ижил child subtree-г олон ancestor дахин тоолно. Нэг postorder DFS child-ийн хариуг эхлээд бодоод parent-д нь нийлүүлж, тэр давталтыг арилгана."
+            },
+            {
+              "type": "p",
+              "text": "Node бүр нэг удаа дуудуулж, нэг удаа өөрийн size-ийг бодно. Tree-ийн $n-1$ edge adjacency list-д нийт $2(n-1)$ удаа байдаг тул хөршийн нийт scan $O(n)$. Child-ийн бэлэн size-ийг нэмэх нь тогтмол ажил."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $5$ node-ийн chain дээр тус бүрээс доош нь дахин тоолбол $5+4+3+2+1=15$ node visit. Нэг DFS ердөө $5$ node-ийн хариуг нэг нэг удаа бодно."
+            },
+            {
+              "type": "note",
+              "text": "Parent-ийг алгасах нь tree-д хангалттай. Cycle-тэй graph-д ижил кодыг visited-гүй хэрэглэж болохгүй. Урт tree-д recursion stack $O(n)$ хүрнэ."
+            }
+          ]
         }
       ],
       "translations": {
@@ -7840,6 +8830,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Running a fresh DFS for every subtree repeatedly counts the same descendants for different ancestors. One postorder DFS computes children first and reuses their sizes at the parent."
+                },
+                {
+                  "type": "p",
+                  "text": "Each vertex is called once and computes its size once. A tree’s $n-1$ edges make $2(n-1)$ adjacency entries, so all neighbour scans cost $O(n)$. Adding a completed child size is constant work."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: separately counting each subtree of a $5$-vertex chain needs $5+4+3+2+1=15$ visits. One DFS computes exactly $5$ vertex answers once each."
+                },
+                {
+                  "type": "note",
+                  "text": "Skipping the parent is sufficient for a tree, but not for a cyclic graph without visited tracking. A long tree can still need $O(n)$ recursion stack."
                 }
               ]
             }
@@ -8031,6 +9043,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Шатаар өгсөх бүх боломжит замыг нэг нэгээр нь үүсгэвэл ижил үлдсэн алхмуудын бодлого дахин дахин гарна. DP нь $i$-р гишгүүр хүрэх замын тоог нэг утгад хадгалж, дараа хэрэглэхэд дахин бодохгүй."
+            },
+            {
+              "type": "p",
+              "text": "Бодох state нь $0,1,\\ldots,n$: нийт $n+1$. State бүр өмнөх хамгийн ихдээ хоёр утгыг уншаад нэмдэг тул $O(1)$ ажил. Нийт хугацаа state-ийн тоо $\\times$ нэг state-ийн ажил буюу $O(n)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=10$ үед $89$ зам байлаа ч код тэр $89$ замыг хадгалахгүй. $11$ dp байрлал бэлтгэж, өмнөх утгуудаас хариуг гаргана."
+            },
+            {
+              "type": "note",
+              "text": "DP үргэлж $O(n)$ биш. State бүр бүх өмнөх state-ийг шалгавал $O(n^2)$ болж болно. Энэ тооллого fixed-width/modular тоололд хамаарна."
+            }
+          ]
         }
       ],
       "translations": {
@@ -8201,6 +9235,28 @@
                       "url": "https://usaco.guide/gold/intro-dp"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Enumerating all stair-climbing paths repeatedly solves the same remaining subproblems. DP stores the number of ways to reach step $i$ and reuses it without recomputation."
+                },
+                {
+                  "type": "p",
+                  "text": "There are $n+1$ states, numbered $0$ through $n$. Each state reads at most two previous answers and adds them: $O(1)$ work. Number of states times work per state gives $O(n)$ time."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: for $n=10$ there are $89$ paths, but the code does not store those paths. It uses $11$ DP positions and derives the answer from earlier values."
+                },
+                {
+                  "type": "note",
+                  "text": "DP is not always linear. If each state scans all earlier states, it can take $O(n^2)$. This count assumes fixed-width or modular arithmetic."
                 }
               ]
             }
@@ -8404,6 +9460,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Grid дээрх бүх замыг нэг нэгээр нь үргэлжлүүлэхгүй. Нэг нүд хүрсэн олон өөр зам цаашдаа ижил боломжтой тул тэдний тоог ганц dp утгад нэгтгэнэ."
+            },
+            {
+              "type": "p",
+              "text": "Нийт $nm$ state байна. Нүд бүр дээр хана эсэхийг шалгаж, дээрх ба зүүн талын хамгийн ихдээ хоёр бэлэн утгыг нэмнэ. Ижил нүдний хариуг дахин бодохгүй тул нийт $O(nm)$, замын боломжит тоогоор үржүүлэхгүй."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: саадгүй $5\\times5$ grid-ийн эхнээс төгсгөлд хүрэх $\\binom84=70$ зам байна. DP ердөө $25$ нүдний утгыг бодно."
+            },
+            {
+              "type": "note",
+              "text": "Энэ recurrence нь зөвхөн доош, баруун тийш шилждэг acyclic хөдөлгөөнд зориулсан. Бүх чиглэлд хөдөлдөг замын бодлогод шууд ижил DP тавьж болохгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -8586,6 +9664,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Do not extend every possible path separately. Different paths arriving at one cell have the same future options, so their count can be combined into one DP value."
+                },
+                {
+                  "type": "p",
+                  "text": "There are $nm$ states. Each cell checks whether it is blocked and combines at most two completed values, from above and left. Each state is computed once, giving $O(nm)$ time regardless of how many paths exist."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: an unobstructed $5\\times5$ grid has $\\binom84=70$ paths from start to finish. DP computes only $25$ cell values."
+                },
+                {
+                  "type": "note",
+                  "text": "This recurrence assumes acyclic movement down or right. It does not directly solve a path-counting problem allowing arbitrary directions."
                 }
               ]
             }
@@ -8780,6 +9880,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Item бүрийг авах/авахгүй бүх $2^n$ сонголтыг тус тусад нь үүсгэхгүй. Эхний $i$ item ба capacity $w$ ижил байвал цаашдын сонголт ижил; зөвхөн тэр нөхцөл дэх хамгийн сайн value-г хадгалахад хангалттай."
+            },
+            {
+              "type": "p",
+              "text": "Хүснэгт $(n+1)(W+1)$ байрлалтай. Байрлал бүр өмнөх мөрийн хамгийн ихдээ хоёр хариуг харьцуулна: авахгүй эсвэл авч болно бол авах. Нэг state $O(1)$ учраас нийт $O(nW)$. Нэг subset хэдэн удаа үүсэхийг биш, давхардалгүй state-үүдийг тоолно."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=20$, $W=100$ үед $2^{20}=1048576$ subset-ийн оронд $21\\times101=2121$ хүснэгтийн байрлал бэлтгэнэ."
+            },
+            {
+              "type": "note",
+              "text": "$W$ нь input-ийн тоон утга болохоос bit-ийн урт биш: үүнийг pseudo-polynomial гэдэг. $W=10^9$ бол $O(nW)$ хүснэгт хурдан, багтаамжтай гэж үзэж болохгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -8953,6 +10075,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Instead of generating all $2^n$ take-or-skip choices, store the best value for each combination of processed-item count $i$ and capacity $w$. The same state has the same future choices, so worse alternatives can be discarded."
+                },
+                {
+                  "type": "p",
+                  "text": "The table has $(n+1)(W+1)$ entries. Each entry compares at most two answers from the previous row: skip or take if possible. Constant work per state gives $O(nW)$ time."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $n=20$, $W=100$ gives $21\\times101=2121$ table entries instead of enumerating $2^{20}=1048576$ subsets."
+                },
+                {
+                  "type": "note",
+                  "text": "$W$ is a numeric value, not its bit length, so this is called pseudo-polynomial time. A capacity of $10^9$ still makes the $O(nW)$ table impractical."
                 }
               ]
             }
@@ -9145,6 +10289,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Бүх subsequence-ийг жагсаахын оронд $a[i]$ дээр төгссөн хамгийн урт increasing subsequence-ийн уртыг нэг dp утгад хадгална. Ижил төгсгөлтэй богино хариу нь дараа урт хариунаас илүү ашигтай болохгүй."
+            },
+            {
+              "type": "p",
+              "text": "Гэхдээ энэ beginner reference $i$ бүрт бүх өмнөх $j<i$-г шалгадаг. Нийт $0+1+\\cdots+(n-1)=n(n-1)/2$ харьцуулалт тул $O(n^2)$. DP exponential subsequence жагсаалтыг арилгасан ч дотор loop-ийг арилгаагүй."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=20$ үед боломжит index subset $2^{20}$ ширхэг, харин энэ код ердөө $190$ өмнөх index-ийн харьцуулалт хийнэ."
+            },
+            {
+              "type": "note",
+              "text": "Энд $O(n\\log n)$ LIS код заагаагүй. Тэр optimization өөр state, binary search ашигладаг; одоогийн кодын хугацааг түүнтэй андуурч бичихгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -9320,6 +10486,28 @@
                   ]
                 }
               ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Rather than enumerating every subsequence, store the length of the longest increasing subsequence ending at each $a[i]$. A shorter answer with the same endpoint is never better for a future extension."
+                },
+                {
+                  "type": "p",
+                  "text": "This beginner reference still checks every earlier $j<i$ for each $i$. It makes $0+1+\\cdots+(n-1)=n(n-1)/2$ comparisons, giving $O(n^2)$. DP removes exponential enumeration, but not the inner loop."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $20$ positions have $2^{20}$ index subsets, while this code makes only $190$ earlier-index comparisons."
+                },
+                {
+                  "type": "note",
+                  "text": "This is not the $O(n\\log n)$ LIS implementation. That optimization uses a different state and binary search; do not assign its complexity to this code."
+                }
+              ]
             }
           ]
         }
@@ -9493,6 +10681,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Элемент бүрийн дараагийн greater-ийг тусдаа баруун тийш scan хийж хайдаггүй. Хариугаа хараахан олоогүй index-үүдийг stack-д хадгална. Шинэ том утга орж ирэхэд хэд хэдэн index-ийн хариуг нэг дор шийдээд stack-аас бүрмөсөн гаргана."
+            },
+            {
+              "type": "p",
+              "text": "Нэг iteration олон pop хийж болох ч нэг index нэг л удаа push, хамгийн ихдээ нэг pop хийнэ. Бүх iteration-ийн pop нийлээд $n$-ээс ихгүй. Иймээс гаднах $n$ алхам дээр нийт $O(n)$ stack ажил нэмэгдэж, нийт $O(n)$ болно."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $[5,4,3,2,6]$ дээр сүүлийн $6$ дөрвөн index-ийг pop хийнэ. Энэ нь дөрвөн pop-ийг өмнөх алхам бүрт давтсан гэсэн үг биш: гарсан index буцаж орохгүй."
+            },
+            {
+              "type": "note",
+              "text": "Нийт дарааллын ажил хувааж тоолохыг amortized analysis гэдэг. Нэг iteration $O(n)$ байж болох ч бүх $n$ iteration нийлээд $O(n)$ байж болно."
+            }
+          ]
         }
       ],
       "translations": {
@@ -9649,6 +10859,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Do not scan rightwards separately for every element. Keep indices still waiting for their next greater value on a stack. A new large value can resolve several waiting indices at once and remove them permanently."
+                },
+                {
+                  "type": "p",
+                  "text": "One iteration can make many pops, but each index is pushed once and popped at most once. All pops combined are at most $n$. Adding this to the $n$ outer iterations gives $O(n)$ total time."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: in $[5,4,3,2,6]$, the final $6$ pops four indices. Those four pops are not repeated for every earlier iteration: removed indices never return."
+                },
+                {
+                  "type": "note",
+                  "text": "Counting work over the whole sequence is amortized analysis. One iteration may cost $O(n)$ even though all $n$ iterations together cost only $O(n)$."
                 }
               ]
             }
@@ -9825,6 +11057,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Бүлэг нэгтгэхдээ бүх гишүүний parent-ийг өөрчлөхгүй: хоёр root-ийг олоод нэг root-ийг нөгөөд холбоно. Жижиг tree-г томд нь холбох үед node-ийн depth нэг өссөн бол түүний бүлгийн size дор хаяж хоёр дахин өссөн байна."
+            },
+            {
+              "type": "p",
+              "text": "Size $1\\to2\\to4\\to8$ гэж өсөх учраас union by size дангаараа tree-ийн өндрийг $O(\\log n)$ барина. Path compression нэмэхэд find-аар үзсэн node-уудыг root-д шууд холбоно: дараагийн find өмнөх урт замыг дахин туулахгүй. Хоёуланг нь хэрэглэсэн олон үйлдлийн нийт зардал нь initialization-ийг оруулаад $O(n+q\\alpha(n))$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: union by size хэрэглэсэн $16$ node-д depth өсөхөд бүлэг $1\\to2\\to4\\to8\\to16$ болох тул depth хамгийн ихдээ $4$. Find тэр замыг үзсэний дараа node root-оос ганц холбоосын зайд очно."
+            },
+            {
+              "type": "note",
+              "text": "$\\alpha(n)$ нь inverse Ackermann function, маш удаан өсдөг. Doubling тайлбар нь $O(\\log n)$-ийг нотолно; $O(\\alpha(n))$-ийн бүрэн баталгаа илүү нарийн. Энэ нь amortized баталгаа, find бүр яг нэг алхам гэсэн үг биш."
+            }
+          ]
         }
       ],
       "translations": {
@@ -9982,6 +11236,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "A merge does not rewrite every member’s parent: it finds two roots and links one root to the other. With union by size, whenever a vertex’s depth increases, its component size at least doubles."
+                },
+                {
+                  "type": "p",
+                  "text": "Sizes grow as $1\\to2\\to4\\to8$, bounding height by $O(\\log n)$ even without compression. Path compression then links visited vertices directly to the root, avoiding the same long path in later finds. With both optimizations, initialization plus $q$ operations costs $O(n+q\\alpha(n))$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: with $16$ vertices, size can double only as $1\\to2\\to4\\to8\\to16$, so union-by-size depth is at most $4$. After a find compresses that path, the vertex is one parent link from the root."
+                },
+                {
+                  "type": "note",
+                  "text": "$\\alpha(n)$ is the very slowly growing inverse Ackermann function. The doubling argument proves the logarithmic bound; the inverse-Ackermann proof is more involved. This is an amortized bound, not a claim that every find takes one step."
                 }
               ]
             }
@@ -10159,6 +11435,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Edge бүрийг авах үед cycle үүсэх эсэхийг шинэ DFS-ээр шалгахгүй. DSU сонгосон edge-үүдийн connectivity-г хадгалж, хоёр төгсгөлийн root ижил эсэхээр cycle-ийн шалгалтыг хийнэ."
+            },
+            {
+              "type": "p",
+              "text": "$m$ edge sort хийх $O(m\\log(m+1))$. Дараа edge бүрт хоёр find ба шаардлагатай бол unite: нийт $O(m\\alpha(n))$, DSU бэлтгэл $O(n)$. Нийт $O(n+m\\log(m+1)+m\\alpha(n))$; ердийн connected input дээр sorting гол зардал болно."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $1000$ node, $5000$ edge-д хамгийн ихдээ $5000$ edge-ийн DSU шалгалт хийнэ. Шалгалт бүрт $1000$ node-ийн DFS эхлүүлэхгүй."
+            },
+            {
+              "type": "note",
+              "text": "DSU хурдан болгосон хэсэг нь connectivity check. Edge-үүдийг эрэмбэлэх зардал үлдэнэ; graph disconnected бол spanning tree бус forest гарна."
+            }
+          ]
         }
       ],
       "translations": {
@@ -10315,6 +11613,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Kruskal does not run a fresh DFS to test for a cycle before accepting every edge. DSU maintains connectivity of accepted edges and checks whether the endpoints already have the same root."
+                },
+                {
+                  "type": "p",
+                  "text": "Sorting $m$ edges costs $O(m\\log(m+1))$. Each edge then needs root checks and possibly a merge, totalling $O(m\\alpha(n))$, plus $O(n)$ DSU initialization. Total time is $O(n+m\\log(m+1)+m\\alpha(n))$; sorting usually dominates on connected inputs."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $1000$ vertices and $5000$ edges need at most $5000$ DSU edge checks, not a new $1000$-vertex DFS for each edge."
+                },
+                {
+                  "type": "note",
+                  "text": "DSU speeds up connectivity checks, but the sorting cost remains. A disconnected graph yields a spanning forest rather than a spanning tree."
                 }
               ]
             }
@@ -10492,6 +11812,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Хамгийн бага утгыг авах бүрт бүх утгаас min хайж scan хийхгүй. Binary heap нь parent-ийн утга child-аасаа ихгүй гэсэн дүрэм хадгалдаг тул min нь root дээр бэлэн байна."
+            },
+            {
+              "type": "p",
+              "text": "Push үед шинэ утга нэг ancestor замаар дээш, pop үед root-д орлуулсан утга нэг child замаар доош явж дүрмийг сэргээнэ. Complete binary tree-ийн өндөр $O(\\log n)$ тул push/pop $O(\\log n)$; top нь root унших төдий $O(1)$. Бүх subtree-г эрэмбэлэх шаардлагагүй."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: min-ийг авч хасаад давтдаг scan арга $n+(n-1)+\\cdots+1$ утга үзнэ. Heap-д $n$ push, $n$ pop хийхэд нийт $O(n\\log n)$ ажил орно."
+            },
+            {
+              "type": "note",
+              "text": "Reference demo нэг нэгээр нь push хийдэг учраас build нь $O(n\\log n)$. Бүх input-ийг нэг дор heap болгох make_heap-ийн $O(n)$ аргыг энэ demo хэрэглээгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -10648,6 +11990,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "A binary heap avoids scanning all values for the minimum each time. Its parent-not-greater-than-child rule keeps the minimum ready at the root."
+                },
+                {
+                  "type": "p",
+                  "text": "Push repairs one ancestor path upwards; pop repairs one child path downwards after replacing the root. A complete binary tree has height $O(\\log n)$, so push and pop cost $O(\\log n)$, while top reads the root in $O(1)$. The whole heap need not be sorted."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: repeatedly scanning for and removing the minimum examines $n+(n-1)+\\cdots+1$ values. A heap uses $n$ pushes and $n$ pops, costing $O(n\\log n)$ overall."
+                },
+                {
+                  "type": "note",
+                  "text": "The demo builds by individual pushes, so construction costs $O(n\\log n)$. It does not use the separate $O(n)$ make_heap construction."
                 }
               ]
             }
@@ -10825,6 +12189,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Дараагийн хамгийн бага distance-тэй node-ийг бүх node дундаас scan хийж олохын оронд min-heap ашиглана. Nonnegative жинтэй тул зөв хамгийн бага entry-г авахад тэр node-ийн distance эцэслэгдэж, adjacency list-ийг нь дахин дахин scan хийхгүй."
+            },
+            {
+              "type": "p",
+              "text": "Амжилттай relaxation бүр heap-д нэг шинэ entry нэмнэ; тоо нь reachable edge scan-ийн тооноос ихгүй. Энэ lazy heap хувилбар хуучин entry-г ч pop хийдэг боловч $d\\ne dist[v]$ бол хөрш рүү орохгүй шууд алгасна. Иймээс edge scan нийт $O(m)$, heap entry нийт $O(m+1)$, нэг push/pop $O(\\log(m+2))$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: нэг node-ийн distance $10$-аас $7$ болж сайжирвал heap-д хоёр entry байж болно. $7$-г боловсруулахад хөршийг үзнэ; хуучин $10$-г авахад дахин үзэхгүй."
+            },
+            {
+              "type": "note",
+              "text": "Initialization-ийг оруулаад $O(n+(m+1)\\log(m+2))$ гэсэн аюулгүй bound гарна. Simple graph-д үүнийг түгээмэл $O((n+m)\\log(n+1))$ гэж бичдэг. Сөрөг edge-тэй бол settled гэсэн үндэслэл хүчинтэй биш."
+            }
+          ]
         }
       ],
       "translations": {
@@ -10981,6 +12367,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "A min-heap avoids scanning all vertices to select the next smallest tentative distance. With nonnegative weights, a valid minimum entry settles that vertex, so its adjacency list need not be scanned repeatedly."
+                },
+                {
+                  "type": "p",
+                  "text": "Each successful relaxation adds one heap entry, and there cannot be more successes than scanned edges. This lazy version also pops outdated entries, but skips their neighbour scans when $d\\ne dist[v]$. Total edge scans are $O(m)$; there are $O(m+1)$ heap entries, each costing $O(\\log(m+2))$ to push or pop."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: if a vertex improves from distance $10$ to $7$, both entries may remain in the heap. The $7$ entry scans its neighbours; the stale $10$ entry does not."
+                },
+                {
+                  "type": "note",
+                  "text": "Including initialization gives the safe bound $O(n+(m+1)\\log(m+2))$. For simple graphs it is commonly written $O((n+m)\\log(n+1))$. Negative edges invalidate the settling argument."
                 }
               ]
             }
@@ -11158,6 +12566,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Бүх боломжит замыг жагсаахгүй: зөвшөөрсөн дундын node-уудын хүрээнд хоёр node-ийн хамгийн богино distance-ийг хадгална. Шинэ $k$ node зөвшөөрөхөд хуучин distance эсвэл $k$-ээр дамжсан хоёр бэлэн distance-ийн нийлбэрийг харьцуулна."
+            },
+            {
+              "type": "p",
+              "text": "$k$ нийт $n$ сонголттой; $k$ бүрт $(i,j)$ гэсэн $n^2$ хосыг шалгана. Нэг шалгалт тогтмол нэмэх/харьцуулах ажилтай тул $n\\times n\\times n=n^3$, өөрөөр хэлбэл $O(n^3)$. DP давтан зам бодохыг арилгасан ч бүх node-ийн хосыг үе бүрт шалгадаг."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=100$ үед $10^6$, $n=200$ үед $8\\times10^6$ candidate шалгалт. Хэмжээг хоёр дахин нэмэхэд ажил найм дахин өснө."
+            },
+            {
+              "type": "note",
+              "text": "Энэ нь sparse graph-д ч $O(n^3)$ хэвээр. Олон node-той sparse graph-д adjacency-list shortest-path арга илүү тохиромжтой байж болно."
+            }
+          ]
         }
       ],
       "translations": {
@@ -11314,6 +12744,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Do not enumerate every path. Store the shortest distance for each pair using the currently allowed intermediate vertices. Allowing vertex $k$ compares the previous answer with a path through $k$ built from two stored distances."
+                },
+                {
+                  "type": "p",
+                  "text": "There are $n$ choices of $k$, each checking $n^2$ pairs $(i,j)$. A check does constant addition/comparison work, so $n\\times n\\times n$ gives $O(n^3)$. DP avoids repeated path enumeration, but still checks all pairs in every phase."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $n=100$ gives $10^6$ candidate checks; $n=200$ gives $8\\times10^6$. Doubling the input multiplies the work by eight."
+                },
+                {
+                  "type": "note",
+                  "text": "The bound stays $O(n^3)$ even for a sparse graph. Adjacency-list shortest-path methods may suit large sparse graphs better."
                 }
               ]
             }
@@ -11491,6 +12943,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Дараагийн dependency-гүй node-ийг олох гэж node бүрийн бүх dependency-г үе бүрт дахин шалгахгүй. Indegree нь үлдсэн prerequisite-ийн тоог хадгална; тэг болсон node-ийг queue-д шууд оруулна."
+            },
+            {
+              "type": "p",
+              "text": "Node бүр queue-д нэг удаа орж гарна. Node-ийг авахдаа outgoing edge бүрийн destination indegree-г нэг удаа бууруулна. Indegree бэлтгэх ба queue боловсруулах хоёр scan хоёулаа нийт $O(n+m)$, тэднийг нэмэхэд мөн $O(n+m)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $1000$ task, $3000$ dependency-д үндсэн queue үе хамгийн ихдээ $1000$ dequeue, $3000$ indegree бууруулалт хийнэ."
+            },
+            {
+              "type": "note",
+              "text": "Cycle байвал зарим node queue-д орохгүй. Энэ нь хугацааг өсгөхгүй; гарсан node-ийн тоогоор cycle байгааг мэднэ. Adjacency list ашигласан тооцоо юм."
+            }
+          ]
         }
       ],
       "translations": {
@@ -11647,6 +13121,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Do not repeatedly inspect every dependency of every vertex to find the next available one. Indegree stores the number of remaining prerequisites, and vertices enter the queue when it becomes zero."
+                },
+                {
+                  "type": "p",
+                  "text": "Each vertex enters and leaves the queue once. Processing it decreases the destination indegree once per outgoing edge. Initializing indegrees and processing the queue each cost $O(n+m)$; adding them still gives $O(n+m)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $1000$ tasks and $3000$ dependencies need at most $1000$ dequeues and $3000$ indegree decrements in the queue phase."
+                },
+                {
+                  "type": "note",
+                  "text": "With a cycle, some vertices never enter the queue. This does not increase the work; the processed count detects the cycle. The analysis assumes adjacency lists."
                 }
               ]
             }
@@ -11855,6 +13351,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Prefix sum авахдаа бүх өмнөх элементийг уншихгүй. Fenwick нь тодорхой хэмжээтэй бэлэн блокуудын sum хадгалж, prefix-ийг давхцахгүй хэдхэн блокоос нийлүүлнэ."
+            },
+            {
+              "type": "p",
+              "text": "Prefix loop-ийн $i-=i\\mathbin{\\&}(-i)$ алхам нь $i$-ийн хамгийн бага set bit-ийг арилгана. Index-ийн binary бичлэг $O(\\log n)$ bit-тэй тул тэд дуусахад loop зогсоно. Update-ийн $i+=i\\mathbin{\\&}(-i)$ нь дараагийн том блок руу орж, lowbit нь алхам бүрт дор хаяж хоёр дахин өсдөг. Тиймээс update ч $O(\\log n)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: prefix($13$) дотор internal index $13\\to12\\to8\\to0$. $13$ элемент тус бүрийг биш, ердөө $3$ хадгалсан sum уншина. $n=16$, internal update index $5$ бол $5\\to6\\to8\\to16$ гэсэн $4$ байрлалд хүрнэ."
+            },
+            {
+              "type": "note",
+              "text": "Range sum хоёр prefix query хийдэг тул $2O(\\log n)=O(\\log n)$. Энэ reference-д initial array-г add-аар нэг нэгээр нь оруулах build нь $O(n\\log n)$; өөр linear build хэрэглээгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -12042,6 +13560,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Fenwick prefix queries combine a few stored, nonoverlapping block sums rather than reading every earlier element."
+                },
+                {
+                  "type": "p",
+                  "text": "In a prefix loop, $i-=i\\mathbin{\\&}(-i)$ clears the lowest set bit of $i$. There are only $O(\\log n)$ bits to clear. In an update, $i+=i\\mathbin{\\&}(-i)$ moves to a larger containing block, with the lowbit at least doubling each step. Updates therefore also take $O(\\log n)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: prefix($13$) follows internal indices $13\\to12\\to8\\to0$, reading $3$ stored sums instead of $13$ individual values. For $n=16$, updating internal index $5$ touches $5,6,8,16$."
+                },
+                {
+                  "type": "note",
+                  "text": "A range sum uses two prefix queries, so $2O(\\log n)=O(\\log n)$. Building this reference by adding each initial value costs $O(n\\log n)$; it does not use a separate linear build."
                 }
               ]
             }
@@ -12272,6 +13812,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Build-д бүх node нэг удаа бэлтгэгдэнэ. $n$ leaf-тэй, internal node бүр хоёр child-тэй tree-д $n-1$ internal node байдаг тул нийт $2n-1$: build $O(n)$. Point update-д зөвхөн өөрчлөгдсөн leaf ба түүний ancestor-ууд орно; түвшин бүрт нэг зам дагах тул $O(\\log n)$."
+            },
+            {
+              "type": "p",
+              "text": "Range query хоёр child руу дууддаг ч бүх branch leaf хүртэл явахгүй. Query-д бүтнээр багтсан node-ийн sum-ийг шууд авна; огт давхцахгүй node шууд буцна. Нэг түвшинд query-ийн зүүн ба баруун заагтай огтлолцсон хамгийн ихдээ хоёр node л хэсэгчлэн давхцаж, цааш задарна. Тэдний children-ийн тоо тогтмол тул түвшин бүр $O(1)$ node, нийт $O(\\log n)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $8$ элементэд query $[1,6]$ асуухад $[2,3]$, $[4,5]$ node-уудын бэлэн sum-ийг авч children рүү нь орохгүй. Зөвхөн хоёр зааг орчмоор доошилно. Бүтэн $[0,7]$ query бол root-ийн нэг sum уншаад зогсоно."
+            },
+            {
+              "type": "note",
+              "text": "Tree-ийн өндөр logarithmic гэдэг дангаараа query-г logarithmic гэж батлахгүй. Түвшин бүрт хэдэн node үзэж байгааг бас тоолсон нь гол нотолгоо. Энэ нь sum-ийг тогтмол хугацаанд нэгтгэдэг reference-д хамаарна."
+            }
+          ]
         }
       ],
       "translations": {
@@ -12481,6 +14043,28 @@
                   ]
                 }
               ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Build computes every node once. A full binary tree with $n$ leaves has $n-1$ internal nodes, so $2n-1$ nodes in total: $O(n)$ build time. A point update follows only the changed leaf’s ancestor path, with one node per level: $O(\\log n)$."
+                },
+                {
+                  "type": "p",
+                  "text": "A range query calls both children, but most branches stop early. Fully covered nodes return their stored sum; disjoint nodes return immediately. At each level, only at most two partially covered nodes can cross the left and right query boundaries. They create a constant number of child calls per level, so the total is $O(\\log n)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: on $8$ elements, query $[1,6]$ takes the stored sums for nodes $[2,3]$ and $[4,5]$ without visiting their children. Only the two boundaries need further descent. Querying the whole $[0,7]$ interval stops at the root."
+                },
+                {
+                  "type": "note",
+                  "text": "Logarithmic tree height alone does not prove logarithmic query time. The crucial additional argument is a constant number of visited nodes per level. This assumes stored sums combine in constant time."
+                }
+              ]
             }
           ]
         }
@@ -12656,6 +14240,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Query бүрийн minimum-ийг бүх range-аар scan хийхгүй. Урт нь $1,2,4,8,\\ldots$ болох блокуудын minimum-ийг урьдчилан хадгална. Нэг шинэ блок өмнөх түвшний хоёр хагасын minimum-ээс бодогдоно."
+            },
+            {
+              "type": "p",
+              "text": "Бэлтгэл $O(\\log n)$ түвшинтэй, түвшин бүр хамгийн ихдээ $n$ блоктой, блок бүр тогтмол ажил: $O(n\\log n)$. Query уртынхаа хамгийн том power-of-two блокийг хоёр төгсгөлөөс авч, хоёр утгыг min хийнэ. Урт ба түвшнийг lg хүснэгтээс шууд олох тул query $O(1)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: урт $6$ query-г урт $4$-тэй эхний, сүүлийн хоёр блок хамарна. Тэд давхцсан ч minimum өөрчлөгдөхгүй; query зөвхөн хоёр min утга уншина."
+            },
+            {
+              "type": "note",
+              "text": "Duplicate утга үр дүнг өөрчлөхгүй байх чанар minimum-д бий. Sum дээр давхцсан хоёр блокийг нэмбэл буруу, мөн array update хийхэд хүснэгт шууд шинэчлэгдэхгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -12812,6 +14418,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Precompute minima of blocks of lengths $1,2,4,8,\\ldots$ instead of scanning a range for every query. Each new block combines the minima of two half-sized blocks from the previous level."
+                },
+                {
+                  "type": "p",
+                  "text": "There are $O(\\log n)$ levels, at most $n$ blocks per level and constant work per block: $O(n\\log n)$ preparation. A query combines just two power-of-two blocks, taking the level from the precomputed lg table. Hence queries cost $O(1)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: a length-$6$ query is covered by two length-$4$ blocks from its ends. Their overlap does not change the minimum, so the query reads only two stored minima."
+                },
+                {
+                  "type": "note",
+                  "text": "Minimum tolerates duplicate contributions. Summing two overlapping blocks would be wrong, and updates do not automatically maintain this table."
                 }
               ]
             }
@@ -12989,6 +14617,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Prime factorization-д $1$-ээс анхны тоо хүртэл бүх divisor шалгахгүй. Хуваагчид хосоороо гарна: $p\\cdot q=N$. Хоёул $\\sqrt N$-ээс их байж чадахгүй тул жижиг талыг шалгахад хангалттай."
+            },
+            {
+              "type": "p",
+              "text": "Outer loop анхны $N$-ийн хамгийн ихдээ $\\sqrt N$ хүртэлх candidate-уудыг үзнэ; factor олдох бүрт үлдсэн тоо багасч, зогсох зааг бүр ойртоно. Inner while нэг factor-ийг салгах бүрдээ үлдсэн тоог дор хаяж хоёрт хуваадаг тул бүх division нийлээд $O(\\log N)$. Нийт worst case $O(\\sqrt N)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $N=360$-аас $2$-ыг гурван удаа салгахад $45$, $3$-ыг хоёр удаа салгахад $5$ үлдэнэ. Дараа $5$ prime-ийг шууд авна; $360$ хүртэл scan хийхгүй."
+            },
+            {
+              "type": "note",
+              "text": "Анхны $N$ өөрөө prime байвал үлдсэн тоо багасахгүй, $\\sqrt N$ хүрэх нь worst case. Маш том $64$-bit тоонд энэ bound ч удаан байж болно."
+            }
+          ]
         }
       ],
       "translations": {
@@ -13145,6 +14795,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Divisors occur in pairs $p\\cdot q=N$. They cannot both exceed $\\sqrt N$, so testing the smaller side is enough; there is no need to try every number up to the original value."
+                },
+                {
+                  "type": "p",
+                  "text": "The outer loop tests at most $\\sqrt N$ candidates for the original input $N$. Removing factors shrinks the remaining value and its stopping bound. Each successful inner division reduces that value by at least a factor of two, so all divisions together cost $O(\\log N)$. The worst-case total is $O(\\sqrt N)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: removing three factors of $2$ from $360$ leaves $45$, then removing two factors of $3$ leaves $5$. The final prime factor is taken directly, with no scan up to $360$."
+                },
+                {
+                  "type": "note",
+                  "text": "If the original $N$ is prime, it does not shrink, so testing up to $\\sqrt N$ is the worst case. This can still be slow for very large $64$-bit values."
                 }
               ]
             }
@@ -13320,6 +14992,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Сонголтын бүх subset-ийг жагсаахгүй. Pascal recurrence нь ижил $(n,k)$ хариуг олон recursive мөчрөөс дахин бодохын оронд нэг хүснэгтэд хадгалж, хөрш хоёр жижиг хариуг нэмнэ."
+            },
+            {
+              "type": "p",
+              "text": "$0$–$N$ мөр, мөр бүр хамгийн ихдээ $N+1$ байрлал: $O(N^2)$ state. State бүр тогтмол нэмэх/modulo ажилтай. Reference нь бүтэн квадрат хүснэгтийг эхлүүлдэг тул initialization ч $O(N^2)$. Дараа choose query нэг утга унших төдий $O(1)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $N=10$ үед $11\\times11=121$ хүснэгтийн байрлал бэлтгэж, $\\binom{10}{5}=252$-ыг шууд уншина. Тэр $252$ сонголтыг өөрсдийг нь жагсаахгүй."
+            },
+            {
+              "type": "note",
+              "text": "Нэг query $O(1)$ гэдэг нь бэлтгэл үнэгүй гэсэн үг биш. Reference хариуг MOD-оор авдаг; бодит их тоог бүтнээр нь хадгалдаггүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -13476,6 +15170,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Pascal’s recurrence avoids enumerating subsets or recomputing the same $(n,k)$ through many recursive branches. Store each answer once and combine two smaller neighbouring answers."
+                },
+                {
+                  "type": "p",
+                  "text": "There are $O(N^2)$ states over rows $0$ through $N$, each using constant addition/modulo work. The reference also initializes a full square table, which costs $O(N^2)$. Afterwards, a choose query reads one entry in $O(1)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: for $N=10$, prepare $11\\times11=121$ entries and directly read $\\binom{10}{5}=252$. The $252$ selections themselves are never listed."
+                },
+                {
+                  "type": "note",
+                  "text": "A constant-time query does not make preparation free. The reference stores answers modulo MOD, not arbitrary-length exact integers."
                 }
               ]
             }
@@ -13658,6 +15374,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Naive matching mismatch бүрийн дараа өмнө таарсан тэмдэгтүүдийг эхнээс нь дахин шалгадаг. KMP-ийн prefix link нь өмнөх match-ийн suffix аль prefix-тэй таарсныг бэлэн өгч, тэднийг дахин харьцуулахгүйгээр $j$-г шинэчилнэ. Text-ийн $i$ ухрахгүй."
+            },
+            {
+              "type": "p",
+              "text": "While олон удаа ажиллаж болох ч $j$ өсөхдөө нэг text тэмдэгтэд хамгийн ихдээ нэгээр өснө: нийт хамгийн ихдээ $n$. While-ийн iteration бүр $j$-г дор хаяж нэгээр бууруулна. $j\\ge0$ тул бүх бууралтын тоо бүх өсөлтөөс их байж чадахгүй. Prefix build-д мөн энэ тооллого $m$ тэмдэгт дээр үйлчилнэ: нийт $O(n+m)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $p=\\text{ababac}$ дээр $\\text{ababa}$ таарсны дараа дараагийн тэмдэгт $b$ байвал $j=5\\to3$ гэж буугаад $p[3]=b$-тэй таарна. Өмнөх $\\text{aba}$-г дахин уншиж шалгахгүй."
+            },
+            {
+              "type": "note",
+              "text": "Prefix link нь $j$-г хэд хэдэн нэгжээр бууруулж болно; энэ нь bound-ийг улам сайжруулна. Match-ийн дараах reset ч зөвхөн бууруулалт. Empty pattern-ийн output $n+1$ байрлалтай тул output хийхэд $O(n)$ орно."
+            }
+          ]
         }
       ],
       "translations": {
@@ -13819,6 +15557,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Naive matching rechecks characters after a mismatch. KMP’s prefix links identify which suffix of the existing match is also a pattern prefix, letting us update $j$ without rechecking those characters. The text index $i$ never moves backwards."
+                },
+                {
+                  "type": "p",
+                  "text": "The while loop may run repeatedly, but $j$ increases by at most one per text character: at most $n$ increases. Each while iteration decreases $j$ by at least one. Since $j\\ge0$, total decreases cannot exceed total increases. The same argument bounds prefix construction by $O(m)$, giving $O(n+m)$ overall."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: with $p=\\text{ababac}$, after matching $\\text{ababa}$, a next character $b$ changes $j$ from $5$ to $3$, then matches $p[3]=b$. The already-matched $\\text{aba}$ is not checked again."
+                },
+                {
+                  "type": "note",
+                  "text": "A prefix link can decrease $j$ by several units, which only helps the bound. Resetting after a match is also a decrease. An empty pattern produces $n+1$ positions, requiring $O(n)$ output work."
                 }
               ]
             }
@@ -14002,6 +15762,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ancestor-ийг parent-аар нэг нэг алхам өгсөж олохгүй. Node бүрээс $1,2,4,8,\\ldots$ алхмын ancestor-уудыг бэлтгэж, том зайг хэдхэн binary jump болгон задлана."
+            },
+            {
+              "type": "p",
+              "text": "Build-д node бүрт $O(\\log n)$ jump хадгална, jump бүр өмнөх хоёр jump-ийг холбох тогтмол ажилтай: $O(n\\log n)$. Query эхлээд depth-ийн зөрүүний bit бүрийг, дараа томоос жижиг jump-ийн түвшин бүрийг нэг удаа шалгана. Хоёр scan тус бүр $O(\\log n)$ тул query мөн $O(\\log n)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: depth-ийн зөрүү $13=8+4+1$ бол parent-аар $13$ удаа явахын оронд $8,4,1$ гэсэн $3$ jump ашиглана. Code нь bit-үүдийг шалгах loop-ийн ажлыг мөн хийдэг."
+            },
+            {
+              "type": "note",
+              "text": "Query-ийн logarithmic хугацаа нь өмнөх $O(n\\log n)$ бэлтгэлтэй холбоотой. Tree-г өөрчилбөл ancestor хүснэгт өөрөө засагдахгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -14162,6 +15944,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Binary lifting avoids climbing one parent at a time. Precompute ancestors $1,2,4,8,\\ldots$ steps away and express large distances as a few binary jumps."
+                },
+                {
+                  "type": "p",
+                  "text": "Each vertex stores $O(\\log n)$ jumps, each built from two earlier jumps in constant work: $O(n\\log n)$ preparation. A query scans the bits of the depth difference, then the jump levels from large to small. Two logarithmic scans still give $O(\\log n)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: a depth difference of $13=8+4+1$ takes jumps of $8,4,1$ instead of $13$ parent steps. The code still spends time scanning the relevant bit positions."
+                },
+                {
+                  "type": "note",
+                  "text": "Logarithmic queries depend on the earlier $O(n\\log n)$ preparation. The ancestor table does not automatically update when the tree changes."
                 }
               ]
             }
@@ -14340,6 +16144,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Assignment-ийн бүх $n!$ дарааллыг тус тусад нь үргэлжлүүлэхгүй. Аль jobs ашиглагдсан mask ижил байвал дараагийн worker-ийн index ба үлдсэн jobs ижил. Тэр mask-д хүрсэн хамгийн хямд cost-ийг л хадгална."
+            },
+            {
+              "type": "p",
+              "text": "Нийт $2^n$ mask байна. Reference mask бүрт $n$ job-ийн bit-ийг шалгадаг тул $O(n2^n)$ ажил. Ашиглагдаагүй job нэмэх бодит transition-уудын тоо $n2^{n-1}$: job бүр нийт mask-ийн хагаст ашиглагдаагүй байдаг. Шалгалтын loop-ийг тооцсон ч bound ижил."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $n=10$ үед $10!=3628800$ бүрэн assignment байна. DP $1024$ mask, ойролцоогоор $10240$ job шалгалт, $5120$ transition-оор хариуг гаргана."
+            },
+            {
+              "type": "note",
+              "text": "Энэ нь factorial-аас хурдан боловч exponential хэвээр. $n$ нэгээр нэмэгдэхэд mask-ийн тоо хоёр дахин өснө; том $n$-д тохирохгүй."
+            }
+          ]
         }
       ],
       "translations": {
@@ -14497,6 +16323,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "Instead of continuing all $n!$ assignment orders separately, merge paths reaching the same used-job mask. The next worker and remaining jobs are identical, so only the cheapest cost for that mask matters."
+                },
+                {
+                  "type": "p",
+                  "text": "There are $2^n$ masks. The reference checks $n$ job bits for each mask, giving $O(n2^n)$ time. There are $n2^{n-1}$ actual unused-job transitions because each job is absent from half the masks; including the bit-check loops gives the same bound."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: $n=10$ has $10!=3628800$ full assignments. DP uses $1024$ masks, about $10240$ job checks and $5120$ transitions."
+                },
+                {
+                  "type": "note",
+                  "text": "This is faster than factorial enumeration but remains exponential. Increasing $n$ by one doubles the number of masks, so it is unsuitable for large $n$."
                 }
               ]
             }
@@ -14688,6 +16536,28 @@
               ]
             }
           ]
+        },
+        {
+          "key": "speed-reason",
+          "title": "11. Яагаад ийм хурдан ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Range add хийхдээ бүх leaf рүү буухгүй. Node-ийн interval бүтнээр хамрагдвал sum-д $x(r-l+1)$ нэмээд lazy tag-д $x$ тэмдэглэж зогсоно. Тэр interval-ийн бүх child-ийг одоо өөрчлөх ажлыг хойшлуулсан нь гол хэмнэлт."
+            },
+            {
+              "type": "p",
+              "text": "Partial coverage үед push нь зөвхөн хоёр child-ийн sum/tag-ийг шинэчилнэ: subtree-г бүтнээр нь scan хийхгүй, нэг node-д $O(1)$ ажил. Range query ба update аль аль нь түвшин бүрийн хамгийн ихдээ хоёр заагийн partial node-оос л цаашилдаг. Tree $O(\\log n)$ өндөртэй тул нэг ажиллагаа $O(\\log n)$; build бүх $2n-1$ node-ийг нэг удаа бэлтгэж $O(n)$."
+            },
+            {
+              "type": "p",
+              "text": "Жишээ: $1024$ элементийг бүтнээр нь $+5$ болгоход root-ийн sum ба tag-ийг өөрчлөхөд хангалттай. Дараа нэг жижиг range асуухад зөвхөн хэрэгтэй замаар tag-уудыг push хийнэ; бүх $1024$ leaf-ийг урьдчилан шинэчлэхгүй."
+            },
+            {
+              "type": "note",
+              "text": "Энд range addition ба sum-ийн apply/push тогтмол ажилтай. Бүх төрлийн update-г ганц lazy tag-аар ийм хурдтай шийдэж болно гэсэн үг биш."
+            }
+          ]
         }
       ],
       "translations": {
@@ -14859,6 +16729,28 @@
                       "url": "https://cses.fi/book/book.pdf"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "key": "speed-reason",
+              "title": "11. Why does it take this amount of time?",
+              "blocks": [
+                {
+                  "type": "p",
+                  "text": "A range addition does not descend to every leaf. A fully covered node adds $x(r-l+1)$ to its sum, records $x$ in its lazy tag and stops. Deferring changes to all descendants is the main saving."
+                },
+                {
+                  "type": "p",
+                  "text": "On partial coverage, push updates only the two immediate children’s sums and tags in $O(1)$ work, not their entire subtrees. Both range queries and updates descend further only at the at-most-two partial boundary nodes per level. With $O(\\log n)$ levels, each operation costs $O(\\log n)$. Build visits the $2n-1$ nodes once: $O(n)$."
+                },
+                {
+                  "type": "p",
+                  "text": "Example: adding $5$ to all $1024$ elements only changes the root sum and tag. A later small-range query pushes tags only along the necessary paths, rather than first updating all $1024$ leaves."
+                },
+                {
+                  "type": "note",
+                  "text": "This applies to range addition and sum, whose apply/push operations take constant work. It does not mean every type of range update can use one lazy tag with this bound."
                 }
               ]
             }
