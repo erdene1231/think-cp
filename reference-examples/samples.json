@@ -1,0 +1,260 @@
+{
+  "complexity": {
+    "input": "5\n",
+    "output": "10\n2\n",
+    "mn": "Input нэг integer $n\\ge1$. Эхний мөрт ялгаатай хосын тоо, дараагийн мөрт $n$-ийг integer division-аар нэг хүртэл хоёрт хуваах алхмын тоо гарна.",
+    "en": "Input is one integer $n\\ge1$. Print the number of distinct pairs, then the number of integer halvings needed to reach one."
+  },
+  "brute-force": {
+    "input": "4\n4 1 7 3\n8\n",
+    "output": "YES\n",
+    "mn": "Input: $n$, дараа $n$ утга, эцэст нь target. Хоёр өөр index-ийн нийлбэр target бол YES, үгүй бол NO.",
+    "en": "Input: $n$, then $n$ values, then the target. Print YES if two distinct indices sum to the target, otherwise NO."
+  },
+  "sorting": {
+    "input": "5\n4 1 4 -2 7\n",
+    "output": "-2 1 4 4 7\n",
+    "mn": "Input: $n$ ба $n$ integer. Output нь өсөхөөр эрэмбэлсэн бүх утга; давхардлыг арилгахгүй.",
+    "en": "Input: $n$ and $n$ integers. Output all values sorted increasingly; duplicates remain."
+  },
+  "recursion": {
+    "input": "5\n",
+    "output": "120\n",
+    "mn": "Input нэг integer $0\\le n\\le20$. Long long-д багтах $n!$-г хэвлэнэ.",
+    "en": "Input one integer $0\\le n\\le20$. Print $n!$, which fits in long long under this constraint."
+  },
+  "stack-queue": {
+    "input": "(()())\n4\n8 3 5 1\n",
+    "output": "YES\n8 3 5 1\n",
+    "mn": "Input: зөвхөн дугуй хаалттай хоосон биш string, дараа $n$ ба queue-д хийх $n$ тоо. Эхлээд хаалт зөв эсэх, дараа FIFO дарааллаар гарсан тоонууд хэвлэгдэнэ.",
+    "en": "Input a nonempty parentheses string, then $n$ and $n$ queue values. Print bracket validity, then the values removed in FIFO order."
+  },
+  "set-map": {
+    "input": "6\n4 1 4 2 1 4\n",
+    "output": "3\n1 2\n2 1\n4 3\n",
+    "mn": "Input: $n$ ба array. Эхлээд ялгаатай утгын тоо, дараа key-ийн өсөх дарааллаар утга ба давтамж хэвлэнэ.",
+    "en": "Input: $n$ and the array. Print the distinct count, then each value and frequency in increasing key order."
+  },
+  "prefix-sums": {
+    "input": "5 3\n2 -1 4 0 3\n1 3\n0 4\n2 2\n",
+    "output": "3\n8\n4\n",
+    "mn": "Input: $n,q$, array, дараа $q$ ширхэг $l,r$. Index $0$-оос эхэлнэ; $[l,r]$-ийн хоёр зааг багтана, $0\\le l\\le r<n$.",
+    "en": "Input: $n,q$, the array, then $q$ pairs $l,r$. Indices are zero-based and both ends of $[l,r]$ are included, with $0\\le l\\le r<n$."
+  },
+  "difference-array": {
+    "input": "5 2\n1 3 2\n2 4 3\n",
+    "output": "0 2 5 5 3\n",
+    "mn": "Input: $n,q$, дараа $q$ мөр $l,r,x$. Эхний array бүхэлдээ тэг; $[l,r]$ бүрт $x$ нэмээд эцсийн array-г хэвлэнэ. Index $0$-оос эхэлнэ.",
+    "en": "Input: $n,q$, then $q$ lines $l,r,x$. Starting from zeros, add $x$ to inclusive range $[l,r]$ and print the final array. Indices are zero-based."
+  },
+  "prefix-sums-2d": {
+    "input": "2 3 2\n1 2 3\n4 5 6\n0 1 1 2\n1 0 1 1\n",
+    "output": "16\n9\n",
+    "mn": "Input: $n,m,q$, дараа grid-ийн $n$ мөр, эцэст $q$ query $r_1,c_1,r_2,c_2$. Хоёр булан хоёулаа багтана; мөр, багана $0$-оос эхэлнэ.",
+    "en": "Input: $n,m,q$, the $n$ grid rows, then $q$ rectangles $r_1,c_1,r_2,c_2$. Both corners are included and row/column indices are zero-based."
+  },
+  "binary-search": {
+    "input": "5\n2 4 4 7 9\n4\n4 5 10 1\n",
+    "output": "1\n3\n5\n0\n",
+    "mn": "Input: $n$, өсөхөөр эрэмбэлсэн array, дараа $q$ ба $q$ утга $x$. Query бүрт $x$-ээс бага биш эхний index, байхгүй бол $n$ гарна.",
+    "en": "Input: $n$, a sorted array, then $q$ and $q$ query values $x$. Output the first index with value at least $x$, or $n$ if none exists."
+  },
+  "two-pointers": {
+    "input": "4\n2 1 3 1\n3\n",
+    "output": "5\n",
+    "mn": "Input: $n$, сөрөг биш array, дараа $k$. Нийлбэр нь $k$-ээс ихгүй хоосон биш contiguous subarray-ийн тоо гарна.",
+    "en": "Input: $n$, a nonnegative array, then $k$. Print the number of nonempty contiguous subarrays whose sum is at most $k$."
+  },
+  "bit-operations": {
+    "input": "5 13\n",
+    "output": "0 2 3\n",
+    "mn": "Input: $0\\le n\\le32$ ба unsigned mask. Эхний $n$ bit дотор $1$ байгаа index-үүдийг хэвлэнэ; index $0$ нь хамгийн бага bit.",
+    "en": "Input: $0\\le n\\le32$ and an unsigned mask. Print set-bit indices among its first $n$ bits; index $0$ is the least significant bit."
+  },
+  "gcd": {
+    "input": "48 18\n",
+    "output": "6\n",
+    "mn": "Input хоёр сөрөг биш integer $a,b$. GCD-г хэвлэнэ; хоёулаа тэг бол энэ implementation $0$ буцаана.",
+    "en": "Input two nonnegative integers $a,b$. Print their GCD; this implementation returns $0$ when both are zero."
+  },
+  "fast-power": {
+    "input": "3 13 1000000007\n",
+    "output": "1594323\n",
+    "mn": "Input: сөрөг биш $a,b$, $1\\le\\mathrm{mod}\\le10^9+7$. Output $a^b\\bmod\\mathrm{mod}$. Энэ mod-ийн хүрээ квадратын intermediate long long-д багтах нөхцөл болно.",
+    "en": "Input: nonnegative $a,b$ and $1\\le\\mathrm{mod}\\le10^9+7$. Output $a^b\\bmod\\mathrm{mod}$. This modulus bound keeps squared intermediate values within long long."
+  },
+  "sieve": {
+    "input": "20\n",
+    "output": "2 3 5 7 11 13 17 19\n",
+    "mn": "Input $n\\ge0$. $n$-ээс ихгүй бүх prime-ийг өсөх дарааллаар хэвлэнэ. $n$ бага бол хоосон мөр гарч болно.",
+    "en": "Input $n\\ge0$. Print all primes at most $n$ in increasing order. Small inputs may produce an empty line."
+  },
+  "graph-basics": {
+    "input": "4 3\n0 1\n0 2\n2 3\n",
+    "output": "0: 1 2\n1: 0\n2: 0 3\n3: 2\n",
+    "mn": "Input: $n,m$, дараа $m$ undirected edge. Node $0$–$n-1$. Node бүрийн хөршүүд input-д орсон дарааллаар хэвлэгдэнэ.",
+    "en": "Input: $n,m$, then $m$ undirected edges on vertices $0$ through $n-1$. Print each adjacency list in insertion order."
+  },
+  "bfs": {
+    "input": "5 4\n0 1\n0 2\n1 3\n2 3\n0\n",
+    "output": "0 1 1 2 -1\n",
+    "mn": "Input: $n,m$, undirected edge-үүд, эхлэх node $s$. Node бүр хүртэлх хамгийн бага edge-ийн тоо хэвлэнэ; хүрэхгүй бол $-1$.",
+    "en": "Input: $n,m$, undirected edges and source $s$. Print the minimum edge count to every vertex, or $-1$ if unreachable."
+  },
+  "dfs": {
+    "input": "5 3\n0 1\n1 2\n3 4\n",
+    "output": "0 0 0 1 1\n",
+    "mn": "Input: $n,m$, undirected edge-үүд. Node бүрийн component ID гарна. Нэг ID-тай node-ууд холбоотой; ID өөрөө бодлогын тусгай дугаар биш.",
+    "en": "Input: $n,m$ and undirected edges. Output each vertex’s component ID. Equal IDs mean connected vertices; the IDs have no special external meaning."
+  },
+  "flood-fill": {
+    "input": "3 4\n..##\n#.#.\n##..\n",
+    "output": "2\n",
+    "mn": "Input: $n,m$ ба $n$ мөр string. Нээлттэй нүд нь цэг, хана нь #. Дөрвөн чиглэлээр холбогдсон өрөөний тоо хэвлэнэ.",
+    "en": "Input: $n,m$ and $n$ strings. Dots are open cells and # marks walls. Print the number of four-directionally connected rooms."
+  },
+  "greedy": {
+    "input": "4\n1 4\n2 3\n3 5\n5 7\n",
+    "output": "3\n",
+    "mn": "Input: $n$ ба $n$ киноны эхлэх, дуусах цаг. Интервал $[l,r)$ тул нэг нь дууссан цагт дараагийнх эхэлж болно. Хамгийн олон киноны тоо гарна.",
+    "en": "Input: $n$ and $n$ start/finish pairs. Intervals are $[l,r)$, so a film may start when another ends. Print the maximum number of nonoverlapping films."
+  },
+  "binary-search-answer": {
+    "input": "5 3\n2 4 7 3 5\n",
+    "output": "8\n",
+    "mn": "Input: $n\\ge1$, $1\\le k\\le n$, сөрөг биш array. Array-г хамгийн ихдээ $k$ хоосон биш contiguous хэсэгт хуваахад хэсгийн хамгийн их sum-ийн хамгийн бага утга гарна.",
+    "en": "Input: $n\\ge1$, $1\\le k\\le n$ and nonnegative values. Minimize the largest segment sum when splitting into at most $k$ nonempty contiguous segments."
+  },
+  "hash-compression": {
+    "input": "4\n1000000000 7 1000000000 100\n",
+    "output": "2 0 2 1\n",
+    "mn": "Input: $n$ ба array. Утга бүрийн zero-based rank-ийг input-ийн дарааллаар хэвлэнэ; ижил утга ижил rank-тай.",
+    "en": "Input: $n$ and the array. Print each value’s zero-based rank in input order; equal values receive equal ranks."
+  },
+  "tree-basics": {
+    "input": "5 0\n0 1\n0 2\n1 3\n1 4\n",
+    "output": "-1 0 5\n0 1 3\n0 1 1\n1 2 1\n1 2 1\n",
+    "mn": "Input: $n\\ge1$, root, дараа tree-ийн $n-1$ undirected edge. Node бүрт parent, depth, subtree size хэвлэнэ. Root-ийн parent $-1$.",
+    "en": "Input: $n\\ge1$, the root, then $n-1$ undirected tree edges. Print parent, depth and subtree size for each vertex. The root’s parent is $-1$."
+  },
+  "dynamic-programming": {
+    "input": "5\n",
+    "output": "8\n",
+    "mn": "Input: $n\\ge0$. $1$ эсвэл $2$ гишгүүрээр өгсөх замын тоог $10^9+7$-оор хэвлэнэ. $n=0$ үед хоосон замыг нэг гэж тоолно.",
+    "en": "Input: $n\\ge0$. Print the number of ways to climb using steps of size $1$ or $2$, modulo $10^9+7$. At $n=0$, the empty path counts as one."
+  },
+  "grid-dp": {
+    "input": "3 3\n...\n.#.\n...\n",
+    "output": "2\n",
+    "mn": "Input: $n,m\\ge1$ ба grid (# хана). Зүүн дээдээс баруун доод хүртэл зөвхөн доош, баруун явсан замын тоог $10^9+7$-оор гаргана.",
+    "en": "Input: $n,m\\ge1$ and a grid with # walls. Count paths from top-left to bottom-right using only down/right moves, modulo $10^9+7$."
+  },
+  "knapsack": {
+    "input": "3 5\n2 3\n3 4\n4 5\n",
+    "output": "7\n",
+    "mn": "Input: $n,W\\ge0$, дараа item бүрийн эерэг weight ба сөрөг биш value. Нийт weight $W$-ээс хэтрэхгүй хамгийн их value; item бүрийг нэгээс ихгүй авна.",
+    "en": "Input: $n,W\\ge0$, then positive weight and nonnegative value for each item. Maximize value with total weight at most $W$, using each item at most once."
+  },
+  "lis": {
+    "input": "5\n3 1 2 2 4\n",
+    "output": "3\n",
+    "mn": "Input: $n$ ба array. Strictly increasing subsequence-ийн хамгийн урт уртыг хэвлэнэ; subsequence contiguous байх шаардлагагүй.",
+    "en": "Input: $n$ and the array. Print the length of a longest strictly increasing subsequence; it need not be contiguous."
+  },
+  "monotonic-stack": {
+    "input": "5\n5 4 3 2 6\n",
+    "output": "4 4 4 4 -1\n",
+    "mn": "Input: $n$ ба array. Элемент бүрийн баруун талын анхны strictly greater утгын index, байхгүй бол $-1$ хэвлэнэ.",
+    "en": "Input: $n$ and the array. Print the first index to the right with a strictly greater value, or $-1$ if absent."
+  },
+  "dsu": {
+    "input": "4 6\nunion 0 1\nsame 1 2\nunion 2 3\nunion 1 2\nsame 0 3\nsize 3\n",
+    "output": "NO\nYES\n4\n",
+    "mn": "Input: $n,q$, дараа union u v, same u v, эсвэл size u. Node $0$–$n-1$. Union нь output-гүй; same YES/NO, size бүлгийн хэмжээг гаргана.",
+    "en": "Input: $n,q$, then union u v, same u v, or size u on vertices $0$ through $n-1$. Union prints nothing; same prints YES/NO and size prints the component size."
+  },
+  "kruskal": {
+    "input": "4 5\n0 1 1\n1 2 2\n0 2 5\n2 3 3\n0 3 10\n",
+    "output": "6\n",
+    "mn": "Input: $n\\ge1,m$, дараа undirected weighted edge $u,v,w$. Бүх node-ийг холбох MST-ийн нийт weight, холбоогүй бол IMPOSSIBLE.",
+    "en": "Input: $n\\ge1,m$, then undirected weighted edges $u,v,w$. Print the total MST weight, or IMPOSSIBLE if all vertices cannot be connected."
+  },
+  "priority-queue": {
+    "input": "5\n7 2 7 1 4\n",
+    "output": "1 2 4 7 7\n",
+    "mn": "Input: $n$ ба array. Min-heap-д утгуудыг нэмээд нэг нэгээр нь авч хэвлэнэ. Давхардсан утгууд хэвээр үлдэнэ.",
+    "en": "Input: $n$ and the array. Insert values into a min-heap and repeatedly remove them. Duplicate values are retained."
+  },
+  "dijkstra": {
+    "input": "4 4 0\n0 1 4\n0 2 1\n2 1 2\n1 3 1\n",
+    "output": "0 3 1 4\n",
+    "mn": "Input: $n,m,s$, дараа directed edge $u,v,w$, $w\\ge0$. Distance бүрийг хэвлэнэ; хүрэхгүй бол $-1$. Бодит finite distance нь INF-ээс бага байна.",
+    "en": "Input: $n,m,s$, then directed edges $u,v,w$ with $w\\ge0$. Print distances or $-1$ for unreachable vertices. Every finite distance must be below INF."
+  },
+  "floyd-warshall": {
+    "input": "3 3\n0 1 4\n1 2 2\n0 2 10\n",
+    "output": "0 4 6\n-1 0 2\n-1 -1 0\n",
+    "mn": "Input: $n,m$ ба directed weighted edge-үүд. Энэ ажиллуулах жишээнд $w\\ge0$ хэрэглэж, бүх хосын distance matrix гаргана; хүрэхгүй бол $-1$.",
+    "en": "Input: $n,m$ and directed weighted edges. This runnable example uses $w\\ge0$ and prints the all-pairs distance matrix, with $-1$ for unreachable pairs."
+  },
+  "topological-sort": {
+    "input": "4 4\n0 1\n0 2\n1 3\n2 3\n",
+    "output": "0 1 2 3\n",
+    "mn": "Input: $n,m$, directed dependency edge $u\\to v$. Нэг зөв topological дараалал, cycle байвал CYCLE гарна. Ерөнхий input-д өөр зөв дараалал ч байж болно.",
+    "en": "Input: $n,m$ and dependency edges $u\\to v$. Print one topological order or CYCLE. Other valid orders may exist for the same input."
+  },
+  "fenwick-tree": {
+    "input": "4 3\n2 1 3 4\nsum 1 3\nadd 2 5\nsum 1 3\n",
+    "output": "8\n13\n",
+    "mn": "Input: $n,q$, initial array, дараа add pos x эсвэл sum l r. Add нь одоогийн утгад $x$ нэмнэ; assignment биш. Index $0$-оос, sum нь inclusive.",
+    "en": "Input: $n,q$, the initial array, then add pos x or sum l r. Add increments the current value; it is not assignment. Indices are zero-based and sums are inclusive."
+  },
+  "segment-tree": {
+    "input": "4 3\n2 1 3 4\nsum 1 3\nset 2 8\nsum 1 3\n",
+    "output": "8\n13\n",
+    "mn": "Input: $n\\ge1,q$, array, дараа set pos x эсвэл sum l r. Set нь тухайн утгыг $x$ болгоно; sum $[l,r]$ inclusive, index $0$-оос.",
+    "en": "Input: $n\\ge1,q$, the array, then set pos x or sum l r. Set assigns $x$ to the position. Sum uses inclusive $[l,r]$ and zero-based indices."
+  },
+  "sparse-table": {
+    "input": "5 3\n5 2 7 1 4\n0 2\n1 4\n2 2\n",
+    "output": "2\n1\n7\n",
+    "mn": "Input: $n\\ge1,q$, өөрчлөгдөхгүй array, inclusive zero-based $l,r$ query-ууд. Range бүрийн minimum гарна.",
+    "en": "Input: $n\\ge1,q$, an immutable array and inclusive zero-based $l,r$ queries. Print each range minimum."
+  },
+  "number-theory": {
+    "input": "360\n",
+    "output": "2 3\n3 2\n5 1\n",
+    "mn": "Input $n\\ge1$. Prime factor ба exponent-ийг мөр бүрт хэвлэнэ. $n=1$ үед factor байхгүй тул output хоосон.",
+    "en": "Input $n\\ge1$. Print each prime factor and its exponent. For $n=1$ there are no factors, so output is empty."
+  },
+  "combinatorics": {
+    "input": "5 3\n5 2\n4 0\n3 4\n",
+    "output": "10\n1\n0\n",
+    "mn": "Input: бэлтгэх хамгийн их $N$, query-ийн $q$, дараа $0\\le n\\le N$ ба $k$. $\\binom nk\\bmod(10^9+7)$ хэвлэнэ; $k$ хүрээнээс гадуур бол $0$.",
+    "en": "Input: preparation bound $N$, query count $q$, then $0\\le n\\le N$ and $k$. Print $\\binom nk$ modulo $10^9+7$, or $0$ for an invalid $k$."
+  },
+  "kmp": {
+    "input": "abababa\naba\n",
+    "output": "0 2 4\n",
+    "mn": "Input: хоосон биш text ба pattern хоёр string. Pattern-ийн бүх эхлэх zero-based index гарна; overlapping match-уудыг мөн тоолно.",
+    "en": "Input nonempty text and pattern strings. Print all zero-based starting indices, including overlapping matches."
+  },
+  "lca": {
+    "input": "5 0 3\n0 1\n0 2\n1 3\n1 4\n3 4\n3 2\n1 3\n",
+    "output": "1 2\n0 3\n1 1\n",
+    "mn": "Input: $n\\ge1$, root, $q$, tree-ийн $n-1$ edge, дараа $q$ node хос. Query бүрт LCA ба edge-ийн тоогоор distance хэвлэнэ; node $0$-оос эхэлнэ.",
+    "en": "Input: $n\\ge1$, root, $q$, the tree’s $n-1$ edges, then $q$ vertex pairs. Print LCA and distance in edges for each pair; vertices are zero-based."
+  },
+  "bitmask-dp": {
+    "input": "3\n9 2 7\n6 4 3\n5 8 1\n",
+    "output": "9\n",
+    "mn": "Input: жижиг $n$ ба $n\\times n$ сөрөг биш cost хүснэгт. Worker бүрт өөр job оноох хамгийн бага нийт cost. Практик туршилтад $n\\le20$, нийт cost INF-ээс бага байна.",
+    "en": "Input: small $n$ and a nonnegative $n\\times n$ cost matrix. Assign a distinct job to each worker at minimum total cost. For practice use $n\\le20$ and totals below INF."
+  },
+  "lazy-segment-tree": {
+    "input": "4 4\n2 1 3 4\nsum 0 3\nadd 1 2 5\nsum 1 2\nsum 0 3\n",
+    "output": "10\n14\n20\n",
+    "mn": "Input: $n\\ge1,q$, initial array, дараа add l r x эсвэл sum l r. Inclusive zero-based range-д нэмнэ/нийлбэр асууна. Sum болон length-times-increment long long-д багтана.",
+    "en": "Input: $n\\ge1,q$, the initial array, then add l r x or sum l r on inclusive zero-based ranges. Sums and length-times-increment products must fit long long."
+  }
+}

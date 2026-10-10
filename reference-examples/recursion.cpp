@@ -11,7 +11,12 @@ long long factorial(int n) {
 }
 
 int main() {
-    cout << factorial(4) << '\n';
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    cout << factorial(n) << '\n';
 
     return 0;
 }

@@ -73,12 +73,30 @@ struct SegTree {
 };
 
 int main() {
-    vector<long long> a = {2, 1, 3, 4};
-    SegTree st(a);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    cout << st.query(1, 3) << '\n';
-    st.update(2, 8);
-    cout << st.query(1, 3) << '\n';
+    int n, q;
+    cin >> n >> q;
+    vector<long long> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    SegTree st(a);
+    for (int i = 0; i < q; i++) {
+        string type;
+        cin >> type;
+        if (type == "set") {
+            int pos;
+            long long x;
+            cin >> pos >> x;
+            st.update(pos, x);
+        } else if (type == "sum") {
+            int l, r;
+            cin >> l >> r;
+            cout << st.query(l, r) << '\n';
+        }
+    }
 
     return 0;
 }
