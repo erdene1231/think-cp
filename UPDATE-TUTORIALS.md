@@ -1,48 +1,53 @@
-# Erdene Club — Tutorials шинэчлэлт
+# Erdene Club — хоёр хэлтэй Tutorials шинэчлэлт
+
+Энэ багц нь өмнөх Source / Pagination шинэчлэлт (007-custom-sources.sql хүртэл)-тэй сайтад зориулагдсан. GitHub repository болон live Supabase-д автоматаар байршуулсан хувилбар биш.
 
 ## Суулгах
 
-Энэ багц өмнөх Source / Pagination шинэчлэлттэй сайтад зориулагдсан.
+1. ZIP-ийг задлаад файлуудыг repository-ийн үндсэн хавтсанд ижил замаар оруулж, хуучин хувилбаруудыг солино. vendor болон supabase хавтсын бүтэц хэвээр байх ёстой. Өөрийн config.js-ийг ашиглана; энэ багц түүнийг агуулаагүй.
+2. Supabase → SQL Editor дээр supabase/008-tutorials.sql файлыг бүтнээр нь ажиллуулна. Өмнөх 007 migration суусан байх шаардлагатай. Энэ шинэчлэлт 24 хоёр хэлтэй хичээлийг анх үүсгэж, tutorial засварлах эрх болон хадгалалтыг тохируулна.
+3. GitHub дээр Commit changes хийгээд Pages deployment дууссаны дараа сайтаа дахин нээнэ.
+4. Tutorials → Монгол / English сонгоод хичээлээ уншина. Админ account-аар нэвтрээд Admin · Tutorials цэсийг нээнэ.
 
-1. ZIP-ийн index.html, app.js, styles.css, favicon.svg файлуудыг repository-ийн root түвшинд хуучин файлуудын оронд оруул.
-2. tutorials.js, tutorials.json хоёр шинэ файлыг мөн root түвшинд оруул. JSON-ийг Supabase-ийн бодлогын importer-аар оруулахгүй; энэ нь tutorial-ийн агуулга.
-3. Commit changes хийгээд GitHub Pages deployment дууссаны дараа сайтаа дахин нээ.
-4. Tutorials цэсийг дар. English эсвэл Монгол үгээр хайж, бүлгээ сонгоод хичээл нээнэ.
+SQL-ийг дахин ажиллуулахад байгаа tutorial-ийн админ засварыг дарж солихгүй. Эхний удаа үүсээгүй хичээлүүдийг л нэмнэ. tutorials.json-ийг бодлогын JSON importer-аар оруулахгүй.
 
-Tutorials-д шинэ SQL migration шаардлагагүй. Өмнөх 007 Source шинэчлэлт суусан байх ёстой. Энэ ZIP нь config.js агуулахгүй тул өөрийн Supabase тохиргоогоо ашиглана.
+## Шинэ боломжууд
 
-## Сайтын нэр ба URL
+- 24 хичээл, тус бүр Монгол болон English хувилбартай. Хичээл бүр ойлголт, хэрэглэх нөхцөл, санаа, алхамчилсан жишээ, зөв ажиллах үндэслэл, C++17 код, complexity, түгээмэл алдаа, дасгал, эх сурвалж гэсэн 10 хэсэгтэй.
+- Анхан шат → Дунд шат → Ахисан шат гэсэн дараалалтай. Түвшнээр болон бүлгээр шүүнэ. Хайлт хоёр хэлний нэр, keyword, тайлбар, агуулгаас хайна.
+- Нүүр, Бодлогууд, Tutorials, Хэрэглэгчид, Friends, Following, Admin · Бодлого, Admin · Tutorials нь тусдаа дэлгэцэд нээгдэнэ. GitHub Pages-д тохирох hash холбоос ашигласан тул reload болон Back/Forward ажиллана.
+- Хичээлүүд өөрийн #tutorial/binary-search хэлбэрийн холбоостой. Агуулгын цэс нь #tutorial/binary-search/part/5 гэх мэт тухайн хэсэгт шууд хүргэнэ.
+- Хувьсагч, индекс, array-ийн тэмдэглэгээ болон томъёонууд MathJax SVG хэлбэрээр харагдана.
+- C++ кодын keyword, type, number, string, comment, function зэрэг нь highlight.js ашиглан өнгөөр ялгарна. Код хуулах товч нь эх кодыг хэвээр хуулна.
 
-Харагдах нэр, browser title, logo нь Erdene Club болсон. Кодын файлууд relative URL ашиглана.
+## Томъёо бичих
 
-GitHub Pages URL-ыг /erdene-club/ болгохын тулд repository → Settings → General → Repository name хэсэгт erdene-club гэж Rename хийнэ. Үүнийг энэ багц автоматаар хийгээгүй.
+Өгүүлбэр дотор нэг нэг $ тэмдэгтийн хооронд бичнэ:
 
-Шинэ хаяг https://erdene1231.github.io/erdene-club/ болно. Repository-ийг rename хийсэн бол Supabase → Authentication → URL Configuration дээр Site URL болон Redirect URLs-д шинэ хаягаа тохируул. Account-ын database болон бодлогын ID өөрчлөгдөхгүй. Browser хадгалалтын key-үүдийг өмнөх хэвээр ашиглаж progress-ийг хадгалсан.
+    Array $a[i..j]$-ийн нийлбэрийг $P[j+1]-P[i]$ гэж олно.
 
-## Tutorials
+Тусдаа мөрөнд хоёр хоёр $ тэмдэгт ашиглана:
 
-24 хичээлтэй. Хичээл бүр 10 хэсэгтэй: гол ойлголт, хэрэглэх нөхцөл, санаа/томъёо, алхамтай жишээ, correctness, C++17, time/space complexity, алдаа, дасгал, цааш унших холбоос.
+    $$\sum_{i=1}^{n}a_i$$
 
-- Суурь: Time & space complexity.
-- Array/search: Prefix sum & difference array, Binary search, Two pointers, Sorting & greedy.
-- Data structures: Stack/queue/monotonic stack, Hash map & compression, DSU, Fenwick tree, Segment tree, Sparse table, Lazy propagation.
-- Graphs: BFS, DFS, Dijkstra, Topological sort/DAG DP, Binary lifting/LCA.
-- DP: Dynamic programming, 0/1 knapsack, LIS, Bitmask DP.
-- Strings: Prefix function/KMP.
-- Math: GCD/sieve/modulo, Combinatorics ба түгээмэл томъёо.
+Мөн \(…\) болон \[…\] тэмдэглэгээ дэмжинэ. Code block доторх $ тэмдэг болон C++ кодыг MathJax боловсруулахгүй. Editor-ийн “Тусдаа мөрийн томъёо” талбарт $ тэмдэггүй TeX бичнэ; editor өөрөө display delimiter нэмдэг.
 
-Тайлбарууд нь Erdene Club-д зориулсан Монгол агуулга. Техникийн танил нэр томъёог англиар хадгалсан. C++ кодын нэг хэсэг нь GNU C++17-ийн __int128 хэрэглэдэг; number theory хичээлд энэ нөхцөлийг тайлбарласан.
+MathJax 3.2.2 болон highlight.js 11.11.1-ийн файлууд vendor хавтаст хамт байгаа тул renderer авахын тулд өөр CDN шаардлагагүй. Лицензүүд мөн хавсаргасан. Renderer файл ачаалахгүй бол тайлбар, код уншигдсан хэвээр үлдэж, томъёо LaTeX хэлбэрээр харагдана. Дахин ачаалах товчтой.
 
-Хайлтыг нэр, keyword, Монгол тайлбар, агуулгаас хийнэ. Хичээлүүд #tutorial/binary-search хэлбэрийн өөрийн холбоостой; reload ба Back/Forward ажиллана. Код, холбоос хуулах товчтой.
+## Админ tutorial засах
 
-## Математикийн томъёо
+Admin · Tutorials хэсгээс хичээлээ сонгоно. Түвшин, түвшин доторх дараалал, бүлгийг өөрчилж болно. Засах хэлээ сонгоод гарчиг, товч тайлбар, урьдчилан мэдэх зүйл болон 10 хэсгийн агуулгыг засна. Монгол/English хооронд шилжихэд түр засвар хадгалагдана; нийтэд хадгалахын тулд “Өөрчлөлтийг хадгалах” товчийг дарна.
 
-MathJax 3.2.2 SVG renderer-ийг Tutorials хичээл анх нээхэд CDN-ээс ачаална. Хичээлүүдийн formulas нь tutorials.json дотор type=math, tex талбарт LaTeX байна. Inline \( … \), block \[ … \], $ … $, $$ … $$ delimiter-ууд дэмжинэ. Code block доторх текстийг MathJax өөрчлөхгүй.
+Жагсаалтын мөр бүр тусдаа зүйл; хүснэгтийн нүдийг Tab-аар, мөрийг Enter-ээр тусгаарлана. Эх сурвалжийн мөр нь “нэр | https://холбоос” хэлбэртэй. C++ болон хүснэгтийн textarea-д Tab товч тухайн тэмдэгтийг оруулна. “Урьдчилан харах” товч нь засварын MathJax болон C++ өнгөчлөлтэй хувилбарыг харуулна.
 
-Renderer-ийн CDN хүрэхгүй үед тайлбар ба код уншигдсан хэвээр, томъёо LaTeX хэлбэрээр харагдаж, дахин ачаалах товч гарна. Tutorials-ийн текст, код нь account нэвтрэх шаардлагагүй.
+Нийтэд хадгалсан tutorial-ийг дараагийн ачаалалтаас бүх хэрэглэгч Supabase-аас уншина. Холболт эсвэл migration байхгүй үед tutorials.json-ийн үндсэн хичээлүүдээр унших боломжтой; онлайн засварлахын тулд SQL шинэчлэлт шаардлагатай.
 
-## Шалгасан зүйл
+Server талд админ эрхийг шалгана. Админ биш хэрэглэгч tutorial table-д шууд бичих эсвэл хадгалах RPC дуудах боломжгүй. Хоёр админ нэг хичээлийг зэрэг өөрчилбөл хуучин revision-ийн хадгалалтыг хориглож, дахин ачаалахыг хүснэ. Өмнөх ба шинэ агуулга audit table-д үлдэнэ. Tutorial ID өөрчлөгдөхгүй. SQL ажиллуулах нь account, бодлого болон progress-ийг өөрчлөхгүй.
 
-24 C++ snippet-ийг g++ -std=c++17-аар compile хийж, expected result болон тохирох сэдвүүдэд brute-force/randomized харьцуулалтаар шалгасан. Fenwick, segment tree/lazy tree, binary search, knapsack, LIS, KMP, LCA, Dijkstra зэрэгт naive/reference хариутай тулгасан.
+## Шалгалт
 
-Бодит Chromium дээр 24 хичээлийн хайлт, category filter, дэлгэрэнгүй 10 хэсэг, бүх MathJax SVG formulas, direct link/reload, Back/Forward, rapid switching, 390px mobile layout, renderer failure fallback-ийг шалгасан. Хуучин бодлогын жагсаалт guest горимд ажиллаж байгааг мөн шалгасан. Live Supabase account эсвэл GitHub deployment дээр энэ шинэчлэлтийг шалгаж байршуулсан гэж үзэхгүй.
+Chromium browser дээр хоёр хэлний нийт 48 хувилбарын 10 хэсэг, inline/display MathJax, C++ syntax highlighting, хайлт, түвшин ба бүлгийн шүүлт, direct link/reload, Back/Forward, тусдаа дэлгэцүүд болон 390px mobile layout-ийг шалгасан. Бодлогын хуучин 85 мөр харагдаж, хэрэглэгч/Friends/Following цэсүүд өөрийн дэлгэцэд нээгдэж байгааг шалгасан.
+
+Бодит editor-ийг RPC fixture ашиглан шалгасан: хоёр хэлний өөрчлөлт, preview, $ болон $$ томъёо, эх кодын өнгөчлөл, хадгалах payload, эрх хүчингүй болох урсгал. PGlite PostgreSQL дээр seed, өгөгдлийн validation, public read, RLS ба шууд бичих хориг, админ/админ биш эрх, revision conflict, audit болон migration дахин ажиллуулахад админ засвар хадгалагдахыг шалгасан. Live Supabase болон GitHub deployment дээр байршуулж шалгаагүй.
+
+24 C++ хэрэгжүүлэлт өмнөх шинэчлэлтийн compile болон reference/randomized шалгалтыг давсан код хэвээр. English тайлбарын two pointers болон monotonic stack-ийг тухайн кодын бодит үр дүнтэй тулгаж зассан. Number theory код GNU C++17-ийн __int128 extension ашигладаг.

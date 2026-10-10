@@ -1,11 +1,13 @@
+import {setupTutorials} from './tutorials.js?v=12';
+let tutorialUI;
 import {EMPTY, cleanEntry, parseBackup} from './progress.js';
 import {getSolvers} from './community.js?v=6';
-import {setupAdmin} from './admin.js?v=11';
-import {parseCatalog,hintTexts,getSources} from './problem-store.js?v=11';
+import {setupAdmin} from './admin.js?v=12';
+import {parseCatalog,hintTexts,getSources} from './problem-store.js?v=12';
 import {rpc} from './accounts.js?v=6';
 import {ownProfile,saveOwnProfile,avatarUrl,accountError} from './accounts.js?v=6';
-import {setupSocial} from './social.js?v=11';
-import {filterProblems, getTags, ratingLabel} from './catalog.js?v=11';
+import {setupSocial} from './social.js?v=12';
+import {filterProblems, getTags, ratingLabel} from './catalog.js?v=12';
 const $ = id => document.getElementById(id);
 const STATUS = {new:'Эхлээгүй',trying:'Оролдож байгаа',solved:'Бодсон'};
 let data, selectedPack='', selectedProblem, state={}, dirty={}, user=null, client=null, loading=false, syncing=false, syncAgain=false, epoch=0;
@@ -111,7 +113,7 @@ function renderOwnAvatar() {
   const url=avatarPreviewUrl||avatarUrl(client,myProfile);$('own-avatar').hidden=!url;if(url)$('own-avatar').src=url;else $('own-avatar').removeAttribute('src');$('own-avatar-fallback').hidden=!!url;$('own-avatar-fallback').textContent=((myProfile?.full_name||myProfile?.username||'?')[0]||'?').toUpperCase();
 }
 function updateAccount() {
-  social?.accountChanged();adminUI?.accountChanged();
+  social?.accountChanged();adminUI?.accountChanged();tutorialUI?.accountChanged();
   for(const id of ['full-name','school','avatar-file','remove-avatar'])$(id).disabled=profileLoading||profileSaving||!myProfile;
   $('reload-profile').hidden=!user||!!myProfile;$('reload-profile').disabled=profileLoading;
   $('account').textContent=user?(username?'@'+username:'Миний account'):'Нэвтрэх';$('storage-label').textContent=user?'Account + энэ browser':'Энэ browser-т хадгална';
@@ -168,7 +170,7 @@ async function refreshCatalog(){if(!client){catalogLoading=false;render();notice
  finally{catalogLoading=false;render();}
 }
 async function init() {
-  const response=await fetch('./problems.json?v=11', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();catalogIds=new Set(data.problems.map(p=>p.id));catalogLoading=configured;
+  const response=await fetch('./problems.json?v=12', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();catalogIds=new Set(data.problems.map(p=>p.id));catalogLoading=configured;
   try{const cached=parseCatalog(JSON.parse(localStorage.getItem('think-cp:online-catalog')||'null'));data.problems=cached.problems;data.sources=cached.sources||[];for(const id of cached.knownIds)catalogIds.add(id);}catch{}
   readLocal();render();updateAccount();
   populateTags();populateSources();
@@ -186,6 +188,7 @@ async function init() {
   render();
   document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
   $('account').onclick=()=>{updateAccount();$('auth').showModal();};
+  tutorialUI=setupTutorials({client:()=>client,user:()=>user});
   social=setupSocial({client:()=>client,user:()=>user,problems:()=>data.problems,openProblem,openAccount:()=>{$('account').onclick();},notice});
   adminUI=setupAdmin({client:()=>client,user:()=>user,refreshCatalog,sources:()=>getSources(data.problems,data.sources||[])});
   $('avatar-file').onchange=()=>{if(avatarPreviewUrl)URL.revokeObjectURL(avatarPreviewUrl);avatarPreviewUrl=null;const file=$('avatar-file').files?.[0];if(file){avatarPreviewUrl=URL.createObjectURL(file);$('remove-avatar').checked=false;}renderOwnAvatar();};
@@ -212,7 +215,7 @@ async function init() {
       const {createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');client=createClient(cfg.supabaseUrl,cfg.supabaseKey);
       client.auth.onAuthStateChange((event,session)=>{social.authEvent(event,session);setTimeout(()=>void switchUser(session?.user || null),0);});
       await refreshCatalog();
-      const {data:sessionData,error}=await client.auth.getSession();if(error)throw error;await switchUser(sessionData.session?.user || null);updateAccount();social.connected();adminUI.connected();
+      const {data:sessionData,error}=await client.auth.getSession();if(error)throw error;await switchUser(sessionData.session?.user || null);updateAccount();social.connected();adminUI.connected();tutorialUI.connected();
     } catch(error){client=null;catalogLoading=false;render();updateAccount();notice('Account холболт ажилласангүй: '+error.message);}
   }
 }

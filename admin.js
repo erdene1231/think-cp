@@ -1,3 +1,4 @@
+import {setAdminRoute} from './navigation.js?v=12';
 import {rpc,accountError} from './accounts.js?v=6';
 import {validateProblem,parseProblemImport,validateSource,getSources} from './problem-store.js?v=10';
 export function setupAdmin(ctx) {
@@ -16,8 +17,8 @@ export function setupAdmin(ctx) {
   try{const list=await rpc(ctx.client(),'get_admin_catalog');if(request!==token||uid!==ctx.user()?.id)return;rows=list||[];selected=selected?rows.find(p=>p.number===selected.number)||null:null;edit(selected);$('admin-message').textContent=rows.length+' бодлого · Хассан бодлогыг сэргээж болно.';}
   catch(e){if(request===token)$('admin-message').textContent=accountError(e);}
  }
- async function checkRole(){const request=++token,uid=ctx.user()?.id;admin=false;rows=[];selected=null;$('admin-section').hidden=true;$('admin-nav').hidden=true;if(!uid||!ctx.client())return;
-  try{const allowed=await rpc(ctx.client(),'is_admin');if(request!==token||uid!==ctx.user()?.id)return;admin=allowed===true;$('admin-nav').hidden=!admin;$('admin-section').hidden=!admin;if(admin){edit(null);void load();void loadAdmins();}}
+ async function checkRole(){const request=++token,uid=ctx.user()?.id;admin=false;rows=[];selected=null;setAdminRoute(false);if(!uid||!ctx.client())return;
+  try{const allowed=await rpc(ctx.client(),'is_admin');if(request!==token||uid!==ctx.user()?.id)return;admin=allowed===true;setAdminRoute(admin);if(admin){edit(null);void load();void loadAdmins();}}
   catch{ /* No client-side email or metadata fallback can grant admin rights. */ }
  }
  function input(){return validateProblem({title:$('admin-title').value,source:$('admin-source').value,ref:$('admin-ref').value,url:$('admin-url').value.trim(),rating:$('admin-rating').value,ratingKind:$('admin-rating-kind').value,level:$('admin-level').value,priority:$('admin-priority').checked,tags:$('admin-tags').value.split(','),hints:Array.from({length:3},(_,i)=>$('admin-hint-mn-'+i).value.trim()).filter((v,_,all)=>all.some(Boolean)),hintsEn:Array.from({length:3},(_,i)=>$('admin-hint-en-'+i).value.trim()).filter((v,_,all)=>all.some(Boolean)),lesson:$('admin-lesson').value,editorialUrl:$('admin-editorial').value.trim()});}
