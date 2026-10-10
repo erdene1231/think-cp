@@ -1,11 +1,11 @@
 import {EMPTY, cleanEntry, parseBackup} from './progress.js';
 import {getSolvers} from './community.js?v=6';
-import {setupAdmin} from './admin.js?v=10';
-import {parseCatalog,hintTexts,getSources} from './problem-store.js?v=10';
+import {setupAdmin} from './admin.js?v=11';
+import {parseCatalog,hintTexts,getSources} from './problem-store.js?v=11';
 import {rpc} from './accounts.js?v=6';
 import {ownProfile,saveOwnProfile,avatarUrl,accountError} from './accounts.js?v=6';
-import {setupSocial} from './social.js?v=10';
-import {filterProblems, getTags, ratingLabel} from './catalog.js?v=10';
+import {setupSocial} from './social.js?v=11';
+import {filterProblems, getTags, ratingLabel} from './catalog.js?v=11';
 const $ = id => document.getElementById(id);
 const STATUS = {new:'Эхлээгүй',trying:'Оролдож байгаа',solved:'Бодсон'};
 let data, selectedPack='', selectedProblem, state={}, dirty={}, user=null, client=null, loading=false, syncing=false, syncAgain=false, epoch=0;
@@ -168,7 +168,7 @@ async function refreshCatalog(){if(!client){catalogLoading=false;render();notice
  finally{catalogLoading=false;render();}
 }
 async function init() {
-  const response=await fetch('./problems.json?v=10', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();catalogIds=new Set(data.problems.map(p=>p.id));catalogLoading=configured;
+  const response=await fetch('./problems.json?v=11', {cache:'no-store'});if(!response.ok)throw new Error('Бодлогын санг ачаалж чадсангүй.');data=await response.json();catalogIds=new Set(data.problems.map(p=>p.id));catalogLoading=configured;
   try{const cached=parseCatalog(JSON.parse(localStorage.getItem('think-cp:online-catalog')||'null'));data.problems=cached.problems;data.sources=cached.sources||[];for(const id of cached.knownIds)catalogIds.add(id);}catch{}
   readLocal();render();updateAccount();
   populateTags();populateSources();
@@ -198,7 +198,7 @@ async function init() {
   $('toggle-hints').onclick=()=>{const id=selectedProblem.id;if(hiddenHints.has(id))hiddenHints.delete(id);else hiddenHints.add(id);renderDetail();};
   $('next-hint').onclick=()=>{if(!selectedProblem.hints?.length)return;hiddenHints.delete(selectedProblem.id);const e=entry(selectedProblem.id);setEntry(selectedProblem.id,{hints:Math.min(e.hints+1,selectedProblem.hints.length),status:e.status==='new'?'trying':e.status});renderDetail();};
   $('save-note').onclick=()=>{setEntry(selectedProblem.id,{notes:$('notes').value});$('detail-feedback').textContent='Тэмдэглэлийг progress-д нэмлээ. Хадгалалтын төлөвийг үндсэн хуудаснаас харна уу.';};
-  $('export').onclick=()=>{const blob=new Blob([JSON.stringify({version:1,progress:state},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=el('a');a.href=url;a.download='think-cp-progress.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+  $('export').onclick=()=>{const blob=new Blob([JSON.stringify({version:1,progress:state},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=el('a');a.href=url;a.download='erdene-club-progress.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
   $('import').onchange=async event=>{
     const file=event.target.files[0],turn=epoch;if(!file)return;
     try {if(loading)throw new Error('Account ачаалагдаж байна. Түр хүлээгээд дахин сонгоно уу.');if(file.size>2_000_000)throw new Error('Файл хэт том байна.');const imported=parseBackup(JSON.parse(await file.text()),catalogIds);if(turn!==epoch)throw new Error('Account солигдлоо. Файлаа дахин сонгоно уу.');if(!confirm('Файлд байгаа бодлогуудын progress-ийг сэргээх үү? Одоогийн ижил бодлогын төлөв солигдоно.'))return;for(const [id,e] of Object.entries(imported)){state[id]=e;dirty[id]=e;}const saved=persist();render();if(saved)notice('Progress сэргээгдлээ.');void sync();}

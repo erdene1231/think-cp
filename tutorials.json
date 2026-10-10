@@ -1,0 +1,4014 @@
+{
+  "version": 1,
+  "language": "mn",
+  "tutorials": [
+    {
+      "id": "complexity",
+      "title": "Time & space complexity",
+      "category": "Суурь",
+      "level": "Анхан",
+      "aliases": "big o O(n) хугацаа санах ой complexity asymptotic",
+      "summary": "Input томроход алгоритмын ажил хэрхэн нэмэгдэхийг тооцож, бодлогод багтах шийдэл сонгох.",
+      "prerequisites": "Loop, array, function.",
+      "related": [
+        "prefix-sums",
+        "binary-search",
+        "monotonic-stack"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Time complexity нь кодын секундийг шууд хэлэхгүй. Input-ийн хэмжээ өсөхөд үндсэн үйлдлийн тоо ямар хурдаар нэмэгдэхийг илэрхийлнэ. Big-O бол өсөлтийн дээд хязгаар; яг өсөлтийн эрэмбийг Θ гэж тэмдэглэдэг. Жишээ нь бүх n элементийг нэг удаа үзэх loop Θ(n). Үүнийг O(n²) гэж хэлж болох ч энэ нь ашиг багатай сул хязгаар болно."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Код бичихээс өмнө n, query-ийн тоо q, graph-ийн V ба E, DP-ийн state-уудын тоог хар. n=200000 үед бүх хосыг үзэх n² арга ихэвчлэн тохирохгүй. Харин sort хийдэг n log n шийдэл боломжтой байж болно. Нэг секундэд яг хэдэн үйлдэл багтах тогтмол дүрэм байхгүй: хэл, memory access, өгөгдлийн бүтэц, judge-ийн төхөөрөмж бүгд нөлөөлнө."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Дараалсан loop-уудын ажлыг нэмнэ; nested loop-ын хувьд дотор loop хэдэн удаа ажиллахыг нийтээр нь тоолно. Дотор loop-ын урт i байвал n² гэсэн үгийг цээжлэхийн оронд 1+2+…+n нийлбэр гарга. Binary search-д үлдсэн боломжийн тоо алхам бүрд хоёр дахин багасдаг."
+            },
+            {
+              "type": "math",
+              "tex": "\\sum_{i=1}^{n} i=\\frac{n(n+1)}2=\\Theta(n^2),\\qquad \\log_2 n\\text{ halvings}"
+            },
+            {
+              "type": "p",
+              "text": "Space complexity-д array, DP table, adjacency list, recursion stack зэрэг нэмэлт санах ойг тооцно. Input өөрөө эзэлж буй зай болон алгоритмын нэмэлт зайг ялгаж хэл. Recursion гүн n бол local variable цөөн байсан ч stack O(n) болно."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "n=4 үед эхний i-д j=0…i гэсэн nested loop-ын үйлдэл 1+2+3+4=10.",
+                "n=8 үед 36, n=16 үед 136 болно. n хоёр дахин өсөхөд ажил ойролцоогоор дөрөв дахин өснө.",
+                "Харин n-ийг алхам бүрд /2 хийвэл 16→8→4→2→1: дөрвөн алхам.",
+                "n=200000 үед бүх хос ойролцоогоор 20 тэрбум. Sort-ийн харьцуулалтын эрэмбэ хэдэн сая орчим боловч энэ нь шууд секундийн амлалт биш."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Θ(n²)-ийг батлахдаа дээд ба доод хязгаар хоёрыг харуул. Nested loop нийт n(n+1)/2 ажилладаг тул n≥1 үед n²/2-оос багагүй, n²-оос ихгүй. Иймээс хоёр тогтмолын хооронд n²-той ижил эрэмбээр өснө. Amortized analysis-д нэг үйлдлийн worst case-ийг бүх үйлдэлд үржүүлж болохгүй: stack-д element бүр нэг удаа push, нэг удаа pop хийгдэх нь нийт O(n)-ийн жишээ."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_pairs(int n) {\n    long long count = 0;\n    for (int i = 0; i < n; ++i)\n        for (int j = 0; j <= i; ++j) ++count;\n    return count;\n}\nint halvings(int n) {\n    int steps = 0;\n    while (n > 1) { n /= 2; ++steps; }\n    return steps;\n}"
+            },
+            {
+              "type": "p",
+              "text": "Эдгээр нь growth-ийг ажиглах жижиг function-ууд. count_pairs-ийн буцах утгыг 1LL*n*(n+1)/2-той харьцуулж болно. Benchmark ганцхан n дээр ажиллуулах нь complexity-ийн баталгаа болохгүй."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "count_pairs",
+                  "Θ(n²) хугацаа, O(1) нэмэлт зай"
+                ],
+                [
+                  "halvings",
+                  "Θ(log n) хугацаа, O(1) нэмэлт зай"
+                ],
+                [
+                  "n×m DP table",
+                  "O(nm) state хадгалах зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Big-O-г яг гүйцэтгэх хугацаа гэж ойлгох.",
+                "Query бүрд O(n) хийдэг кодын нийт O(nq)-ийг мартах.",
+                "int overflow-оос болоод үйлдлийн тоог буруу тооцох. n*(n+1)-ийг long long-д үржүүл.",
+                "Recursive DFS-ийн stack болон hash table-ийн overhead-ийг зайны тооцоонд оруулахгүй орхих."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Дараалсан хоёр n урт loop яагаад O(n²) биш вэ?",
+                "i=1,2,4,8… гэж өсөх loop хэдэн удаа ажиллах вэ?",
+                "n=200000, q=200000 үед prefix sum, naive range sum хоёрын нийт ажлыг харьцуул."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prefix-sums",
+      "title": "Prefix sum & difference array",
+      "category": "Array ба search",
+      "level": "Анхан",
+      "aliases": "prefix sum угтвар нийлбэр difference array ялгаврын массив range sum",
+      "summary": "Олон range query-г урьдчилан тооцсон нийлбэрээр хурдан хариулах; олон range update-ийг difference array-д хуримтлуулах.",
+      "prerequisites": "Array, loop, нийлбэр.",
+      "related": [
+        "fenwick-tree",
+        "segment-tree",
+        "two-pointers"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Prefix sum нь эхнээс нь тодорхой байрлал хүртэлх нийлбэрийг хадгална. Query бүрд range-ийг дахин тойрох шаардлагагүй. Difference array нь эсрэг чиглэлээр ажиллана: бүх update-ийг эхлэл ба төгсгөлийн өөрчлөлтөөр тэмдэглээд, эцэст нь prefix sum аван бодит array-г сэргээнэ. Хоёрыг хооронд нь хольж болохгүй: эхнийх нь query, хоёр дахь нь offline update-д тохиромжтой."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Array өөрчлөгдөхгүй, range sum олон удаа асуухад prefix sum хэрэглэ. Нэмэх update-уудыг бүгдийг хийсний дараа л эцсийн array хэрэгтэй бол difference array хэрэглэ. Update ба query ээлжилбэл энгийн prefix sum-ийг байнга дахин байгуулах хэрэг гарна; тэр үед Fenwick tree эсвэл segment tree-г сонго."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "0-based array дээр pref[k] нь эхний k элементийн нийлбэр байг. Тэгвэл pref[0]=0, pref[i+1]=pref[i]+a[i]. Энэ хичээлд бүх range [l,r), өөрөөр хэлбэл l багтана, r багтахгүй. Хоосон range-ийн нийлбэр 0."
+            },
+            {
+              "type": "math",
+              "tex": "\\operatorname{sum}(l,r)=P[r]-P[l],\\qquad d[l]\\mathrel{+}=x,\\quad d[r]\\mathrel{-}=x"
+            },
+            {
+              "type": "p",
+              "text": "Difference array-д l-ээс эхлэн x нэмэгдэж, r-ээс эхлэн тэр нөлөө дуусна. n+1 урттай array хэрэглэвэл r=n үед төгсгөлийн тэмдэглэгээг ч аюулгүй хадгална. Нийлбэр n×max|a[i]| хүрч болдог тул long long хэрэгтэй эсэхээ шалга."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "a=[2,−1,3,4] байвал P=[0,2,1,4,8].",
+                "[1,4) range нь −1+3+4=6. P[4]−P[1]=8−2=6.",
+                "Zero array дээр [1,4)-д 5 нэмбэл d[1]+=5, d[4]−=5.",
+                "d-ийн running sum-ийг авбал [0,5,5,5] гарна. Дараагийн update-ийг d дээр нэмж тэмдэглээд нэг удаа сэргээж болно."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "P[r] нь [0,r)-ийг, P[l] нь [0,l)-ийг тоолсон. Ижил эхний хэсгийг хасахад [l,r) л үлдэнэ. Difference array-ийн нэг update prefix sum авахад i<l үед 0, l≤i<r үед x, i≥r үед x−x=0 нэмэртэй. Бүх update нийлбэрт шугаман байдлаар үйлчилдэг тул тэдгээрийг хамтад нь тэмдэглэх нь зөв."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<long long> prefix(const vector<long long>& a) {\n    vector<long long> p(a.size() + 1, 0);\n    for (int i = 0; i < (int)a.size(); ++i) p[i+1] = p[i] + a[i];\n    return p;\n}\nvector<long long> apply_updates(int n,\n        const vector<tuple<int,int,long long>>& updates) {\n    vector<long long> d(n+1, 0), a(n);\n    for (auto [l,r,x] : updates) {\n        assert(0 <= l && l <= r && r <= n);\n        d[l] += x; d[r] -= x;\n    }\n    long long current = 0;\n    for (int i = 0; i < n; ++i) { current += d[i]; a[i] = current; }\n    return a;\n}"
+            },
+            {
+              "type": "p",
+              "text": "Range sum-ийг prefix(a)[r]−prefix(a)[l] хэлбэрээр, update-ийг (l,r,x) tuple-ээр өгнө. apply_updates нь анх 0 байсан array-д үйлчилнэ. Анхны a байгаа бол сэргээсэн нэмэгдлээ element бүр дээр нь нэм."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Prefix байгуулах",
+                  "O(n) хугацаа, O(n) зай"
+                ],
+                [
+                  "Нэг range sum",
+                  "O(1)"
+                ],
+                [
+                  "q offline range update + сэргээх",
+                  "O(n+q) хугацаа, O(n) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "[l,r] ба [l,r)-ийг холих; inclusive r-ийг кодод r+1 болго.",
+                "Prefix sum нь ерөнхий range minimum-ийг хасалтаар гаргаж чадахгүй.",
+                "Negative element prefix sum-д асуудалгүй. Харин sum-ийг monotonic гэж үзэж binary search хийхэд асуудал болно.",
+                "Difference array-аас final array сэргээхээс өмнө энгийн query асуух."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "[0,n), [2,2), ганц element-ийн range-ийг турш.",
+                "2D grid-ийн rectangle sum-д дөрвөн prefix утгын inclusion-exclusion томъёо гарга.",
+                "Overlap хийсэн хоёр update-ийн хариуг гараар тооцоод кодтой тулга."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "binary-search",
+      "title": "Binary search",
+      "category": "Array ба search",
+      "level": "Анхан",
+      "aliases": "хоёртын хайлт binary search lower bound upper bound answer monotonic",
+      "summary": "Monotonic нөхцөлийн false/true заагийг олж, эрэмбэлсэн array эсвэл хариун дээр хайлт хийх.",
+      "prerequisites": "Sorted array, comparison, complexity.",
+      "related": [
+        "complexity",
+        "prefix-sums",
+        "lis"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Binary search нь зөвхөн array дотроос утга хайх арга биш. Боломжит хариунуудыг эрэмбэлж, check(x) нь false…false,true…true болж өөрчлөгдөж байвал анхны true-г олж болно. Нөхцөлийн monotonic чанар нь гол шаардлага. Хэрэглэхээсээ өмнө x боломжтой бол түүнээс том утга яагаад боломжтой хэвээр болохыг батал."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Sorted array дээр lower_bound буюу анхны ≥x байрлал, upper_bound буюу анхны >x байрлал олоход хэрэглэнэ. Хамгийн бага боломжит capacity, хамгийн бага хугацаа зэрэг answer search бодлогод check function зохионо. Check нь O(n) бол хайлт O(n log R). Нөхцөл true/false ээлжлээд байвал энэ template тохирохгүй."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Хариу [0,n] байг; n нь array-д тохирох element байхгүй гэсэн sentinel. l<r үед m-ийг шалга. a[m]≥x бол анхны тохирох байрлал m-ээс хойш байх албагүй тул r=m. Үгүй бол m болон түүнээс өмнөх бүх байрлал тохирохгүй учир l=m+1."
+            },
+            {
+              "type": "math",
+              "tex": "\\text{answer}\\in[l,r],\\qquad m=l+\\left\\lfloor\\frac{r-l}{2}\\right\\rfloor"
+            },
+            {
+              "type": "p",
+              "text": "Энэ хувилбар n sentinel дээр check хийхгүй. Loop дуусахад l=r болсон цорын ганц candidate үлдэнэ. Answer search дээр check-ийн дотор integer overflow, ceiling division, total sum-ийн төрлийг мөн шалга. Midpoint зөв байсан ч check буруу байвал хариу буруу гарна."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "a=[1,3,3,7,9], x=4. Эхэнд l=0,r=5.",
+                "m=2 дээр 3<4: l=3. Одоо хариу [3,5]-д.",
+                "m=4 дээр 9≥4: r=4. m=3 дээр 7≥4: r=3.",
+                "l=r=3, хариу a[3]=7-ийн байрлал. x=10 үед 5 буцна; a[5]-д хандаж болохгүй."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Loop эхэнд анхны тохирох байрлал [l,r]-д байна. Sorted учир a[m]<x байвал бүх i≤m дээр a[i]<x; хариу m+1-ээс эхэлнэ. a[m]≥x байвал m өөрөө боломжит байрлал тул хариу m-ээс их байж таарахгүй. Алхам бүр invariant хадгалагдаж, range багасна. Тэгэхээр төгсгөлд үлдсэн l зөв хариу."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint first_at_least(const vector<long long>& a, long long x) {\n    int l = 0, r = (int)a.size();\n    while (l < r) {\n        int m = l + (r-l)/2;\n        if (a[m] >= x) r = m;\n        else l = m+1;\n    }\n    return l;\n}"
+            },
+            {
+              "type": "p",
+              "text": "Array заавал nondecreasing байна. Буцах утга a.size() байвал тохирох утга байхгүй. Standard library-ийн lower_bound(a.begin(),a.end(),x) мөн энэ үйлдлийг хийнэ. Exact x байгаа эсэхийг index<n && a[index]==x гэж шалга."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Sorted array query",
+                  "O(log n) хугацаа, O(1) нэмэлт зай"
+                ],
+                [
+                  "Sort шаардлагатай бол",
+                  "O(n log n) урьдчилсан ажил"
+                ],
+                [
+                  "Answer search",
+                  "O(Tcheck × log R) хугацаа"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Unsorted array дээр шууд хэрэглэх.",
+                "r=m−1 гэж өөр template-ийн дүрмийг хольж хэрэглэх; m нь хариу байж болно.",
+                "Midpoint өөрчлөгдөхгүй loop үүсгэх.",
+                "Answer search-ийн high нь үнэхээр боломжтой эсэхийг шалгахгүй байх."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Хоосон array, бүх element ижил, x хамгийн бага/их утгаас гадуур тохиолдлыг шалга.",
+                "Upper_bound хийхэд ганц comparison-ийг яаж өөрчлөх вэ?",
+                "Хугацаа T-д k machine хэдэн бүтээгдэхүүн гаргах check function зохиож monotonic чанарыг батал."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "two-pointers",
+      "title": "Two pointers & sliding window",
+      "category": "Array ба search",
+      "level": "Анхан",
+      "aliases": "хоёр зааг sliding window two pointers subarray window",
+      "summary": "Range-ийн хоёр заагийг зөвхөн урагшлуулж, олон overlapping subarray-г нийт O(n)-д боловсруулах.",
+      "prerequisites": "Array, prefix sum, monotonic нөхцөл.",
+      "related": [
+        "prefix-sums",
+        "hash-compression",
+        "monotonic-stack"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Two pointers-д l ба r гэсэн хоёр байрлал нэг чиглэлд хөдөлдөг. Sliding window нь [l,r) гэсэн одоогийн цонхны нийлбэр, давтамж зэрэг мэдээллийг хадгалдаг хувилбар. Nested while харагдсан ч pointer бүр нийт n удаа л шилжвэл нийт O(n). Гэхдээ энэ аргад range томрох/жижгэрэхэд нөхцөл яаж өөрчлөгдөх нь чухал."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Nonnegative array дээр sum≤K байх subarray-ийн тоо, distinct element≤K байх цонх, string-д тодорхой нөхцөл хангах хамгийн урт хэсэгт хэрэглэж болно. Sum-ийн хувьд negative тоо байвал r нэмэхэд sum буурч болох учир доорх арга ерөнхийдөө буруу. Тийм үед prefix sum + өөр өгөгдлийн бүтэц хэрэгтэй."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Баруун зааг r-ийг нэмэхдээ a[r]-ийг sum-д оруул. Sum>K болсон үед l-ийг урагшлуулж илүүдсэн хэсгийг хас. Үлдсэн window valid болсон бол r дээр төгсөх [l,r], [l+1,r], …, [r,r] гэсэн бүх nonempty range valid байна."
+            },
+            {
+              "type": "math",
+              "tex": "\\text{answer}\\mathrel{+}=r-l+1\\quad\\text{when all }a_i\\ge0\\text{ and }K\\ge0"
+            },
+            {
+              "type": "p",
+              "text": "Nonnegative учир эхнээс нь element хасахад sum өсөхгүй. Өмнө хассан эхлэлүүдийг дараагийн r дээр дахин харах шаардлагагүй. Zero элементтэй үед ч энэ чанар хэвээр. K<0 байвал nonnegative array дээр valid nonempty subarray огт байхгүй."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "a=[2,1,3], K=3. r=0 үед sum=2, l=0; нэг range тоолно.",
+                "r=1 үед sum=3; [2,1], [1] гэсэн хоёр range нэмнэ. Нийт 3.",
+                "r=2 үед sum=6. a[0]=2-ыг хасаад 4, a[1]=1-ийг хасаад 3 болно.",
+                "l=2 тул [3] л valid. Нийт 4. Negative input [4,−3] дээр анхны 4-ийг хасвал дараа нь [4,−3]-ийг алдах учир нөхцөлөө шалгах ёстой."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "r бүрд loop дуусахад window sum≤K бөгөөд хассан эхлэлүүд sum>K байсан. Nonnegative шинэ element нэмэхэд өмнө invalid байсан эхлэл valid болохгүй. Үлдсэн window-ийн suffix бүр sum нь window-оос ихгүй тул valid. Иймээс r−l+1 нь яг r дээр төгсөх valid range-ийн тоо. Эдгээр бүлгүүд төгсгөлийн индексээрээ ялгаатай тул давхар тоолохгүй."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long count_subarrays(const vector<long long>& a, long long k) {\n    if (k < 0) return 0;\n    long long sum = 0, answer = 0;\n    int l = 0;\n    for (int r = 0; r < (int)a.size(); ++r) {\n        assert(a[r] >= 0);\n        sum += a[r];\n        while (sum > k) sum -= a[l++];\n        answer += r-l+1;\n    }\n    return answer;\n}"
+            },
+            {
+              "type": "p",
+              "text": "Энэ function sum≤k байх nonempty subarray-ийн тоог буцаана; sum нь long long-д багтана гэж үзсэн. Exact sum=K тоолох бол nonnegative нөхцөлд count(K)−count(K−1) авч болно. Window-д frequency map нэмбэл distinct element-ийн нөхцөл хариулах боломжтой."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Хоёр pointer-ийн шилжилт",
+                  "Нийт O(n)"
+                ],
+                [
+                  "Sum window",
+                  "O(1) нэмэлт зай"
+                ],
+                [
+                  "Frequency window",
+                  "Distinct утгуудын тоотой тэнцэх зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Negative array дээр sum-based sliding window хэрэглэж нөхцөлийг батлахгүй орхих.",
+                "Window-ийг шинэчлэх үед frequency 0 болсон утгыг distinct count-оос хасахгүй байх.",
+                "answer-ийн O(n²) хэмжээ int-д багтана гэж бодох.",
+                "Empty window үед r−l+1=0 гарч болохыг буруу алдаа гэж үзэх."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "a=[0,0,0], K=0 үед яагаад 6 гарахыг тайлбарла.",
+                "Brute force-аар жижиг array-ийн бүх range-ийг тоолоод function-тай харьцуул.",
+                "Хамгийн ихдээ хоёр distinct утгатай longest window-ийн state-ийг тодорхойл."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "greedy",
+      "title": "Sorting & greedy",
+      "category": "Array ба search",
+      "level": "Дунд",
+      "aliases": "greedy шуналтай эрэмбэлэлт sorting interval exchange argument",
+      "summary": "Алхам бүрд нэг сонголт хийгээд эргэж өөрчлөхгүй шийдлийг exchange argument-аар батлах.",
+      "prerequisites": "Sort, comparator, optimal solution.",
+      "related": [
+        "complexity",
+        "dynamic-programming",
+        "binary-search"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Greedy нь тухайн мөчид хамгийн сайн мэт сонголт хийдэг ч бүх бодлогод зөв биш. Хамгийн хэцүү хэсэг нь сонголтын дүрэм олох болон тэр дүрмийг батлах. Жишээ нь interval scheduling-д хамгийн олон давхцахгүй interval сонгохдоо эрт эхэлснийг эсвэл хамгийн богиныг биш, хамгийн эрт дуусахыг сонгоно."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Бодлогын structure нь хамгийн эрт дуусах, хамгийн бага үнэ, хамгийн их үлдэгдэл зэрэг сонголтыг optimal хариунд хүчээр оруулж болох үед хэрэглэнэ. Сонгосны дараа үлдсэн бодлого ижил хэлбэртэй байх нь тус болдог. Local сонголтоос global optimal руу шилжих баталгаа байхгүй бол counterexample хай. Weighted interval scheduling-д доорх greedy ерөнхийдөө тохирохгүй; DP хэрэгтэй."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Interval-уудыг end өсөхөөр sort хий. Сонгосон сүүлийн interval-ийн end-ийг last-д хадгал. Дараагийн interval-ийн start≥last бол сонгоод last=end болго. Энэ хичээлд [start,end) interval, start<end гэж үзсэн тул нэг нь дуусах мөчид нөгөө эхэлж болно."
+            },
+            {
+              "type": "math",
+              "tex": "\\text{choose }[s,e)\\text{ iff }s\\ge\\text{lastEnd}"
+            },
+            {
+              "type": "p",
+              "text": "Sort comparator strict weak ordering байх ёстой: a.end<b.end, тэнцвэл a.start<b.start гэж тодорхойл. ≤ хэрэглэвэл өөрийгөө өөрөөсөө өмнө гэж үзэх зөрчил үүсгэнэ. Greedy-д нэг дүрэм тохирсон нь бусад зорилтод мөн тохирно гэсэн үг биш."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Interval-ууд [0,5), [1,3), [3,4), [4,7). End-ээр sort хийвэл [1,3), [3,4), [0,5), [4,7).",
+                "Эхлээд [1,3)-ыг сонгоно. last=3.",
+                "[3,4)-ийг сонгоно. [0,5) нь overlap тул алгасна.",
+                "[4,7)-ийг сонгоод нийт 3. Эрт эхэлдэг [0,5)-ыг сонгосон бол энэ жишээнд зөвхөн нэг interval авч болно."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "g нь хамгийн эрт дуусах interval, optimal шийдлийн эхний interval o байг. g.end≤o.end тул o-г g-ээр сольсон ч дараагийн interval-уудтай overlap шинээр үүсэхгүй. Interval-ийн тоо хэвээр. Иймээс g-г агуулсан optimal шийдэл байдаг. g-ийн дараах үлдсэн interval-ууд дээр мөн адил солилт хийж, сонголт бүр optimal шийдэлтэй нийцэхийг induction-аар батална."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint max_intervals(vector<pair<long long,long long>> intervals) {\n    sort(intervals.begin(), intervals.end(), [](auto a, auto b) {\n        if (a.second != b.second) return a.second < b.second;\n        return a.first < b.first;\n    });\n    long long last = LLONG_MIN;\n    int answer = 0;\n    for (auto [s,e] : intervals) {\n        assert(s < e);\n        if (s >= last) { ++answer; last = e; }\n    }\n    return answer;\n}"
+            },
+            {
+              "type": "p",
+              "text": "Pair-ийн first нь start, second нь end. Interval-уудын жин байхгүй, зорилго зөвхөн тоог хамгийн их болгох. Inclusive [s,e] integer interval хэрэглэвэл compatibility нь өөрчлөгдөх тул өгүүлбэрээ эхлээд тогтооно."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Sort",
+                  "O(n log n)"
+                ],
+                [
+                  "Greedy scan",
+                  "O(n)"
+                ],
+                [
+                  "Function-ийн interval copy",
+                  "O(n) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Хэдэн жишээнд таарсан учраас greedy зөв гэж дүгнэх.",
+                "Shortest interval сонгох зэрэг баталгаагүй дүрмийг цээжлэх.",
+                "Weighted variant-д энэ greedy-г шууд хэрэглэх.",
+                "Comparator-д ≤ ашиглах эсвэл overflow үүсэх subtraction-оор харьцуулах."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Earliest-start ба shortest-length дүрэм тус бүрд counterexample зохио.",
+                "n≤15 үед бүх subset-ийг шалгаж greedy-ийн хариутай тулга.",
+                "Яагаад эхний interval-ийг солиход дараагийн сонголтууд боломжтой хэвээр вэ гэдгийг зураггүйгээр тайлбарла."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "monotonic-stack",
+      "title": "Stack, queue & monotonic stack",
+      "category": "Data structures",
+      "level": "Дунд",
+      "aliases": "stack queue deque monotonic stack next greater next smaller стек дараалал",
+      "summary": "LIFO/FIFO ялгааг ойлгож, monotonic stack-аар nearest greater element-ийг нийт O(n)-д олох.",
+      "prerequisites": "Array, loop, amortized complexity.",
+      "related": [
+        "two-pointers",
+        "bfs",
+        "complexity"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Stack нь хамгийн сүүлд нэмэгдсэн element-ийг эхэлж гаргадаг LIFO бүтэц. Queue нь хамгийн түрүүнд нэмэгдсэнийг эхэлж гаргадаг FIFO бүтэц; BFS-ийн суурь болно. Deque нь хоёр талаасаа push/pop хийдэг. Monotonic stack нь element-үүдийг утгын өсөх эсвэл буурах дарааллаар хадгалж, хэрэггүй болсон candidate-уудыг шууд хасдаг."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Next greater/smaller element, histogram-ийн хамгийн том rectangle, зарим contribution бодлогод monotonic stack тохирно. Sliding window minimum/maximum-д хоёр талаасаа гаргах хэрэгтэй тул monotonic deque ашиглана. Priority queue нь хамгийн бага/их element-ийг гаргах heap бөгөөд энгийн queue-ийн FIFO дүрэмтэй адил биш."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Зүүнээс баруун руу scan хийхэд stack-д next strictly greater нь олдоогүй индексүүдийг хадгал. Шинэ a[i] нь top-ын утгаас их бол тухайн top-ын хариу i. Түүнийг pop хийгээд дахин шалгана. Эцэст нь i-г push хийнэ. Stack-ийн утгууд доороос дээш nonincreasing хэвээр үлдэнэ."
+            },
+            {
+              "type": "math",
+              "tex": "\\operatorname{nextGreater}(j)=\\min\\{i>j\\mid a_i>a_j\\}"
+            },
+            {
+              "type": "p",
+              "text": "Index хадгалах нь хариу бичих болон зай тооцоход хэрэгтэй. Strictly greater учир equal утгыг pop хийхгүй. Greater-or-equal хүсвэл comparison-ийг өөрчилнө. Ижил утгуудын дүрэм contribution тоолох бодлогод давхар тоололт үүсгэж болох тул хоёр талын strict/non-strict заагийг зориуд сонго."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "a=[2,1,3,3]. i=0: stack=[0].",
+                "i=1 дээр 1 нь 2-оос их биш: stack=[0,1].",
+                "i=2 дээр 3>1 тул answer[1]=2; мөн 3>2 тул answer[0]=2. Stack=[2].",
+                "i=3 дээр 3>3 биш: stack=[2,3]. Эдгээрт дараагийн strictly greater байхгүй тул −1. Хариу [2,2,−1,−1]."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "j stack-д үлдсэн нь j-ээс хойш одоог хүртэл greater element байгаагүй гэсэн үг. i анх a[i]>a[j] болж pop хийх үед i нь хамгийн ойрын greater. Үүний өмнө ийм element байсан бол j аль хэдийн pop болсон байх ёстой. Index бүр нэг удаа push, нэг удаа pop хийгдэх учир nested while-ийн нийт үйлдэл O(n)."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> next_greater(const vector<long long>& a) {\n    vector<int> answer(a.size(), -1), st;\n    for (int i = 0; i < (int)a.size(); ++i) {\n        while (!st.empty() && a[st.back()] < a[i]) {\n            answer[st.back()] = i;\n            st.pop_back();\n        }\n        st.push_back(i);\n    }\n    return answer;\n}"
+            },
+            {
+              "type": "p",
+              "text": "Буцах array индекс хадгална, утга биш. −1 нь хариу байхгүй. stack<int> хэрэглэж болох ч vector-ийн back/push_back/pop_back үйлдлүүд мөн LIFO-г хэрэгжүүлнэ. Queue-д vector-ийн урдаас erase хийх нь O(n) болохыг анхаар; std::queue эсвэл deque хэрэглэ."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Next greater scan",
+                  "O(n) amortized хугацаа"
+                ],
+                [
+                  "Stack ба answer",
+                  "O(n) зай"
+                ],
+                [
+                  "Queue/deque төгсгөлийн push/pop",
+                  "Ердийн хэрэглээнд O(1)"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "While loop бүр O(n) тул нийт O(n²) гэж буруу дүгнэх.",
+                "Index-ийн оронд value хадгалаад duplicate-уудыг ялгаж чадахгүй болох.",
+                "Strict > нөхцөлд ≥ comparison ашиглах.",
+                "Empty stack дээр back/top дуудах."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Next smaller element олохоор comparison-ийг өөрчил.",
+                "Бүх утга ижил array-ийн хариуг урьдчилан хэл.",
+                "Fixed k window maximum-д deque-ийн урдаас ямар index-ийг хасах ёстойг тайлбарла."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hash-compression",
+      "title": "Hash map & coordinate compression",
+      "category": "Data structures",
+      "level": "Анхан",
+      "aliases": "hash map unordered_map map frequency coordinate compression шахалт давтамж",
+      "summary": "Том утгуудын давтамжийг хадгалах, утгуудыг дарааллыг нь алдагдуулахгүй жижиг индекс болгон шахах.",
+      "prerequisites": "Array, sort, binary search.",
+      "related": [
+        "binary-search",
+        "fenwick-tree",
+        "segment-tree"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Утга 10¹⁸ хүртэл байхад value-г array-ийн index болгож болохгүй. Map нь зөвхөн байгаа key-үүдийг хадгална. std::map нь key-үүдийг sorted tree-д, unordered_map нь hash bucket-уудад байрлуулдаг. Coordinate compression нь offline үед бүх утгыг sort/unique хийж, rank-аар нь орлуулах өөр арга. Энэ нь hash collision-оос хамаарахгүй."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Frequency, value→state lookup-д map тохирно. Fenwick/segment tree-г том координат дээр ашиглахдаа compression хийнэ. Query-ийн бүх утга урьдчилан мэдэгдэж байвал шаардлагатай query coordinate-уудаа ч цуглуул. Compression нь утгын эрэмбэ ба тэнцүү чанарыг хадгалдаг боловч бодит зай, ялгавар, үржвэрийг хадгалахгүй."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Sorted unique утгуудыг vals гэе. x-ийн rank нь lower_bound(vals,x)-ийн index. Нэг value ижил rank авч, бага value бага rank авна. Анхны утгыг хэрэгтэй үед vals[rank]-аас сэргээнэ. Unordered_map-ийн average O(1) нь worst-case баталгаа биш; CP-д adversarial collision-ийг бас бодолц."
+            },
+            {
+              "type": "math",
+              "tex": "x<y\\iff\\operatorname{rank}(x)<\\operatorname{rank}(y),\\qquad x=y\\iff\\operatorname{rank}(x)=\\operatorname{rank}(y)"
+            },
+            {
+              "type": "p",
+              "text": "Compression хийсний дараа [100,1000] нь [0,1] болно; зай нь 900 биш 1 болсон. Geometry эсвэл interval length тооцохдоо анхны coordinate-ийн ялгаврыг хэрэглэ. Map-ийн operator[] нь байхгүй key-г default value-тай нэмдэг; зөвхөн байгаа эсэхийг асуухдаа find/count хэрэглэ."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "a=[100,−5,100,1000000000]. Sorted unique vals=[−5,100,1000000000].",
+                "−5→0, 100→1, 1000000000→2.",
+                "Шахсан array [1,0,1,2]. Frequency array [1,2,1].",
+                "Анхны 100 ба 1000000000-ын хоорондын зайг rank-аас биш vals[2]−vals[1]-ээс олно."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Sorted unique жагсаалтад value бүр яг нэг байрлалтай. lower_bound нь тэр байрлалыг олно. Sorting нь бүх pair-ийн бага/их харьцааг хадгалсан тул rank-ууд дээрх харьцуулалт анхны value-тай адил. Иймээс зөвхөн order ба equality-д тулгуурласан алгоритмд rank орлуулахад хариу өөрчлөгдөхгүй."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\npair<vector<int>,vector<long long>> compress(const vector<long long>& a) {\n    vector<long long> vals = a;\n    sort(vals.begin(), vals.end());\n    vals.erase(unique(vals.begin(), vals.end()), vals.end());\n    vector<int> ranks;\n    for (long long x : a)\n        ranks.push_back(lower_bound(vals.begin(),vals.end(),x)-vals.begin());\n    return {ranks, vals};\n}"
+            },
+            {
+              "type": "p",
+              "text": "Буцах first нь rank array, second нь reverse mapping. Зөвхөн map хэрэглэхэд map<long long,int> freq; ++freq[x]; гэж давтамж хадгалж болно. Compression нь шинэ online coordinate ирвэл автоматаар шинэчлэгдэхгүй тул offline нөхцөлөө шалга."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Compression",
+                  "O(n log n) хугацаа, O(n) зай"
+                ],
+                [
+                  "std::map lookup/update",
+                  "O(log k)"
+                ],
+                [
+                  "unordered_map lookup/update",
+                  "Average O(1), worst case O(k)"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Compressed index-үүдийн ялгаврыг бодит зай гэж үзэх.",
+                "Duplicate утгуудыг unique хийхгүй байх.",
+                "Unordered_map iteration sorted байна гэж таамаглах.",
+                "operator[] ашигласан lookup шинэ entry үүсгэж болохыг мартах."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Inverse mapping-ээр бүх a[i]-г сэргээ.",
+                "Том coordinate-тай inversion count-д ямар data structure нэмж хэрэглэх вэ?",
+                "Online шинэ value ирдэг үед offline compression-ийн ямар асуудал гарахыг тайлбарла."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bfs",
+      "title": "BFS — өргөнөөр хайх",
+      "category": "Graphs",
+      "level": "Анхан",
+      "aliases": "bfs breadth first search grid graph unweighted shortest path өргөнөөр богино зам queue",
+      "summary": "Жингүй graph эсвэл grid дээр хамгийн цөөн ирмэгтэй замыг queue-аар олох.",
+      "prerequisites": "Graph, adjacency list, queue.",
+      "related": [
+        "monotonic-stack",
+        "dfs",
+        "dijkstra"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "BFS нь эхлэх оройгоос эхлээд зай 0, дараа нь зай 1, зай 2 гэх мэт layer-уудыг боловсруулна. Graph-ийн орой нь ямар нэг state, ирмэг нь нэг зөвшөөрөгдсөн шилжилт байж болно. BFS-ийн зай нь ирмэгийн тоо; ирмэг бүр ижил өртөгтэй үед л энэ нь хамгийн бага нийт өртөгтэй таарна."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Жингүй graph, дөрвөн чиглэлтэй grid, нэг алхам ижил үнэтэй puzzle-ийн хамгийн бага алхамд хэрэглэ. Өртөг 0/1 бол 0-1 BFS, дурын nonnegative weight бол Dijkstra хэрэгтэй. Олон эхлэлтэй үед бүх source-ийг зай 0-той queue-д оруулаад multi-source BFS хийж болно."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "dist[v]=−1 бол хараахан олдоогүй. s-ийг dist=0 болгож queue-д хийнэ. Queue-оос v авахад олдоогүй neighbor u-г dist[u]=dist[v]+1 болгож queue-д нэм. Visited тэмдэглэгээг pop хийхэд биш, queue-д нэмэх үед хий; ингэснээр нэг орой олон удаа нэмэгдэхгүй."
+            },
+            {
+              "type": "math",
+              "tex": "d[u]=d[v]+1\\quad\\text{on the first discovery of }u"
+            },
+            {
+              "type": "p",
+              "text": "Зам сэргээхэд parent[u]=v гэж хадгал. Target-оос parent дагаж source хүрээд reverse хийнэ. Grid дээр (row,col)-ийг state болгох эсвэл row*m+col гэсэн index ашиглаж болно. Хана, grid-ийн хязгаар, diagonal allowed эсэхийг neighbor үүсгэх үед шалга."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "0→1, 0→2, 1→3, 2→3 гэсэн graph. Queue эхэнд [0], dist[0]=0.",
+                "0-г гаргаад 1,2-ыг зай 1-тэй нэмнэ. Queue=[1,2].",
+                "1-ээс 3-ыг анх олоод зай 2, parent[3]=1 болгоно.",
+                "2-оос 3 аль хэдийн олдсон учир дахин нэмэхгүй. 0→1→3 хамгийн богино замуудын нэг; 0→2→3 ч мөн урт 2."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "FIFO queue-ийн улмаас зай k-тэй бүх орой зай k+1-тэй оройгоос өмнө боловсруулагдана. u-г анх зай k+1-тэй олсон үед илүү богино зам байсан бол тэр замын өмнөх орой зай≤k−1-тэй байх ёстой бөгөөд өмнө нь боловсруулагдсан байх байлаа. Тэгвэл u өмнө олдох байсан гэсэн зөрчил гарна. Иймээс анхны discovery зай optimal."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\npair<vector<int>,vector<int>> bfs(const vector<vector<int>>& g, int s) {\n    int n = g.size();\n    assert(0 <= s && s < n);\n    vector<int> dist(n,-1), parent(n,-1);\n    queue<int> q; q.push(s); dist[s]=0;\n    while (!q.empty()) {\n        int v=q.front(); q.pop();\n        for (int u:g[v]) if (dist[u]==-1) {\n            dist[u]=dist[v]+1; parent[u]=v; q.push(u);\n        }\n    }\n    return {dist,parent};\n}"
+            },
+            {
+              "type": "p",
+              "text": "Adjacency list-ийн бүх neighbor index [0,n)-д байна. Undirected graph үүсгэхэд хоёр чиглэлд edge нэм. Хүрэхгүй орой dist=−1 хэвээр; түүний parent-аар зам сэргээх гэж оролдохгүй."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "BFS",
+                  "O(V+E) хугацаа"
+                ],
+                [
+                  "dist, parent, queue",
+                  "O(V) зай"
+                ],
+                [
+                  "Adjacency list өөрөө",
+                  "O(V+E) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Жин өөр өөр graph дээр BFS ашиглах.",
+                "Visited-ийг queue-д нэмэхэд тэмдэглэхгүй байх.",
+                "Graph disconnected байхад нэг source-оос бүх орой хүрнэ гэж бодох.",
+                "Grid-ийн coordinate-ийг row/col сольж neighbor буруу үүсгэх."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Хүрэхгүй орой нэмээд dist нь −1 хэвээр эсэхийг шалга.",
+                "Олон галын эхлэлтэй grid дээр cell бүрийн гал хүрэх хамгийн эрт хугацааг ол.",
+                "Parent-аас сэргээсэн замын edge-ийн тоо dist[target]-тай тэнцүүг батал."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dfs",
+      "title": "DFS — гүнээр хайх",
+      "category": "Graphs",
+      "level": "Анхан",
+      "aliases": "dfs depth first search гүнээр холбоост connected component traversal subtree recursion",
+      "summary": "Graph-ийн холбоост хэсгүүдийг олох, tree-г боловсруулах, recursion ба iterative traversal-ийг ойлгох.",
+      "prerequisites": "Graph, stack, visited.",
+      "related": [
+        "bfs",
+        "topological-sort",
+        "lca"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "DFS нь нэг салаагаар боломжтой хамгийн гүн хүртэл явж, тэндээс буцаж дараагийн салааг үздэг. Recursive function өөрийн call stack-аар энэ дарааллыг хадгална. Iterative хувилбар explicit stack ашигладаг. DFS-ийн traversal tree болон бодит graph нэг зүйл биш; graph-д cycle ба олон өөр зам байж болно."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Undirected graph-ийн connected component, tree-ийн subtree мэдээлэл, directed graph-ийн cycle check, topological ordering зэрэгт хэрэглэ. Энгийн DFS-ийн олсон зам нь хамгийн богино байх албагүй. n≈200000 chain tree дээр recursive DFS stack overflow үүсгэж болох тул iterative хувилбар эсвэл зөвшөөрөгдсөн stack нөхцөл сонго."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Undirected graph дээр component label-ийг анх −1 болго. Олдоогүй орой s бүрээс DFS эхлүүлж, хүрсэн бүх оройд ижил label өг. Stack-д нэмэхдээ visited тэмдэглэвэл нэг орой нэг л удаа нэмэгдэнэ. Tree-ийн postorder calculation-д enter/exit event эсвэл preorder-ийг reverse хийсэн өөр загвар хэрэгтэй."
+            },
+            {
+              "type": "math",
+              "tex": "\\text{sameComponent}(u,v)\\iff\\operatorname{component}[u]=\\operatorname{component}[v]"
+            },
+            {
+              "type": "p",
+              "text": "Parent edge-ийг алгасах нь зөвхөн tree эсвэл зохих undirected cycle algorithm-ийн нэг хэсэг. Directed cycle шалгахад unvisited/active/finished гэсэн гурван төлөв хэрэгтэй; visited ганц boolean хүрэлцэхгүй. Доорх код зөвхөн undirected connected component label гаргана."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Graph-д 0—1—2, мөн 3—4, тусгаар 5 байг.",
+                "0-оос DFS эхлээд 0,1,2-т component 0 өгнө.",
+                "3 хараахан тэмдэглээгүй тул component 1 эхэлж 3,4-ийг авна.",
+                "5-д component 2 өгнө. Нийт 3 component; 1 ба 4 хооронд зам байхгүй."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "s-ээс DFS-ээр олдсон орой бүр s-ээс edge-үүд дагасан замтай. Нөгөө талаас s-ээс хүрэх орой u олдоогүй үлдвэл s→u зам дээр анх олдоогүй оройг ав. Түүний өмнөх орой олдсон учраас adjacency list-ийг үзэхэд u рүү DFS шилжих ёстой. Энэ зөрчлөөс component-ийн бүх оройг яг олдог нь гарна."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> components(const vector<vector<int>>& g) {\n    int n=g.size(), count=0;\n    vector<int> comp(n,-1);\n    for (int s=0;s<n;++s) if (comp[s]==-1) {\n        vector<int> st={s}; comp[s]=count;\n        while (!st.empty()) {\n            int v=st.back(); st.pop_back();\n            for (int u:g[v]) if (comp[u]==-1) {\n                comp[u]=count; st.push_back(u);\n            }\n        }\n        ++count;\n    }\n    return comp;\n}"
+            },
+            {
+              "type": "p",
+              "text": "Энэ iterative хувилбар recursion stack overflow-оос сэргийлнэ. Neighbor-уудыг stack-д дарааллаар нэмэхэд гарах traversal дараалал recursive DFS-ээс өөр байж болох ч connected component хариу ижил. Directed graph дээр энэ код SCC олохгүй."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Бүх component traversal",
+                  "O(V+E) хугацаа"
+                ],
+                [
+                  "Label ба explicit stack",
+                  "O(V) нэмэлт зай"
+                ],
+                [
+                  "Recursive хувилбар",
+                  "Worst-case O(V) call stack"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Visitedгүй cycle дээр recursion хийж infinite loop үүсгэх.",
+                "Нэг source-оос л эхлээд бусад component-ийг орхих.",
+                "DFS замыг shortest path гэж үзэх.",
+                "Directed graph-ийн SCC-г энгийн reachability label-тай андуурах."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Оройгүй graph болон ганц тусгаар оройг турш.",
+                "Tree-ийн subtree size-ийг children боловсруулсны дараа яаж нэмэх вэ?",
+                "Active орой руу чиглэсэн edge нь directed cycle үүсгэж байгааг тайлбарла."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dsu",
+      "title": "Disjoint Set Union — DSU",
+      "category": "Data structures",
+      "level": "Дунд",
+      "aliases": "dsu union find холбоост компонент disjoint set path compression",
+      "summary": "Оройнуудын бүлгийг merge хийж, хоёр орой нэг component-д байгаа эсэхийг хурдан шалгах.",
+      "prerequisites": "Tree parent, connected component.",
+      "related": [
+        "dfs",
+        "greedy",
+        "fenwick-tree"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "DSU нь хоорондоо огтлолцохгүй бүлгүүдийг parent forest-оор төлөөлнө. Бүлэг бүр нэг root-той. find(v) нь төлөөлөгч root-ийг, unite(a,b) нь хоёр бүлгийг нэгтгэнэ. Root-ийн numeric утга утгын ач холбогдолгүй; түүнийг хамгийн бага element гэж үзэж болохгүй."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Edge нэмэгдэхэд connectivity query асуух, Kruskal MST, component size хадгалахад тохирно. Энгийн DSU нь edge устгах, component доторх замыг сэргээх, distance олох үйлдлийг шууд дэмжихгүй. Deletion хэрэгтэй бол offline processing, rollback DSU эсвэл өөр бүтэц шаардаж болно."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Path compression нь find хийсэн орой бүрийг root рүү ойртуулна. Union by size нь жижиг tree-ийн root-ийг том tree-ийн root дор холбоно. Энэ хоёр optimization хамт хэрэглэхэд олон үйлдлийн amortized өртөг inverse Ackermann α(n), практикт маш бага боловч O(1) гэсэн формал баталгаа биш."
+            },
+            {
+              "type": "math",
+              "tex": "\\operatorname{same}(a,b)\\iff\\operatorname{find}(a)=\\operatorname{find}(b)"
+            },
+            {
+              "type": "p",
+              "text": "Size мэдээлэл root дээр л зөв. unite эхлээд хоёр root-ийг олж, ижил бол false буцаана. Merge амжилттай бол том root-ийн size дээр жижиг root-ийн size-ийг нэм. Шинэ root-д аль нэмэлт мэдээлэл шилжихийг тус бүрд тодорхойл."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "5 тусдаа орой: sizes бүгд 1.",
+                "unite(0,1) хийвэл {0,1} хэмжээ 2 болно.",
+                "unite(2,3), дараа unite(1,3) хийвэл {0,1,2,3} хэмжээ 4.",
+                "find(0)==find(2) true. unite(0,2) дахин хийхэд бүлэг өөрчлөгдөхгүй, false буцна. 4 тусдаа хэвээр."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Эхэнд орой бүр тусдаа component. Unite нь зөвхөн өөр root-уудыг холбодог учир хоёр component яг нэг болно, бусад component өөрчлөгдөхгүй. Path compression зөвхөн тухайн оройн аль хэдийн хүрдэг root рүү parent өөрчилдөг тул бүлгийн гишүүнчлэл хадгалагдана. Size-ийг root-уудын нийлбэрээр шинэчлэх нь давхар тоолохгүй."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct DSU {\n    vector<int> p,sz;\n    DSU(int n):p(n),sz(n,1){iota(p.begin(),p.end(),0);}\n    int find(int v){\n        while(v!=p[v]){p[v]=p[p[v]];v=p[v];}\n        return v;\n    }\n    bool unite(int a,int b){\n        a=find(a);b=find(b);\n        if(a==b)return false;\n        if(sz[a]<sz[b])swap(a,b);\n        p[b]=a;sz[a]+=sz[b];return true;\n    }\n    int size(int v){return sz[find(v)];}\n};"
+            },
+            {
+              "type": "p",
+              "text": "DSU d(n); гэж байгуулаад d.unite(a,b), d.find(a)==d.find(b), d.size(v) гэж хэрэглэ. Энэ find нь path halving гэсэн iterative compression. Vertex index [0,n)-д байна. Rollback хэрэгжүүлэх бол parent өөрчлөлт бүрийг сэргээх шаардлагатай; энэ кодыг шууд ашиглаж болохгүй."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Initialization",
+                  "O(n)"
+                ],
+                [
+                  "m unite/find",
+                  "O((n+m) α(n)) гэж дээд хязгаарлаж болно"
+                ],
+                [
+                  "Parent ба size",
+                  "O(n) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "sz[v]-г root биш үед унших.",
+                "Root id-г тогтвортой component ID гэж хадгалах; merge дараа өөрчлөгдөж болно.",
+                "Same component дээр unite хийхэд size дахин нэмэх.",
+                "Graph path эсвэл edge deletion DSU өөрөө өгнө гэж бодох."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Component-ийн тоог амжилттай unite бүрд нэгээр бууруул.",
+                "Edge нэмэхэд cycle үүсэж байгаа эсэхийг unite-ийн return-оос илрүүл.",
+                "n≤20 random edge-үүдийн connectivity-г BFS болон DSU-гаар тулга."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fenwick-tree",
+      "title": "Fenwick tree — Binary Indexed Tree",
+      "category": "Data structures",
+      "level": "Дунд",
+      "aliases": "fenwick tree bit binary indexed tree point update range sum",
+      "summary": "Point add ба prefix/range sum-ийг O(log n)-д хийдэг компакт data structure.",
+      "prerequisites": "Prefix sum, binary representation, 1-based indexing.",
+      "related": [
+        "prefix-sums",
+        "hash-compression",
+        "segment-tree"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Энгийн prefix sum нь query хурдан ч point update хийхэд олон prefix өөрчлөгдөнө. Fenwick tree нь prefix-ийг хэдхэн block-ийн нийлбэрт хувааж хадгалдаг. Element бүрийн өөрчлөлтийг хамарч буй O(log n) block дээр нэмнэ. Энэ хичээлд sum үйлдэл, delta add update-ийг авч үзнэ."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Dynamic array range sum, inversion count, compressed coordinate-ийн frequency хадгалахад тохирно. Point assign хийхэд шинэ−хуучин delta-г тооцох ёстой. Ерөнхий range minimum, arbitrary merge operation-д segment tree илүү тохиромжтой. Two Fenwick tree-аар range add + range sum зэрэг extension хийж болдог ч доорх код түүнийг хэрэгжүүлээгүй."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Дотоод index i нь 1-based. lowbit(i)=i&−i нь сүүлийн 1 bit-ийн байрлалын утга. bit[i] нь i дээр төгсөх lowbit(i) урттай block-ийг хадгална. Prefix query-д i−=lowbit(i), update-д i+=lowbit(i) гэж явна. Public API нь 0-based бөгөөд prefix(r) нь [0,r)-ийн sum."
+            },
+            {
+              "type": "math",
+              "tex": "\\operatorname{lowbit}(i)=i\\mathbin{\\&}(-i),\\qquad \\operatorname{sum}(l,r)=\\operatorname{prefix}(r)-\\operatorname{prefix}(l)"
+            },
+            {
+              "type": "p",
+              "text": "Query index-ийн хамгийн бага 1 bit-ийг алхам бүрд арилгана; update нь дараагийн том хамрах block руу шилжинэ. bit[0]-г ашиглахгүй. Internal i=0 дээр update эхэлбэл lowbit(0)=0 тул loop ахихгүй."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "8 element-ийн internal bit[6] нь lowbit(6)=2 тул public index [4,6)-ийг хадгална.",
+                "prefix(7)-д bit[7]+bit[6]+bit[4] авна: уртууд 1+2+4=7.",
+                "Public index 2 дээр +5 хийхэд internal i=3,4,8 block-ууд өөрчлөгдөнө.",
+                "a=[2,1,3,4] үед sum(1,4)=8; index 2 дээр +5 хийсний дараа 13."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Prefix query-ийн block-ууд нь хоорондоо давхцахгүй, нийлээд яг [0,r)-ийг бүрхэнэ. i-ээс lowbit(i)-ийг хасахад үлдсэн prefix-ийн төгсгөл рүү шилждэг. Update-ийн visited block бүр тухайн element-ийг агуулдаг бөгөөд бусад block түүнийг агуулахгүй. Иймээс update дараа block sum invariant хадгалагдаж, query зөв хэвээр."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Fenwick {\n    int n; vector<long long> bit;\n    Fenwick(int n):n(n),bit(n+1,0){}\n    void add(int index,long long delta){\n        assert(0<=index && index<n);\n        for(int i=index+1;i<=n;i+=i&-i)bit[i]+=delta;\n    }\n    long long prefix(int r)const{\n        assert(0<=r && r<=n);\n        long long s=0;for(int i=r;i>0;i-=i&-i)s+=bit[i];return s;\n    }\n    long long sum(int l,int r)const{\n        assert(0<=l && l<=r && r<=n);return prefix(r)-prefix(l);\n    }\n};"
+            },
+            {
+              "type": "p",
+              "text": "Fenwick f(n); дараа f.add(i,a[i]) хийж анхны array-г байгуулж болно. Query f.sum(l,r) нь [l,r). Assign update-д a[i]-г тусад нь хадгалж f.add(i,newValue−a[i]) хийгээд a[i]=newValue болго."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Add ба prefix/range sum",
+                  "O(log n)"
+                ],
+                [
+                  "n add-аар build",
+                  "O(n log n)"
+                ],
+                [
+                  "bit array",
+                  "O(n) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Public 0-based index-ийг internal 1-based loop-той холих.",
+                "Assign value-г delta гэж нэмж хуучин утгыг давхар тоолох.",
+                "Prefix(r) нь inclusive r хүртэл гэж эндүүрэх.",
+                "Negative frequency байхад Fenwick дээр kth order statistic search monotonic байна гэж үзэх."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Prefix(0), sum(l,l), бүтэн range-ийн sum-ийг турш.",
+                "Random add/query-г vector дээрх naive sum-тай тулга.",
+                "Compression + Fenwick-ээр inversion count хийхэд query нь strictly smaller эсвэл larger алийг тоолох ёстой вэ?"
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment-tree",
+      "title": "Segment tree",
+      "category": "Data structures",
+      "level": "Дунд",
+      "aliases": "segment tree range sum min max point update мод interval query",
+      "summary": "Range-ийн aggregate-ийг хадгалж point assign ба range query-г O(log n)-д хийх.",
+      "prerequisites": "Array, binary tree, prefix sum.",
+      "related": [
+        "fenwick-tree",
+        "sparse-table",
+        "prefix-sums"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Segment tree нь array-г хэсгүүдэд хувааж, хэсэг бүрийн нийлбэр зэрэг aggregate-ийг хадгална. Leaf нь нэг element, internal node нь хоёр хүүхдийн merge. Sum, min, max, gcd зэрэг associative operation тохирно. Node-ийн хариу зөв байхад хоёр child-ийг merge хийгээд parent-ийн зөв хариу гарна."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Point update-тэй sum/min/max query, custom aggregate-д хэрэглэ. Static sum-д prefix sum энгийн; static min-д sparse table байж болно. Range update-ийг O(log n)-д хийхийн тулд lazy propagation гэсэн тусдаа invariant хэрэгтэй. Энэ хичээлийн код зөвхөн point assign + range sum."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Leaf-үүдийг power-of-two size-тай суурийн хоёр дахь хагаст байрлуулна. Query [l,r)-ийг leaf index рүү шилжүүлж, зүүн зааг right child бол тэр node-ийг авч l++, баруун зааг odd бол --r node-ийг авна. Дараа нь хоёр заагийг parent руу /2 хийнэ."
+            },
+            {
+              "type": "math",
+              "tex": "t[v]=t[2v]+t[2v+1],\\qquad \\operatorname{identity}_{\\mathrm{sum}}=0"
+            },
+            {
+              "type": "p",
+              "text": "Merge-ийн associative чанар хэсгүүдийг янз бүрийн бүлэглэлээр нийлүүлэх боломж өгдөг. Хоосон query-ийн identity нь sum-д 0, min-д +∞. Noncommutative merge, жишээ нь string concatenation-д зүүн ба баруун accumulator-ийн order-ийг хадгалах ёстой; sum дээр тэр ялгаа харагддаггүй."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "a=[2,1,3,4]. Хүүхдийн sums: [0,2)=3, [2,4)=7; root=10.",
+                "[1,4) query нь a[1]=1 ба [2,4)-ийн 7-г авч 8 болно.",
+                "Index 2-ыг 8 болгоход leaf 3→8, [2,4) sum 7→12, root 10→15.",
+                "[1,4) query одоо 13. Бусад замын node өөрчлөгдөхгүй."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Build нь leaves-ээс дээш merge хийдэг тул node бүрийн segment sum зөв. Point assign хийхэд зөвхөн тэр leaf-ийг агуулдаг ancestor-уудын sum өөрчлөгдөнө; тэднийг дарааллаар дахин тооцох нь invariant-ийг сэргээнэ. Query нь [l,r)-ийг давхцахгүй бүрэн node-уудад хувааж авдаг тул тэдний sum яг хүссэн range-ийн sum."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct SegTree {\n    int n,size=1;vector<long long> t;\n    SegTree(const vector<long long>& a):n(a.size()){\n        while(size<n)size*=2;t.assign(2*size,0);\n        for(int i=0;i<n;i++)t[size+i]=a[i];\n        for(int i=size-1;i>0;i--)t[i]=t[2*i]+t[2*i+1];\n    }\n    void assign(int i,long long x){\n        assert(0<=i&&i<n);i+=size;t[i]=x;\n        for(i/=2;i>0;i/=2)t[i]=t[2*i]+t[2*i+1];\n    }\n    long long sum(int l,int r)const{\n        assert(0<=l&&l<=r&&r<=n);long long answer=0;\n        for(l+=size,r+=size;l<r;l/=2,r/=2){\n            if(l&1)answer+=t[l++];if(r&1)answer+=t[--r];\n        }\n        return answer;\n    }\n};"
+            },
+            {
+              "type": "p",
+              "text": "SegTree st(a); st.assign(i,x); st.sum(l,r); гэж хэрэглэнэ. n=0 үед хоосон query sum(0,0) зөв боловч assign хийх боломжгүй. Type-ийг aggregate-ийн хамгийн их утгад тохируул. Min болгож солихдоо zero padding болон identity-ийг хоёуланг нь +∞ болгож өөрчил."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Build",
+                  "O(n) хугацаа"
+                ],
+                [
+                  "Point assign / range sum",
+                  "O(log n)"
+                ],
+                [
+                  "Tree storage",
+                  "O(n) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Min query-ийн identity-д 0 тавих; positive бүх range-д буруу 0 гарна.",
+                "Range-ийн inclusive/exclusive заагийг холих.",
+                "Associative биш operation-ийг node merge болгох.",
+                "Range update хийхдээ бүх leaf update хийгээд O(log n) гэж мэдээлэх."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Random point assign/query-г naive array-тай тулга.",
+                "Node дээр sum ба maximum хоёрыг зэрэг хадгалдаг merge зохио.",
+                "Lazy range-add хийхэд sum-д delta×segmentLength яагаад нэмэхийг тайлбарла."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sparse-table",
+      "title": "Sparse table — static RMQ",
+      "category": "Data structures",
+      "level": "Дунд",
+      "aliases": "sparse table rmq static range minimum query min gcd",
+      "summary": "Өөрчлөгдөхгүй array-ийн range minimum query-г O(1)-д хариулах.",
+      "prerequisites": "Array, powers of two, min.",
+      "related": [
+        "segment-tree",
+        "binary-search",
+        "lca"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Sparse table нь урт нь 1,2,4,8… байх бүх боломжит segment-ийн minimum-ийг хадгална. Ийм segment-үүдийг хоёр жижиг segment-ийн minimum-ээр байгуулна. Query-д range-ийг хоёр давхцаж болох power-of-two segment-ээр бүрхэнэ. Min-д overlap давхар тоологдох нь хариуг өөрчлөхгүй."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Static array дээр олон RMQ, gcd, maximum query хийхэд ашигтай. Update байвал table-ийн олон утга хүчингүй болох тул segment tree сонго. Query-д хоёр overlap segment ашигладаг O(1) арга нь idempotent operation шаарддаг. Sum-д overlap давхар нэмэгдэх тул энэ хувилбар тохирохгүй; prefix sum энгийн бөгөөд хурдан."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "st[k][i] нь [i,i+2^k)-ийн minimum. Урт r−l-ийн floor(log2)-ийг k гэе. Query-д [l,l+2^k) ба [r−2^k,r) segment авна. Эдгээр нь range-ээс гарахгүй бөгөөд нийлээд бүх range-ийг бүрхэнэ."
+            },
+            {
+              "type": "math",
+              "tex": "\\operatorname{RMQ}(l,r)=\\min(st[k][l],st[k][r-2^k]),\\quad k=\\lfloor\\log_2(r-l)\\rfloor"
+            },
+            {
+              "type": "p",
+              "text": "Хоёр segment overlap хийж болно. min(x,x)=x тул давхардсан element-ийн нэмэр өөрчлөгдөхгүй. Log table-ийг integer recurrence-аар байгуулбал floating-point log2 rounding-оос зайлсхийнэ. Query заавал nonempty: log2(0) тодорхойгүй."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "a=[5,2,7,1,6]. Урт 2 segment-ийн min [2,2,1,1].",
+                "Урт 4 segment-ийн min [1,1].",
+                "[1,5) query урт 4 тул [1,5) segment өөрөө minimum 1.",
+                "[0,3) query урт 3, k=1: [0,2) min=2 ба [1,3) min=2. Index 1 давхардсан ч хариу 2 зөв."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Build recurrence-ийн хоёр child нь parent segment-ийг overlapгүй бүрхдэг тул induction-аар st бүр зөв. Query-ийн 2^k≤len<2^(k+1) учир хоёр block-ийн уртын нийлбэр len-ээс багагүй, эхнийх нь l-ээс, хоёр дахь нь r дээр дуусдаг тул завсар үлдэхгүй. Min idempotent тул overlap хариунд нөлөөлөхгүй."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct SparseTable {\n    vector<vector<long long>> st;vector<int> lg;int n;\n    SparseTable(const vector<long long>& a):n(a.size()){\n        assert(n>0);lg.assign(n+1,0);\n        for(int i=2;i<=n;i++)lg[i]=lg[i/2]+1;\n        st.assign(lg[n]+1,vector<long long>(n));st[0]=a;\n        for(int k=1;k<(int)st.size();k++)\n            for(int i=0;i+(1<<k)<=n;i++)\n                st[k][i]=min(st[k-1][i],st[k-1][i+(1<<(k-1))]);\n    }\n    long long query(int l,int r)const{\n        assert(0<=l&&l<r&&r<=n);int k=lg[r-l];\n        return min(st[k][l],st[k][r-(1<<k)]);\n    }\n};"
+            },
+            {
+              "type": "p",
+              "text": "SparseTable rmq(a); rmq.query(l,r) нь [l,r)-ийн min. Empty array-г байгуулахгүй. Memory limit бага бол O(n log n) table-ийн byte-ийг урьдчилан тооц; бүх min long long бол 8×n×levels орчим byte болно."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Build",
+                  "O(n log n)"
+                ],
+                [
+                  "Nonempty min query",
+                  "O(1)"
+                ],
+                [
+                  "Table",
+                  "O(n log n) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Min-ийн overlap аргыг sum-д хуулж хэрэглэх.",
+                "Point update дараа table-ийг шинэчлэхгүй query хийх.",
+                "r−l=0 үед log table унших.",
+                "Урт 2^k segment төгсгөлийн index n-ээс хэтрэх build хийх."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Бүх [l,r)-ийг naive minimum-тай тулга.",
+                "Max ба gcd-д яагаад хоёр overlap block хэрэглэж болдгийг тайлбарла.",
+                "Sum-ийг overlapгүй power-of-two хэсгүүдэд хуваавал query complexity ямар болох вэ?"
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dijkstra",
+      "title": "Dijkstra — weighted shortest path",
+      "category": "Graphs",
+      "level": "Дунд",
+      "aliases": "dijkstra shortest path жинтэй graph хамгийн богино зам heap priority queue",
+      "summary": "Nonnegative edge weight-тай graph дээр нэг source-оос бүх shortest distance-ийг олох.",
+      "prerequisites": "BFS, graph, min-heap, long long.",
+      "related": [
+        "bfs",
+        "topological-sort",
+        "dynamic-programming"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "BFS layer-ийг ирмэгийн тоогоор авдаг бол Dijkstra хамгийн бага tentative distance-тай оройг эхэлж сонгоно. Өмнө олсон замаас илүү богино зам олдвол relax хийнэ. Min-heap нь дараагийн хамгийн бага candidate-ийг олох үүрэгтэй. Edge weight бүгд ≥0 байх нь correctness-ийн үндсэн нөхцөл."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Замын урт, хугацаа, төлбөр зэрэг nonnegative weight-тай sparse graph-д хэрэглэ. Negative edge байвал Dijkstra-ийн баталгаа нурна; Bellman–Ford эсвэл graph-ийн structure-д тохирох өөр арга хэрэгтэй. DAG дээр negative edge байж болох бөгөөд topological DP ашиглаж болно. 0/1 weight-д 0-1 BFS илүү энгийн O(V+E) арга байж болно."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "dist[s]=0, бусад dist=INF. Heap-д (0,s) нэм. (d,v)-г pop хийхэд d!=dist[v] бол хуучирсан entry тул алгас. Edge v→u weight w дээр d+w<dist[u] бол шинэ distance болон parent хадгалж heap-д шинэ entry хийнэ."
+            },
+            {
+              "type": "math",
+              "tex": "\\text{if }d[v]+w(v,u)<d[u],\\quad d[u]\\leftarrow d[v]+w(v,u)"
+            },
+            {
+              "type": "p",
+              "text": "Priority_queue-ийн default нь max-heap тул greater<pair<...>> хэрэглэж min-heap болго. Heap-д нэг оройн олон version байж болно; stale check шаардлагатай. INF-ийг буруу сонговол хүрэх замыг unreachable гэж үзэх тул бүх боломжит distance INF-ээс бага, addition overflowгүй байх нөхцөлийг тогтоо."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "0→1 weight 5, 0→2 weight 1, 2→1 weight 2. Эхэнд dist=[0,INF,INF].",
+                "0-г pop хийгээд dist[1]=5, dist[2]=1. Heap-д (1,2),(5,1).",
+                "2-г pop хийхэд 1+2=3<5, тэгэхээр dist[1]=3. Шинэ (3,1) нэмнэ.",
+                "(3,1)-ийг зөв version гэж боловсруулна. Дараа (5,1)-ийг stale тул алгасна."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Хамгийн бага tentative distance-тай v-г авах мөчид түүнд илүү богино зам байсан гэж төсөөлье. Тэр зам дээр хараахан эцэслээгүй анхны оройн өмнөх орой боловсруулагдсан тул relaxation хийгдсэн байх ёстой. Nonnegative edge-үүдтэй учраас тэр prefix-ийн distance v-ийн боломжит богино замаас ихгүй. Тэгвэл heap v-ээс өмнө тэр candidate-ийг авах байсан гэсэн зөрчил. Negative edge үед prefix нь бүтэн замаас их байж болох тул энэ баталгаа ажиллахгүй."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nconst long long INF=4'000'000'000'000'000'000LL;\nvector<long long> dijkstra(const vector<vector<pair<int,long long>>>& g,int s){\n    int n=g.size();assert(0<=s&&s<n);\n    vector<long long>d(n,INF);d[s]=0;\n    priority_queue<pair<long long,int>,vector<pair<long long,int>>,\n                   greater<pair<long long,int>>>q;q.push({0,s});\n    while(!q.empty()){\n        auto [dv,v]=q.top();q.pop();if(dv!=d[v])continue;\n        for(auto [u,w]:g[v]){\n            assert(w>=0 && w<INF);\n            if(dv<=INF-w && dv+w<d[u]){\n                d[u]=dv+w;q.push({d[u],u});\n            }\n        }\n    }\n    return d;\n}"
+            },
+            {
+              "type": "p",
+              "text": "Бүх бодит shortest distance INF-ээс бага байна гэж үзсэн. Equality INF нь хүрэхгүй орой. Parent хүсвэл successful relax дээр parent[u]=v гэж нэм. Weight 0 болон parallel edge дэмжинэ. Heap entry O(E) хүрч болох тул memory-ийн тооцоонд оруул."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Lazy heap хувилбар",
+                  "O((V+E) log(E+2)) дээд хязгаар"
+                ],
+                [
+                  "Simple graph дээр",
+                  "Ихэвчлэн O((V+E) log V) гэж бичдэг"
+                ],
+                [
+                  "Graph + heap + distance",
+                  "O(V+E) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Negative edge байхад шууд ашиглах.",
+                "Heap-ийг max-heap хэвээр орхих.",
+                "Stale entry-ээс дахин adjacency list боловсруулах.",
+                "int distance, INF+w overflow, unreachable-ийг 0 гэж үзэх."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Жижиг random nonnegative graph-ийн distance-ийг Floyd–Warshall-тай тулга.",
+                "Zero-weight cycle-тэй үед strict < relax яагаад чухал вэ?",
+                "Parent хадгалж зам сэргээх; замын weight sum dist[target]-тай тэнцүүг шалга."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "topological-sort",
+      "title": "Topological sort & DAG DP",
+      "category": "Graphs",
+      "level": "Дунд",
+      "aliases": "topological sort dag indegree kahn dependency cycle чиглэсэн cycle",
+      "summary": "Dependency-уудыг зөрчихгүй дараалал олох; DAG дээр DP state-уудыг зөв дарааллаар боловсруулах.",
+      "prerequisites": "Directed graph, BFS queue, DP-ийн санаа.",
+      "related": [
+        "dfs",
+        "dynamic-programming",
+        "dijkstra"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Topological order нь directed edge u→v бүрд u өмнө, v дараа байрлах оройнуудын дараалал. Энэ нь prerequisite, task dependency зэрэг утгатай. Directed cycle байгаа үед ийм дараалал байхгүй: cycle-ийн бүх орой нөгөөгөөсөө өмнө байх шаардлагатай болдог. DAG гэдэг нь directed acyclic graph."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Dependency scheduling, DAG path counting, longest path, negative edge-тай DAG shortest path-д хэрэглэ. Topological sort нь ерөнхий graph-ийн shortest path алгоритм биш. Undirected graph-д хоёр чиглэл нэмээд topological sort хийвэл утга өөр болж cycle гэж үзэх тул edge-ийн чиглэлийг өгүүлбэрээс зөв байгуул."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Kahn-ийн аргад indegree[v] нь хараахан боловсруулаагүй оройноос v рүү орж ирэх edge-ийн тоо. Indegree 0 оройнуудыг queue-д нэм. v-г авахад order-д бичээд outgoing edge бүрийн indegree-г нэгээр бууруул. 0 болсон neighbor одоо dependencyгүй болж queue-д орно."
+            },
+            {
+              "type": "math",
+              "tex": "\\forall(u\\to v),\\quad\\operatorname{pos}(u)<\\operatorname{pos}(v)"
+            },
+            {
+              "type": "p",
+              "text": "DAG DP-д source state-ийг initialize хийсний дараа topo order-оор relax хийнэ. Path counting-д ways[u]+=ways[v], longest path-д dp[u]=max(dp[u],dp[v]+w). Хүрэхгүй state-ийг source-оос хүрсэнтэй андуурахгүй sentinel хэрэглэ. Sorting-д vertex label-ийн тоон эрэмбэ ямар ч шаардлагагүй."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "0→2, 1→2, 2→3 graph-ийн indegree=[0,0,2,1].",
+                "Queue-д 0,1. 0-г авахад indegree[2]=1.",
+                "1-г авахад indegree[2]=0 болж 2 нэмэгдэнэ.",
+                "2-оос 3-ыг чөлөөлнө. Order=[0,1,2,3]; [1,0,2,3] мөн зөв. 3→1 edge нэмбэл бүх орой боловсруулагдахгүй."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Indegree 0 v-д үлдсэн оройноос ирэх edge байхгүй тул v-г дараагийн байрлалд тавих нь dependency зөрчихгүй. DAG-ийн хоосон биш үлдсэн хэсэгт indegree 0 орой заавал бий: байхгүй гэвэл predecessor дагаж finite оройнууд дунд cycle үүснэ. Иймээс DAG-д бүх орой гарна; үлдсэн орой байгаа нь cycle байгааг илтгэнэ."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\noptional<vector<int>> topological(const vector<vector<int>>& g){\n    int n=g.size();vector<int>deg(n),order;queue<int>q;\n    for(auto&edges:g)for(int u:edges)++deg[u];\n    for(int v=0;v<n;v++)if(!deg[v])q.push(v);\n    while(!q.empty()){\n        int v=q.front();q.pop();order.push_back(v);\n        for(int u:g[v])if(--deg[u]==0)q.push(u);\n    }\n    if((int)order.size()!=n)return nullopt;\n    return order;\n}"
+            },
+            {
+              "type": "p",
+              "text": "optional хоосон бол cycle байна. Empty graph нь empty order-той valid DAG. Parallel edge бүр indegree-д тоологдож, боловсруулах үед тус бүр хасагдана. Хамгийн бага label-тай topo order хэрэгтэй бол queue-ийн оронд min-heap ашиглаж O((V+E) log V) хувилбар гаргана."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Kahn traversal",
+                  "O(V+E) хугацаа"
+                ],
+                [
+                  "Indegree, queue, order",
+                  "O(V) нэмэлт зай"
+                ],
+                [
+                  "DAG-ийн edge transition DP",
+                  "O(V+E), transition O(1) үед"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Order-ийн урт n эсэхийг шалгахгүй cycle-тэй graph дээр DP хийх.",
+                "Indegree биш outgoing edge count ашиглах.",
+                "DAG longest path-ийг ерөнхий cycle-тэй graph-д ашиглах.",
+                "Topo order цорын ганц гэж бодох."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Гарсан order-ийн pos array үүсгээд edge бүрийг шалга.",
+                "DAG дээр source-оос target хүрэх path count-ийн recurrence бич.",
+                "Cycle-д оролцоогүй оройнууд ч үлдэж болох уу? Жишээ гарга."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dynamic-programming",
+      "title": "Dynamic programming — DP",
+      "category": "DP",
+      "level": "Дунд",
+      "aliases": "dp dynamic programming memoization tabulation төлөв transition recurrence",
+      "summary": "Ижил subproblem-ийг дахин бодохгүйгээр state, transition, base case, боловсруулах дарааллыг тодорхойлох.",
+      "prerequisites": "Recursion, array, complexity.",
+      "related": [
+        "knapsack",
+        "lis",
+        "topological-sort"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "DP нь зүгээр хоёр loop эсвэл array биш. Бодлогыг жижиг subproblem-д хувааж, нэг subproblem-ийн хариуг бусдад дахин ашиглана. State нь цааш шийдэхэд хэрэгтэй бүх мэдээллийг агуулсан байх ёстой. Хэт бага мэдээлэл хадгалбал ялгаатай нөхцөлүүдийг буруу нэгтгэнэ; хэт их мэдээлэл хадгалбал state-ийн тоо өснө."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Optimization, counting, feasibility бодлогод давтагдсан subproblem ба зөв dependency structure байвал хэрэглэ. Memoization нь шаардлагатай state-ийг recursion-аар бодож хадгална. Tabulation нь dependency order-оор table бөглөнө. DP зохиохдоо state-ийн өгүүлбэр, recurrence, base, order, final answer, complexity зургааг тусад нь бич."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Жишээ нь 1 эсвэл 2 алхмаар n шат өгсөх замын тоо. ways[i] нь яг i шатанд хүрэх sequence-ийн тоо. Сүүлчийн алхам 1 эсвэл 2 байснаар бүх sequence хоёр бүлэгт хуваагдана. ways[0]=1 нь ямар ч алхам хийгээгүй нэг empty sequence."
+            },
+            {
+              "type": "math",
+              "tex": "ways[i]=ways[i-1]+ways[i-2],\\qquad ways[0]=1,\\quad ways[1]=1"
+            },
+            {
+              "type": "p",
+              "text": "ways[i] бодоход зөвхөн өмнөх хоёр state хэрэгтэй учир memory-г O(1) болгож болно. Энэ нь recurrence-ээс гарсан optimization; өмнөх бүх state хэрэгтэй өөр DP дээр ийм rolling memory шууд хэрэглэж болохгүй. Доорх тоололтыг 10⁹+7 modulo-р хийдэг; энэ нь exact integer-ийн оронд үлдэгдэл өгнө."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "n=0: empty sequence нэг тул ways[0]=1.",
+                "n=1: [1], ways[1]=1. n=2: [1,1],[2], ways[2]=2.",
+                "n=3: [1,1,1],[1,2],[2,1], ways[3]=3.",
+                "n=4 үед ways[3]+ways[2]=3+2=5. [1,2] ба [2,1] ялгаатай дараалал учир хоёул тоологдоно."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ямар ч n шат хүрсэн sequence-ийн сүүлчийн алхам 1 эсвэл 2. Сүүлчийн алхмыг хасахад n−1 эсвэл n−2 хүрсэн sequence гарна. Эсрэгээрээ эдгээр sequence бүрийн араас тохирох алхмыг залгаж болно. Хоёр бүлэг давхцахгүй, бүх боломжийг хамардаг учир нийлбэр recurrence зөв. Base cases-ээс эхэлж induction-аар бүх state зөв болно."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long stair_ways(int n){\n    assert(n>=0);const long long MOD=1'000'000'007;\n    if(n==0)return 1;\n    long long previous=1,current=1;\n    for(int i=2;i<=n;i++){\n        long long next=(previous+current)%MOD;\n        previous=current;current=next;\n    }\n    return current;\n}"
+            },
+            {
+              "type": "p",
+              "text": "stair_ways(n) нь ordered sequence-үүдийн тооны modulo-г өгнө. Optimal solution сэргээх DP-д аль transition сонгосноо parent-аар хадгал. Min DP-ийн unreachable утга +INF, max DP-ийнх −INF байж болно; sentinel дээр арифметик хийхээс өмнө хүрэх боломжтой эсэхийг шалга."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "n state, 2 transition",
+                  "O(n) хугацаа"
+                ],
+                [
+                  "Rolling хоёр state",
+                  "O(1) нэмэлт зай"
+                ],
+                [
+                  "Ерөнхий DP",
+                  "State-ийн тоо × нэг state-ийн transitions"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "State яг юу гэсэн утгатайг бичихгүйгээр table үүсгэх.",
+                "Counting DP-д order чухал эсэхийг ялгахгүй байх.",
+                "Unreachable state-ийг 0 болгоод valid 0-той андуурах.",
+                "Memoized recursion-ийн stack гүн болон exponential state space-ийг үл тоох."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "1,3 алхам allowed бол recurrence ба base-ийг гарга.",
+                "Бүх жижиг sequence-ийг enumerate хийгээд DP-тай тулга.",
+                "Min-cost climbing-д state ба transition-ийг counting-оос яаж өөрчлөх вэ?"
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "knapsack",
+      "title": "0/1 knapsack",
+      "category": "DP",
+      "level": "Дунд",
+      "aliases": "knapsack үүргэвч багтаамж 0/1 dp capacity descending",
+      "summary": "Item бүрийг хамгийн ихдээ нэг удаа авч capacity дотор нийт value-г хамгийн их болгох.",
+      "prerequisites": "DP state, loop order, array.",
+      "related": [
+        "dynamic-programming",
+        "greedy",
+        "bitmask-dp"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "0/1 knapsack-д item бүр (weight,value)-тай бөгөөд авах эсвэл авахгүй гэсэн хоёр сонголттой. Capacity W-ээс нийт weight хэтрэхгүй байхад value-ийн maximum-ийг олно. Greedy value/weight ratio нь fraction авч болдог өөр бодлогод тохирдог; 0/1 хувилбарт ерөнхийдөө зөв биш."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "n×W багтах үед capacity-based DP хэрэглэ. W маш том, нийт value бага бол value-based minimum-weight DP сонгож болно. n≤40 үед meet-in-the-middle байж болно. O(nW) нь weight-ийн numeric утга W-ээс хамаардаг pseudo-polynomial complexity; W-ийн bit length-ээс polynomial биш."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "dp[c] нь одоог хүртэл үзсэн item-уудаас нийт weight≤c үед авах maximum value. Эхэнд itemгүй тул бүх dp=0. Item (w,v) дээр авахгүй dp[c], авбал previous dp[c−w]+v хоёрын max. Нэг array дээр хийхдээ capacity-г ихээс бага руу явуул; доод state хараахан энэ item-ээр update болоогүй байна."
+            },
+            {
+              "type": "math",
+              "tex": "dp[c]\\leftarrow\\max(dp[c],dp[c-w]+v),\\qquad c=W,W-1,\\ldots,w"
+            },
+            {
+              "type": "p",
+              "text": "Хэрэв capacity-г багаас их явуулбал dp[c−w] аль хэдийн тухайн item-ийг агуулж, нэг item-ийг олон дахин авах боломж өгнө. Энэ нь unbounded knapsack-ийн өөр recurrence. Exact weight=c байх DP бол dp[0]=0, бусад нь −INF; энэ хичээлийн ≤capacity initialization-тай адил биш."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Items (2,3),(3,4),(4,5), W=5. Эхэнд dp=[0,0,0,0,0,0].",
+                "Эхний item-ийн дараа capacity 2…5 дээр value 3.",
+                "Хоёр дахь item дээр c=5: dp[2]+4=3+4=7; c=3 дээр 4.",
+                "Гурав дахь item 4 weight авч value 5 өгнө, capacity 5 дээрх 7-г сайжруулахгүй. Хариу item 1+2, нийт weight 5, value 7."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Item i-г боловсруулахын өмнө dp нь эхний i−1 item-ийн optimal утгууд. Item i-тэй optimal шийдэл нь түүнийг аваагүй эсвэл авсан гэсэн хоёр case. Авсан бол үлдсэн capacity c−w дээр өмнөх item-уудын optimal сонголт шаардлагатай; эсрэгээрээ түүний дээр item i нэмэх нь valid. Descending order нь previous-layer утгыг хадгалдаг учир recurrence яг хоёр-layer DP-тай ижил."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long knapsack(int W,const vector<pair<int,long long>>& items){\n    assert(W>=0);vector<long long>dp(W+1,0);\n    for(auto [w,v]:items){\n        assert(w>0);\n        for(int c=W;c>=w;c--)dp[c]=max(dp[c],dp[c-w]+v);\n    }\n    return dp[W];\n}"
+            },
+            {
+              "type": "p",
+              "text": "Weight нь positive integer, value sum нь long long-д багтана гэж үзсэн. Negative value байвал item авахгүй үлдээж болдог тул initialization 0 зөв. Zero-weight item-ийн handling-ийг тусад нь төлөвлө; энэ код positive weight шаарддаг. Шийдлийг сэргээхэд state history эсвэл зохих parent бүтэц хэрэгтэй."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "n item × capacity",
+                  "O(nW) хугацаа"
+                ],
+                [
+                  "Нэг DP layer",
+                  "O(W) зай"
+                ],
+                [
+                  "Exact-weight variant",
+                  "Unreachable sentinel тусад нь шаардана"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "0/1 хувилбарт capacity-г ascending явуулах.",
+                "W=10⁹ үед O(nW) DP багтана гэж бодох.",
+                "At-most ба exact capacity state-ийг холих.",
+                "Item сэргээхдээ overwritten нэг layer-ийн parent-ийг баталгаагүй дагах."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Нэг item (2,3), W=4 үед 3 гарах ёстой; 6 гарвал loop order буруу.",
+                "n≤15 бүх subset-ийг enumerate хийж хариугаа тулга.",
+                "Value-based DP-ийн state ба recurrence-ийг бич."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lis",
+      "title": "Longest Increasing Subsequence — LIS",
+      "category": "DP",
+      "level": "Дунд",
+      "aliases": "lis longest increasing subsequence strictly increasing дараалал өсөх tails",
+      "summary": "Анхны дарааллыг хадгалсан strictly increasing subsequence-ийн хамгийн их уртыг O(n log n)-д олох.",
+      "prerequisites": "DP, binary search, subsequence vs subarray.",
+      "related": [
+        "binary-search",
+        "dynamic-programming",
+        "fenwick-tree"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Subsequence нь зарим element-ийг алгасаж болох ч анхны индексийн order-ийг хадгалдаг. Subarray бол тасралтгүй хэсэг. LIS-д утгууд strictly increasing буюу дараагийнх нь заавал их байх ёстой. Эхний O(n²) DP-д dp[i]=1+max(dp[j]) where j<i ба a[j]<a[i]. Үүнээс илүү хурдан хувилбар tails-ийн invariant дээр тулгуурлана."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Strictly increasing subsequence-ийн length, зарим ordering/chain бодлогод хэрэглэ. Tails арга нь length хурдан олдог ч LIS-ийн тоог шууд өгдөггүй. 2D координатын chain-д sort-ын tie-breaking маш чухал; ижил эхний coordinate-той утгуудыг буруу дарааллаар оруулбал valid биш chain нэмэгдэнэ."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "tails[k] нь боловсруулсан prefix дотор урт k+1 strictly increasing subsequence-ийн хамгийн бага боломжит сүүлчийн утга. Шинэ x-д анхны tails[k]≥x байрлалыг lower_bound-аар ол. Олдвол x-ээр солино; олдохгүй бол уртыг нэгээр өсгөнө."
+            },
+            {
+              "type": "math",
+              "tex": "tails[k]=\\min\\{\\text{last value of an increasing subsequence of length }k+1\\}"
+            },
+            {
+              "type": "p",
+              "text": "Бага сүүлтэй subsequence цааш илүү олон element-ээр сунгагдах боломжтой. tails нь sorted боловч энэ array бүхэлдээ анхны input-ийн нэг valid LIS байх албагүй: өөр өөр уртын optimal tails-ийг хольж хадгалдаг. Бодит subsequence сэргээхэд indices ба predecessor тусад нь хэрэгтэй."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "a=[3,1,2,2,5,4]. 3 орвол tails=[3], 1 орвол [1].",
+                "2 нь бүх tails-ээс их тул [1,2]. Дараагийн 2 lower_bound дээр index 1-ийг солино, урт нэмэхгүй.",
+                "5 орвол [1,2,5]. 4 нь 5-г сольж [1,2,4].",
+                "Length=3. Жишээ LIS нь [1,2,4] эсвэл [1,2,5]. Equal 2-ууд strictly increasing биш тул хоёуланг авахгүй."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Length k+1 subsequence-ийн tail бага байх тусам шинэ том x-ээр сунгах боломж муудахгүй. Lower_bound-аас өмнөх бүх tails<x тул x-ийг өмнөх length-ийн subsequence-д залгаж болно. Lower_bound байрлалын tail-ийг x-ээр солих нь тэр уртад илүү бага эсвэл ижил tail өгнө, бусад уртыг эвдэхгүй. Инvariant induction-аар хадгалагдаж, tails.size() хамгийн их боломжит length болно."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nint lis_length(const vector<long long>& a){\n    vector<long long>tails;\n    for(long long x:a){\n        auto it=lower_bound(tails.begin(),tails.end(),x);\n        if(it==tails.end())tails.push_back(x);\n        else *it=x;\n    }\n    return tails.size();\n}"
+            },
+            {
+              "type": "p",
+              "text": "Strict LIS-д lower_bound хэрэглэнэ. Nondecreasing subsequence буюу equal allowed хувилбарт upper_bound хэрэглэнэ. Count LIS эсвэл нэмэлт weight optimization хийх бол coordinate compression + Fenwick/segment tree DP сонгож болно."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Element бүрийн binary search",
+                  "O(n log n) нийт хугацаа"
+                ],
+                [
+                  "tails",
+                  "O(n) зай"
+                ],
+                [
+                  "Энгийн j<i DP",
+                  "O(n²) хугацаа, O(n) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Subarray ба subsequence-ийг андуурах.",
+                "Strict хувилбарт upper_bound хэрэглэж equal element-үүдээр length өсгөх.",
+                "Tails array өөрөө valid LIS гэж хэвлэх.",
+                "LIS count-ийг энэ length algorithm өгнө гэж бодох."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Бүх утга ижил input дээр strict ба nondecreasing хариуг харьцуул.",
+                "O(n²) DP-тай random array-уудын length-ийг тулга.",
+                "LIS сэргээхэд ямар index ба parent мэдээлэл хадгалах вэ?"
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lca",
+      "title": "Tree, binary lifting & LCA",
+      "category": "Graphs",
+      "level": "Дунд",
+      "aliases": "tree lca lowest common ancestor binary lifting ancestor мод өвөг",
+      "summary": "Rooted tree дээр хоёр оройн хамгийн ойрын нийтлэг ancestor болон path-ийн уртыг хурдан олох.",
+      "prerequisites": "Tree, DFS/BFS, depth, powers of two.",
+      "related": [
+        "dfs",
+        "bfs",
+        "sparse-table"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Tree нь connected, cycleгүй undirected graph; n оройтой бол n−1 edge-тэй. Root сонгоход parent ба depth тодорхой болно. Ancestor нь parent-уудыг давтан дагахад хүрэх орой; энэ хичээлд v өөрөө v-ийн ancestor гэж үзнэ. LCA(u,v) нь хоёулангийнх нь ancestor-уудаас хамгийн их depth-тэй орой."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Tree-ийн хоёр оройн distance, kth ancestor, path query-г задлахад LCA хэрэгтэй. Binary lifting нь ancestor jump-уудыг урьдчилан хадгалж query-г O(log n)-д хариулна. Энэ код static tree-д зориулагдсан. Tree-ийн edge structure өөрчлөгдвөл preprocessing хүчингүй болно; dynamic tree өөр data structure шаарддаг."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "up[k][v] нь v-ийн 2^k алхам дээрх ancestor. up[k][v]=up[k−1][up[k−1][v]]. Root-ийн parent-ийг root өөрөөр нь тавьж sentinel-гүй болгож болно. Query-д эхлээд deep оройг нөгөөгийн depth хүртэл өргө. Тэнцүү орой бол тэр LCA. Үгүй бол том jump-оос жижиг рүү, ancestor нь өөр хэвээр байвал хоёуланг өргө."
+            },
+            {
+              "type": "math",
+              "tex": "\\operatorname{dist}(u,v)=depth[u]+depth[v]-2\\,depth[\\operatorname{LCA}(u,v)]"
+            },
+            {
+              "type": "p",
+              "text": "Ижил depth-тэй хоёр өөр оройг LCA дээр нь давуулж болохгүй. up[k][u]≠up[k][v] гэсэн үед л jump хийх нь хоёуланг LCA-ийн доор үлдээнэ. Бүх jump дуусахад parent нь ижил болсон байна. Unweighted distance томъёо edge-ийн тоо өгнө; weighted tree-д depth-ийн оронд root-distance sum хэрэглэ."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Tree edges 0—1,0—2,1—3,1—4; root=0. Depth=[0,1,1,2,2].",
+                "LCA(3,4): depth ижил, 1-step ancestors хоёул 1 тул дээш үсрэхгүй. Parent 1 хариу.",
+                "LCA(3,2): 3-ыг depth 1 хүртэл өргөөд 1 болгоно.",
+                "1 ба 2-ийн parent хоёул 0. LCA=0, distance(3,2)=2+1−0=3."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Depth-ийг тэнцүүлэх нь нийтлэг ancestor-уудыг алдахгүй: shallow оройн depth-ээс доош LCA байх боломжгүй. Ижил depth-тэй u,v өөр байх үед up[k][u]≠up[k][v] байвал тэр ancestor-ууд LCA-ээс доор байна; LCA болон түүнээс дээр ижил depth дээр хоёул ижил орой байдаг. Тиймээс зөвхөн аюулгүй jump хийж, төгсгөлд хоёул LCA-ийн хүүхэд дээр үлдэнэ."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct LCA {\n    int n,LOG=1;vector<int>depth;vector<vector<int>>up;\n    LCA(const vector<vector<int>>&g,int root):n(g.size()),depth(n,-1){\n        assert(n>0&&0<=root&&root<n);\n        while((1LL<<LOG)<=n)++LOG;up.assign(LOG,vector<int>(n,root));\n        queue<int>q;depth[root]=0;q.push(root);\n        while(!q.empty()){\n            int v=q.front();q.pop();\n            for(int u:g[v])if(depth[u]==-1){\n                depth[u]=depth[v]+1;up[0][u]=v;q.push(u);\n            }\n        }\n        for(int d:depth)assert(d!=-1);\n        for(int k=1;k<LOG;k++)for(int v=0;v<n;v++)\n            up[k][v]=up[k-1][up[k-1][v]];\n    }\n    int query(int a,int b)const{\n        if(depth[a]<depth[b])swap(a,b);\n        int diff=depth[a]-depth[b];\n        for(int k=0;k<LOG;k++)if(diff>>k&1)a=up[k][a];\n        if(a==b)return a;\n        for(int k=LOG-1;k>=0;k--)if(up[k][a]!=up[k][b]){\n            a=up[k][a];b=up[k][b];\n        }\n        return up[0][a];\n    }\n    int distance(int a,int b)const{return depth[a]+depth[b]-2*depth[query(a,b)];}\n};"
+            },
+            {
+              "type": "p",
+              "text": "Adjacency list нь connected tree, edge хоёр чиглэлд орсон гэж үзсэн. Constructor нь recursionгүй BFS-ээр depth/parent олно; tree дээр BFS ба DFS аль аль нь parent байгуулахад тохирно. Arbitrary connected graph өгвөл код traversal tree-ийн LCA гаргах боловч graph distance болохгүй."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Preprocessing",
+                  "O(n log n) хугацаа"
+                ],
+                [
+                  "LCA / distance query",
+                  "O(log n)"
+                ],
+                [
+                  "Ancestor table",
+                  "O(n log n) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Graph tree мөн эсэхийг шалгалгүй ашиглах.",
+                "Root-ийн parent-ийг −1 тавьчихаад up[k−1][−1] унших.",
+                "Depth difference-ийн бүх bit-ийг боловсруулахгүй байх.",
+                "Weighted path length-д unweighted depth томъёо ашиглах."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "query(v,v), ancestor-descendant pair, root оролцсон query турш.",
+                "Chain ба star tree-ийн depth, LCA-г гараар бод.",
+                "Хоёр оройг parent-аар нэг нэгээр өргөдөг naive LCA-тай random tree дээр тулга."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kmp",
+      "title": "Prefix function & KMP",
+      "category": "Strings",
+      "level": "Дунд",
+      "aliases": "kmp prefix function string pattern matching текст хайх border substring",
+      "summary": "Pattern-ийг text дотор O(n+m)-д хайх; тохирсон prefix-ийн мэдээллийг mismatch үед дахин ашиглах.",
+      "prerequisites": "String, index, prefix ба suffix.",
+      "related": [
+        "dynamic-programming",
+        "hash-compression",
+        "complexity"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Pattern-ийн prefix function pi[i] нь pattern[0…i]-ийн proper prefix бөгөөд suffix мөн болдог хамгийн урт хэсгийн урт. Proper гэдэг нь бүтэн string-ээс богино гэсэн үг. Ийм хэсгийг border гэж нэрлэнэ. KMP нь text дээр mismatch гарахад өмнөх таарсан character-уудыг дахин эхнээс нь шалгахгүй, border руу шилжинэ."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Олон substring match, overlap occurrences, string period/border бодлогод хэрэглэ. Standard string::find нь хэрэглээний хувьд энгийн боловч энэ хичээл guaranteed linear algorithm-ийн invariant-ийг ойлгоход зориулагдсан. Unicode-ийн тухайд std::string нь byte sequence; Монгол үсгийг UTF-8 байтаар боловсруулах ба буцах index нь character биш byte index байна."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "pi[i] бодоход j=pi[i−1]-ээс эхэл. p[i]!=p[j] байвал j=pi[j−1] гэж дараагийн хамгийн урт border руу буц. Тэнцвэл j++. Text scan-д j нь одоогийн text prefix-ийн suffix-тэй таарч буй pattern prefix-ийн урт. j=m бол match олдсон; дараагийн overlap-ийг алдахгүй j=pi[m−1] болгож үргэлжлүүл."
+            },
+            {
+              "type": "math",
+              "tex": "pi[i]=\\max\\{k<i+1\\mid p[0:k)=p[i-k+1:i+1)\\}"
+            },
+            {
+              "type": "p",
+              "text": "Mismatch үед j−− гэж бүх length-ийг нэг нэгээр шалгахгүй. Зөв боломжит length-үүд нь border-уудын chain тул pi-ээр үсэрнэ. Pattern m=0 тусдаа case; энэ хичээлд хоосон pattern text-ийн n+1 boundary бүр дээр таарна гэж тодорхойлсон."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Pattern ababa-ийн pi=[0,0,1,2,3]. Сүүлчийн a дээр aba prefix ба suffix таарна.",
+                "Text abababa дээр эхний таван character pattern-тэй таарч index 0 match болно.",
+                "Дараа j=pi[4]=3. Шинээр b,a уншаад бүтэн match index 2 дээр олдоно.",
+                "j-г 0 болгосон бол overlap мэдээллийг алдана. KMP match-үүд [0,2] гэж буцаана."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Таарсан prefix урт j дээр mismatch гарвал шинэ candidate нь тэр prefix-ийн suffix бөгөөд pattern-ийн prefix байх ёстой. Ийм хамгийн урт proper хэсэг pi[j−1], дараагийнх нь түүний border гэх мэт. Chain-ээр буцах нь бүх боломжит candidate-ийг алгасахгүй. j нь character match бүрд хамгийн ихдээ нэгээр өсөх ба буцахад буурдаг тул нийт өсөлт/бууралтын тоо linear."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> prefix_function(const string& p){\n    vector<int>pi(p.size());\n    for(int i=1;i<(int)p.size();i++){\n        int j=pi[i-1];\n        while(j>0&&p[i]!=p[j])j=pi[j-1];\n        if(p[i]==p[j])++j;pi[i]=j;\n    }\n    return pi;\n}\nvector<int> kmp(const string& text,const string& pattern){\n    int n=text.size(),m=pattern.size();vector<int>answer;\n    if(m==0){answer.resize(n+1);iota(answer.begin(),answer.end(),0);return answer;}\n    auto pi=prefix_function(pattern);int j=0;\n    for(int i=0;i<n;i++){\n        while(j>0&&text[i]!=pattern[j])j=pi[j-1];\n        if(text[i]==pattern[j])++j;\n        if(j==m){answer.push_back(i-m+1);j=pi[j-1];}\n    }\n    return answer;\n}"
+            },
+            {
+              "type": "p",
+              "text": "Буцах index-үүд нь 0-based эхлэлүүд. Text ба pattern ASCII бол byte index=character index. Delimiter ашигласан pattern+separator+text хувилбараас ялгаатай нь энэ код input дотор байхгүй тусгай separator шаардахгүй."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Prefix function",
+                  "O(m) хугацаа, O(m) зай"
+                ],
+                [
+                  "Text scan",
+                  "O(n) хугацаа"
+                ],
+                [
+                  "Match list",
+                  "Occurrence-ийн тоотой тэнцэх зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "pi[j] гэж буцаж өөрчлөгдөхгүй loop үүсгэх; pi[j−1] хэрэгтэй.",
+                "Бүтэн match дараа pattern[m]-д хандах.",
+                "Overlap match-уудыг алгасах.",
+                "UTF-8 byte index-ийг харагдах character index гэж тайлбарлах."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Text aaaaa, pattern aaa дээр match-уудыг хэлээд кодтой тулга.",
+                "Random жижиг string-ийн naive substring comparison-тай тулга.",
+                "n−pi[n−1] нь string-ийн period candidate болохыг тайлбарла; full repetition-д divisibility шалгах уу?"
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "number-theory",
+      "title": "GCD, sieve & modular arithmetic",
+      "category": "Math",
+      "level": "Дунд",
+      "aliases": "gcd lcm euclid sieve prime эратосфен анхны тоо modulo fast power modular arithmetic",
+      "summary": "GCD, prime sieve, fast exponentiation-ийг ойлгож integer overflow ба modular division-ийн нөхцөлийг ялгах.",
+      "prerequisites": "Integer, remainder, loop, binary representation.",
+      "related": [
+        "combinatorics",
+        "binary-search",
+        "bitmask-dp"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "GCD(a,b) нь хоёрыг хуваадаг хамгийн их positive integer; std::gcd(0,0)=0 гэж тодорхойлогдоно. Euclid algorithm gcd(a,b)=gcd(b,a mod b) дүрмээр ажиллана. Sieve нь 0…N хүртэлх олон тооны prime/composite төлөвийг урьдчилан олдог. Fast power нь exponent-ийн binary representation-аар үржүүлэлтийн тоог logarithmic болгоно."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Олон primality query, factorization-ийн суурь prime list, combinatorics modulo, exponent том бодлогод хэрэглэ. Sieve нь 10¹⁸ хүртэл array байгуулах арга биш; ганц асар том integer-д өөр primality algorithm хэрэгтэй. Modular division нь integer division биш: inverse зөвхөн gcd(a,m)=1 үед оршино."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Sieve-д prime p-ийн multiples-ийг p²-оос тэмдэглэж болно; түүнээс жижиг multiples нь өмнөх prime-уудаар тэмдэглэгдсэн. Fast power-д base-г square хийж exponent-ийг /2 хийнэ; тухайн bit 1 бол result-д base-г үржүүлнэ. Modulo-ийн үлдэгдэлд addition/multiplication хийж болно."
+            },
+            {
+              "type": "math",
+              "tex": "\\gcd(a,b)=\\gcd(b,a\\bmod b),\\qquad a^{2k}=(a^k)^2,\\qquad a^{2k+1}=a(a^k)^2"
+            },
+            {
+              "type": "p",
+              "text": "C++ дээр negative % нь negative байж болно. Normalized remainder хэрэгтэй үед x%=m; if(x<0)x+=m хэрэглэ. base×base нь modulo авахын өмнө overflow үүсгэж болох тул доорх код __int128 intermediate ашиглана. Энэ нь GNU C++17 extension, GCC/Clang орчинд тохирно."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "gcd(48,18): (48,18)→(18,12)→(12,6)→(6,0). Хариу 6.",
+                "N=10 sieve-д 2-ын 4,6,8,10, дараа 3-ын 9 composite болно. Prime-ууд 2,3,5,7.",
+                "3^13: exponent 13=(1101)₂. Хэрэгтэй powers нь 3¹,3⁴,3⁸.",
+                "Modulo 7 дээр 3^13 mod 7=3. Binary exponentiation эдгээр power-ийг square-аар олно."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Euclid-д a=qb+r учраас a,b-г хуваадаг тоо b,r-г мөн хуваана; эсрэг чиглэл ч ижил. Sieve-д composite x заавал ≤√x prime factor-той тул тэр factor-ийн multiples-ийг тэмдэглэхэд x олдоно. Fast power loop-д result×base^exponent нь анхны a^e-тэй modulo m дээр ижил invariant хадгална; exponent 0 болоход result хариу болно."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<bool> sieve(int n){\n    assert(n>=0);vector<bool>prime(n+1,true);\n    prime[0]=false;if(n>=1)prime[1]=false;\n    for(int p=2;1LL*p*p<=n;p++)if(prime[p])\n        for(long long x=1LL*p*p;x<=n;x+=p)prime[x]=false;\n    return prime;\n}\nlong long modpow(long long a,long long e,long long m){\n    assert(e>=0&&m>0);a%=m;if(a<0)a+=m;long long r=1%m;\n    while(e){\n        if(e&1)r=(__int128)r*a%m;\n        a=(__int128)a*a%m;e/=2;\n    }\n    return r;\n}"
+            },
+            {
+              "type": "p",
+              "text": "Sieve n=0,1 тохиолдлыг ч дэмжинэ. modpow нь m=1 үед 0 буцаана. Prime m, a нь m-д хуваагдахгүй үед a^(m−2) mod m нь inverse; composite m дээр тэр дүрмийг шууд хэрэглэж болохгүй. LCM=(a/gcd(a,b))*b боловч үржвэр overflow болох эсэхийг мөн шалга."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Euclid GCD",
+                  "O(log min(a,b)) эерэг оролтод"
+                ],
+                [
+                  "Sieve",
+                  "O(N log log N) хугацаа, O(N) зай (асимптотик)"
+                ],
+                [
+                  "Fast power",
+                  "O(log(e+1)) үржүүлэлт, O(1) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "0,1-ийг prime гэж тэмдэглэх.",
+                "p*p-г int дээр overflow болгох.",
+                "Composite modulus дээр Fermat inverse хэрэглэх.",
+                "Division хийж байгаад modulo авахыг inverse-тэй ижил гэж бодох."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Sieve-ийн бүх n≤100 утгыг trial division-тай тулга.",
+                "gcd(a,b) нь ax+by-ийн бүх integer combination-ийг хуваадаг гэдгийг батал.",
+                "Mod 8 дээр 2-ын inverse яагаад байхгүй вэ? Mod 7 дээр 3-ын inverse-г ол."
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "combinatorics",
+      "title": "Combinatorics & түгээмэл томъёо",
+      "category": "Math",
+      "level": "Дунд",
+      "aliases": "combination permutation factorial ncr binomial томъёо хослол сэлгэмэл геометр арифметик",
+      "summary": "Counting-д order чухал эсэхийг ялгаж, binomial coefficient болон CP-д хэрэгтэй томъёонуудыг нөхцөлтэй нь ашиглах.",
+      "prerequisites": "Factorial, modulo, fast power.",
+      "related": [
+        "number-theory",
+        "dynamic-programming",
+        "knapsack"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Counting бодлогод эхлээд юу ялгаатай сонголт гэж тоологдохыг тодорхойл. n өөр object-оос k-г orderгүй сонгох нь combination, orderтай сонгох нь permutation. n! нь n different object-ийг дараалуулж байрлуулах тоо. Duplicate object-уудтай үед шууд n! хэрэглэвэл давхар тоолно."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Subset size, grid path, coefficients, identical object distribution зэрэгт хэрэглэ. Grid дээр зөвхөн down/right хөдөлж саадгүй бол (r,c) хүрэх зам C(r+c,r). Obstacles байвал шууд энэ томъёо хүрэлцэхгүй. Stars and bars нь xi≥0, sum xi=S гэсэн нөхцөлд C(S+k−1,k−1), k≥1; upper bound байвал өөр бодлого болно."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Prime MOD дээр N<MOD байвал factorial болон inverse factorial-ийг урьдчилан хадгалж C(n,k)-г O(1)-д олно. InvFact[N]=fact[N]^(MOD−2), дараа доош InvFact[i−1]=InvFact[i]×i. N≥MOD үед fact[N]=0 modulo MOD болж inverse байхгүй; энэ арга шууд тохирохгүй."
+            },
+            {
+              "type": "math",
+              "tex": "\\binom nk=\\frac{n!}{k!(n-k)!},\\quad P(n,k)=\\frac{n!}{(n-k)!},\\quad \\sum_{i=1}^{n}i=\\frac{n(n+1)}2"
+            },
+            {
+              "type": "p",
+              "text": "Нэмэлт томъёо: arithmetic progression sum нь n(first+last)/2; geometric sum a(1−r^n)/(1−r), r≠1, харин r=1 бол an. Modular geometric sum-д denominator inverse зөвхөн оршин байвал хэрэглэнэ. Томъёог хэрэглэхийн өмнө бодлогын counting model болон denominator-ийн нөхцөлийг шалга."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "5 different object-оос 2-г orderгүй сонгоход C(5,2)=10.",
+                "Orderтай бол P(5,2)=5×4=20: {A,B} сонголтын AB,BA хоёр дараалал тусдаа.",
+                "Grid дээр down 2, right 3 алхамтай зам: нийт 5 алхмын 2 байранд down тавина, C(5,2)=10.",
+                "3 хүүхдэд 4 ижил чихэр, 0 авч болно: x1+x2+x3=4 тул C(6,2)=15. Чихэрүүд ялгаатай бол энэ загвар тохирохгүй."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "n object-ийн permutation-уудаас эхний k-д сонгосон set-ийг авч үз. Нэг k-element subset нь k! дотоод order ба (n−k)! үлдсэн order-оор n!-д давхар тоологддог. Тиймээс n!/(k!(n−k)!) combination. Modulo дээр integer хуваалтыг inverse multiplication-аар солихдоо denominator MOD-той coprime байх ёстой. Prime MOD ба n<MOD энэ нөхцөлийг батална."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Combinations{\n    static constexpr long long MOD=1'000'000'007;\n    vector<long long>f,invf;\n    static long long power(long long a,long long e){\n        long long r=1;while(e){if(e&1)r=r*a%MOD;a=a*a%MOD;e/=2;}return r;\n    }\n    Combinations(int n):f(n+1,1),invf(n+1,1){\n        assert(0<=n&&n<MOD);\n        for(int i=1;i<=n;i++)f[i]=f[i-1]*i%MOD;\n        invf[n]=power(f[n],MOD-2);\n        for(int i=n;i>0;i--)invf[i-1]=invf[i]*i%MOD;\n    }\n    long long choose(int n,int k)const{\n        assert(0<=n&&n<(int)f.size());\n        if(k<0||k>n)return 0;\n        return f[n]*invf[k]%MOD*invf[n-k]%MOD;\n    }\n};"
+            },
+            {
+              "type": "p",
+              "text": "Combinations c(N); c.choose(n,k); гэж хэрэглэ. Энд тогтмол MOD=10⁹+7 тул хоёр residue-ийн үржвэр long long-д багтана. Бусад modulus сонгохдоо overflow болон primality-г дахин шалга. MOD=prime гээд n≥MOD-ийн асуудал арилдаггүй."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Factorial preprocessing",
+                  "O(N+log MOD) хугацаа"
+                ],
+                [
+                  "C(n,k) query",
+                  "O(1)"
+                ],
+                [
+                  "Factorial arrays",
+                  "O(N) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Orderтай сонголтыг combination-оор тоолох.",
+                "Different ба identical object-уудыг хольж тоолох.",
+                "n≥MOD үед factorial inverse аргыг хэрэглэх.",
+                "nC0=nCn=1, k>n үед 0 boundary-уудыг мартах."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Pascal recurrence C(n,k)=C(n−1,k−1)+C(n−1,k)-тай жижиг утгуудыг тулга.",
+                "Geometric sum-ийн r=1 special case-ийг тайлбарла.",
+                "xi≥1 бол stars and bars-ийн S-ийг хэрхэн өөрчлөх вэ?"
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bitmask-dp",
+      "title": "Bitmask & subset DP",
+      "category": "DP",
+      "level": "Ахисан",
+      "aliases": "bitmask subset dp assignment маск дэд олонлог popcount",
+      "summary": "Жижиг n-тэй сонголтын олонлогийг binary mask-аар төлөөлж subset state дээр DP хийх.",
+      "prerequisites": "DP, bit operations, exponential complexity.",
+      "related": [
+        "dynamic-programming",
+        "knapsack",
+        "number-theory"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "n object-ийн subset бүрийг n-bit integer-ээр төлөөлнө. Bit j=1 байвал object j сонгогдсон. mask&(1<<j) нь байгаа эсэх, mask|(1<<j) нь нэмэх, popcount нь element-ийн тоо. Subset-ийн тоо 2^n тул n≈20 зэрэг жижиг нөхцөлд ашигтай; n=100-д хэрэглэх арга биш."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Assignment, Hamiltonian path/TSP-ийн state, subset coverage зэрэгт хэрэглэнэ. Assignment жишээнд n worker, n job, cost[i][j] байна. Worker бүр нэг job, job бүр нэг worker авч нийт cost minimum. dp[mask] нь эхний popcount(mask) worker-т mask-ийн job-уудыг оноосон minimum cost."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "State-д аль worker дараа сонгох нь popcount(mask)-аар тодорхой тул worker index-ийг тусад нь хадгалах шаардлагагүй. Сонгоогүй job j бүрийг дараагийн worker i-д өгч newMask=mask|(1<<j) рүү transition хийнэ. Нэмэгдсэн bit нь integer mask-ийг өсгөдөг тул increasing mask order valid."
+            },
+            {
+              "type": "math",
+              "tex": "dp[mask\\cup\\{j\\}]=\\min\\big(dp[mask\\cup\\{j\\}],dp[mask]+cost[|mask|][j]\\big)"
+            },
+            {
+              "type": "p",
+              "text": "TSP-д visited set alone хүрэлцэхгүй: одоо аль орой дээр байгаагаас дараагийн cost өөрчлөгдөнө. Тиймээс dp[mask][last] хэрэгтэй. State-ийг багасгах нь зөвхөн цаашдын шийдвэрт мэдээлэл шаардлагагүй гэдгийг баталсны дараа хийнэ."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Cost matrix [[3,1],[2,4]]. dp[00]=0.",
+                "Worker 0 job 0 авбал dp[01]=3; job 1 авбал dp[10]=1.",
+                "dp[01]-ээс worker 1 job 1: dp[11]=3+4=7.",
+                "dp[10]-ээс worker 1 job 0: dp[11]=min(7,1+2)=3. Optimal assignment 0→1,1→0."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Mask-ийн хэмжээгээр induction хий. Mask рүү хүрсэн assignment бүр дараагийн worker-т сонгоогүй job өгөх ёстой; transition бүх ийм сонголтыг хамарна. Нэг mask-ийн өөр assignment-ууд цааш ижил worker index ба ижил сул job set-тэй тул minimum cost-ийг л хадгалахад хангалттай. Full mask дээр бүх worker/job яг нэг удаа ашиглагдсан болно."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nlong long assignment(const vector<vector<long long>>& cost){\n    int n=cost.size();assert(n<=20);\n    for(auto&r:cost)assert((int)r.size()==n);\n    const long long INF=4'000'000'000'000'000'000LL;\n    int states=1<<n;vector<long long>dp(states,INF);dp[0]=0;\n    for(int mask=0;mask<states;mask++){\n        int i=__builtin_popcount((unsigned)mask);if(i==n)continue;\n        for(int j=0;j<n;j++)if(!(mask>>j&1)){\n            assert(cost[i][j]>=0&&cost[i][j]<INF/20);\n            int next=mask|(1<<j);\n            dp[next]=min(dp[next],dp[mask]+cost[i][j]);\n        }\n    }\n    return dp.back();\n}"
+            },
+            {
+              "type": "p",
+              "text": "Энэ dense assignment жишээнд cost nonnegative бөгөөд нийт cost INF-ээс бага. DP-ийн бүх mask хүрч болдог тул sentinel-ээс transition хийхгүй үлдэх тусгай нөхцөл үгүй. Forbidden assignment нэмбэл unreachable check нэмж хэрэгтэй. n=0 үед хоосон assignment-ийн cost 0."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Subset assignment",
+                  "O(n 2^n) хугацаа"
+                ],
+                [
+                  "DP table",
+                  "O(2^n) зай"
+                ],
+                [
+                  "TSP зэрэг last-тай state",
+                  "Ердийн O(n² 2^n) transition хугацаа"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "n том байхад exponential state memory багтана гэж үзэх.",
+                "1<<n-ийг signed int-ийн bit хязгаараас давуулах.",
+                "Mask-аас last vertex-ийг сэргээж болно гэж буруу бодох.",
+                "Unreachable INF state дээр cost нэмж overflow үүсгэх."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "n≤8 үед бүх permutation-ийн assignment cost-тай тулга.",
+                "TSP-д dp[mask][last] recurrence бич; эхлэх оройг яаж тогтоох вэ?",
+                "Subset-уудын бүх submask-ийг enumerate хийх loop яагаад нийт O(3^n) болдог вэ?"
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lazy-segment-tree",
+      "title": "Lazy propagation — range add / sum",
+      "category": "Data structures",
+      "level": "Ахисан",
+      "aliases": "lazy propagation segment tree range add range update sum pending",
+      "summary": "Бүх leaf-ийг өөрчлөхгүйгээр range add ба range sum-ийг O(log n)-д боловсруулах.",
+      "prerequisites": "Segment tree, recursion, range sum.",
+      "related": [
+        "segment-tree",
+        "fenwick-tree",
+        "prefix-sums"
+      ],
+      "sections": [
+        {
+          "title": "1. Гол ойлголт",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Энгийн segment tree point update-д хурдан. Range add-ийг бүх element дээр хийхэд удаан болно. Lazy propagation нь бүтэн node segment дээрх update-ийг aggregate-д шууд тусгаад, children-д хараахан дамжуулаагүй өөрчлөлтийг pending tag-д хадгалдаг. Энэ хичээлд зөвхөн add tag ба sum aggregate-ийг авч үзнэ."
+            }
+          ]
+        },
+        {
+          "title": "2. Хэзээ хэрэглэх вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Олон range add ба range sum ээлжилдэг array бодлогод хэрэглэ. Assign, multiply, min, max зэрэг operation бүр өөр tag composition ба aggregate mapping-тай. Lazy гэх нэртэй учраас дурын operation-ийг залгаад зөв болно гэсэн үг биш. Range add бүх element-д ижил delta нэмэх тул sum segmentLength×delta-аар өөрчлөгдөнө."
+            }
+          ]
+        },
+        {
+          "title": "3. Санааг нь ойлгох",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Node v нь [l,r) segment. apply(v,delta) нь sum[v]+=delta*(r−l), lazy[v]+=delta. Query/update segment-ийг бүтнээр хамарвал apply хийж зогсоно. Хэсэгчлэн хамарвал өмнөх lazy-г children-д push хийж, children дээр ажиллаад parent sum-ийг дахин merge хийнэ."
+            },
+            {
+              "type": "math",
+              "tex": "sum[v]\\leftarrow sum[v]+\\Delta(r-l),\\qquad lazy[v]\\leftarrow lazy[v]+\\Delta"
+            },
+            {
+              "type": "p",
+              "text": "Lazy tag нь хүүхдүүдийн aggregate-д хараахан ороогүй өөрчлөлт; харин тухайн node-ийн sum-д аль хэдийн орсон. Push үед parent sum-г дахин нэмэхгүй. Children-д apply хийгээд parent lazy=0 болгоно. Add tag-ууд нийлбэрээр compose хийгдэх ч assign+add tag-ийн order чухал."
+            }
+          ]
+        },
+        {
+          "title": "4. Жишээг алхам алхмаар",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "a=[1,2,3,4], root sum=10. [0,4)-д +5 update: root sum=30,lazy=5; leaf бүрийг шууд үзэхгүй.",
+                "[1,3) query хийхийн өмнө root-ийн +5-г хоёр child-д push.",
+                "Query нь index 1-ийн 7 ба index 2-ын 8-г авч 15.",
+                "[2,4)-д −2 нэмбэл final array [6,7,6,7]. Бүтэн sum=26."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "5. Яагаад зөв ажилладаг вэ?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Invariant: sum[v] нь segment-ийн бодит нийлбэр, lazy[v] нь children-д дамжуулаагүй update. Full-cover add бүх element-д delta нэмэх тул aggregate өөрчлөлт delta×length зөв. Push хоёр хүүхдэд тэдний length-ээр update хийдэг учир children-ийн sum-ийн нийлбэр parent sum-тай нийцнэ. Partial recursion дараах merge invariant-ийг сэргээдэг тул query/update induction-аар зөв."
+            }
+          ]
+        },
+        {
+          "title": "6. C++17 хэрэгжүүлэлт",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "C++17",
+              "text": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct LazySeg{\n    int n;vector<long long>sum,lazy;\n    LazySeg(const vector<long long>&a):n(a.size()),sum(4*n),lazy(4*n){\n        assert(n>0);build(1,0,n,a);\n    }\n    void build(int v,int l,int r,const vector<long long>&a){\n        if(r-l==1){sum[v]=a[l];return;}int m=(l+r)/2;\n        build(v*2,l,m,a);build(v*2+1,m,r,a);sum[v]=sum[v*2]+sum[v*2+1];\n    }\n    void apply(int v,int l,int r,long long x){sum[v]+=x*(r-l);lazy[v]+=x;}\n    void push(int v,int l,int r){\n        if(r-l==1||lazy[v]==0)return;int m=(l+r)/2;\n        apply(v*2,l,m,lazy[v]);apply(v*2+1,m,r,lazy[v]);lazy[v]=0;\n    }\n    void add(int ql,int qr,long long x,int v,int l,int r){\n        if(qr<=l||r<=ql)return;\n        if(ql<=l&&r<=qr){apply(v,l,r,x);return;}\n        push(v,l,r);int m=(l+r)/2;\n        add(ql,qr,x,v*2,l,m);add(ql,qr,x,v*2+1,m,r);\n        sum[v]=sum[v*2]+sum[v*2+1];\n    }\n    long long query(int ql,int qr,int v,int l,int r){\n        if(qr<=l||r<=ql)return 0;if(ql<=l&&r<=qr)return sum[v];\n        push(v,l,r);int m=(l+r)/2;\n        return query(ql,qr,v*2,l,m)+query(ql,qr,v*2+1,m,r);\n    }\n    void add(int l,int r,long long x){assert(0<=l&&l<=r&&r<=n);add(l,r,x,1,0,n);}\n    long long query(int l,int r){assert(0<=l&&l<=r&&r<=n);return query(l,r,1,0,n);}\n};"
+            },
+            {
+              "type": "p",
+              "text": "LazySeg st(a); st.add(l,r,delta); st.query(l,r);. Public range [l,r), array nonempty. sum болон delta×length long long-д багтана гэж үзсэн. Query нь push хийж internal tags-ийг өөрчилдөг тул const биш боловч logical array value-г өөрчлөхгүй."
+            }
+          ]
+        },
+        {
+          "title": "7. Time ба space complexity",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": [
+                "Хэсэг",
+                "Хугацаа / санах ой"
+              ],
+              "rows": [
+                [
+                  "Build",
+                  "O(n)"
+                ],
+                [
+                  "Range add / range sum",
+                  "O(log n)"
+                ],
+                [
+                  "sum ба lazy arrays",
+                  "O(n) зай"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "8. Түгээмэл алдаа",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Sum-д зөвхөн delta нэмэх; segment-ийн length-ээр үржүүлэх хэрэгтэй.",
+                "Push хийсний дараа parent lazy-г тэглэхгүй байх.",
+                "Children рүү буухаас өмнө pending update-г push хийхгүй байх.",
+                "Assign ба add tag-ийг orderгүйгээр хольж compose хийх."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "9. Өөрөө туршаад үз",
+          "blocks": [
+            {
+              "type": "ordered",
+              "items": [
+                "Random range add/query-г naive vector-тай тулга.",
+                "Бүтэн range update дараа ганц element query турш.",
+                "Range assign tag нэмэхэд ямар boolean болон composition rule хэрэгтэй вэ?"
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Кодыг харалгүй санааг нь өөрийн үгээр тайлбарла. Дараа нь жижиг input дээр гараар ажиллуулж, яагаад зөв болохыг батлаад, сая хэрэгжүүлээрэй."
+            }
+          ]
+        },
+        {
+          "title": "10. Цааш унших",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ижил сэдвийг өөр тайлбартай харьцуулж унших эх сурвалжууд. Энэ хичээлийн жишээ болон Монгол тайлбарыг Erdene Club-д зориулан бичсэн."
+            },
+            {
+              "type": "links",
+              "items": [
+                {
+                  "label": "Competitive Programmer’s Handbook — Antti Laaksonen",
+                  "url": "https://cses.fi/book/book.pdf"
+                },
+                {
+                  "label": "MIT 6.006 — Algorithms lecture notes",
+                  "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/pages/lecture-notes/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
